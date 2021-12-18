@@ -1,0 +1,11 @@
+
+.grade {
+	display: none;
+}
+#gradeErr {
+	display: none;
+}
+.error {
+	color: rgb(255, 0, 0);
+}
+
