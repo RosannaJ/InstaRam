@@ -4,31 +4,31 @@
     $name = $license = $connection = $bio = $grade = $username = $birthdate = "";
     $nameErr = $profileErr = $licenseErr = $connectionErr = $bioErr = $gradeErr = $usernameErr = $birthdateErr = $passwordErr = $password2Err = "";
     $target_dir = "users/";
-    $usedUsernames = []; // go through folders instead?
     $file = "userinfo.json";
     $target_file = "";
     $imageFileType = "";
 
+    $allProfilesFile = "allProfiles.json";
+    $allUsers = get_all_users($allProfilesFile);
+
     // process form data if submitted from page 2
     if ($_SERVER["REQUEST_METHOD"] == "POST" && $_SESSION["page"] == 2) {
         
-        // check if username is valid
+        // check if username is valid and not already in use
         if (empty($_POST["username"])) {
             $usernameErr = "Name is required";
             $isDataClean = false;
         } else if (!preg_match("/^[a-zA-Z-' ]*$/", $_POST["username"])) {
             $usernameErr = "Only letters and white space allowed";
             $isDataClean = false;
-            $username = clean_data($_POST["username"]);
-        } else if (in_array($username, $usedUsernames, $strict = true)) {
+        } else if (username_exists($_POST["username"], $allUsers)) {
             $usernameErr = "Sorry, this username is already in use.";
             $isDataClean = false;
-        } else {
-            $username = clean_data($_POST["username"]);
-            array_push($usedUsernames, $username);
-            console_log($usedUsernames);
         }
-        
+
+        // keep username in input field
+        $username = clean_data($_POST["username"]);
+
         // check if name is valid
         if (empty($_POST["name"])) {
             $nameErr = "Name is required";
@@ -111,6 +111,7 @@
             $phpArray = array();
             $newSubmission = "";
             $dest = $target_dir . $username . "/". $file;
+            $newUser = [];
 
             // create folders if they don't exist
             if (!is_dir($target_dir)) {
@@ -127,18 +128,29 @@
 
             // write form data to json file
             $newSubmission = [
-                        "username" => $username,
-                        "name" => $name,
-                        "license" => $license,
-                        "connection" => $connection,
-                        "grade" => $grade,
-                        "bio" => $bio,
-                        "birthdate" => $birthdate,
-                        "imageFileType" => $imageFileType
-                    ];
+                "username" => $username,
+                "name" => $name,
+                "license" => $license,
+                "connection" => $connection,
+                "grade" => $grade,
+                "bio" => $bio,
+                "birthdate" => $birthdate,
+                "imageFileType" => $imageFileType
+            ];
             
+            // add current profile and write to file
             $phpArray[] = $newSubmission;
             file_put_contents($dest, json_encode($phpArray, JSON_PRETTY_PRINT));
+
+            // write username and profile to file
+            $newUser = [
+                "username" => $username,
+                "password" => "tempPassword"//$password
+            ];
+
+            // add current user and write to file
+            $allUsers[] = $newUser;
+            file_put_contents($allProfilesFile, json_encode($allUsers, JSON_PRETTY_PRINT));
 
             // upload profile pic
             move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $username . "/" . "pfp" . "." .$imageFileType);
@@ -155,7 +167,7 @@
             echo "</pre>";
         } else {
             // temp
-            echo "unsuccessful submission?";
+            echo "unsuccessful submission of signup form";
         }
     }
 ?>		

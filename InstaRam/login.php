@@ -5,6 +5,9 @@
     $loginUsernameErr = "";
     $loginPasswordErr = "";
 
+    // this is also in signup.php, should it be moved?
+    $allProfilesFile = "allProfiles.json";
+
     if ($_SERVER["REQUEST_METHOD"] == "POST" && $_SESSION["page"] == 1) {
 
         // check if username is valid
@@ -13,6 +16,9 @@
             $isDataClean = false;
         } else if (!preg_match("/^[a-zA-Z-' ]*$/", $_POST["username"])) {
             $loginUsernameErr = "Please enter a valid username.";
+            $isDataClean = false;
+        } else if (!username_exists($_POST["username"], get_all_users($allProfilesFile))) {
+            $loginUsernameErr =  "Username does not exist.";
             $isDataClean = false;
         }
 
@@ -23,10 +29,7 @@
         if (empty($_POST["password"])) {
             $loginPasswordErr = "Please enter a password.";
             $isDataClean = false;
-        } //else if (!preg_match("/^[a-zA-Z-' ]*$/", $_POST["username"])) {
-        //     $loginPasswordErr = "Please enter a valid username.";
-        //     $isDataClean = false;
-        // }
+        }
 
         // TODO: check if username and password match
 
