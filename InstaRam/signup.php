@@ -8,7 +8,6 @@
     $target_file = "";
     $imageFileType = "";
 
-    // $allProfilesFile = "allProfiles.json";
     $allUsers = get_all_users($target_dir);
 
     // process form data if submitted from page 2
@@ -38,7 +37,7 @@
             $isDataClean = false;
             $name = clean_data($_POST["name"]);
         } else {
-            $name = clean_data($_POST["name"]);
+            $name = strtolower(clean_data($_POST["name"])); //maybe make all lowercase for consistency
         }
 
         // check if license is valid

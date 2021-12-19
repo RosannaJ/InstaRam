@@ -10,9 +10,32 @@ function displayGrade() {
 			document.getElementsByClassName("grade")[i].style.display = "none";
 		} // for
 	} // else
-		
 	
 } // displayGrade
+
+function hashPassword() {
+	let password1 = document.getElementById("password");
+	let password2 = document.getElementById("password2");
+
+	// hash password1
+	password1.value = hash(password1.value);
+
+	// if exists, hash password2 
+	if (password2) {
+		password2.value = hash(password2.value);
+	}
+
+	// tell browser form can be submitted
+	return true;
+}
+
+function hash(textToHash) {
+	let hash = 0;
+
+	// ...hashing function goes here...
+    
+	return hash;
+}
 
 function fetchData(request, functionToCall) {
 	fetch ("getData.php?" + request, {

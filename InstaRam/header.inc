@@ -15,9 +15,17 @@
   
 	<body onload="displayGrade()">
 
-    <a href="?page=1">Page 1</a>
-    <a href="?page=2">Page 2</a>
-    <a href='?action=del'>Reset Everything</a>
-   
+    <a href="?page=1">Log In</a>
+    <a href="?page=2">Create Account</a>
 
+    <a href="?page=4">New Post</a>
+    <a href='?action=del'>Reset Everything</a>
+
+    <?php
 	
+			if (array_key_exists("username", $_SESSION) && $_SESSION['username'] !== null) {
+				echo "Logged in as: " . $_SESSION['username'];
+			} else {
+				echo "Not Logged in.";
+			}
+		?>

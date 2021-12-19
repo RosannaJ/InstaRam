@@ -17,11 +17,6 @@
 
     // returns all usernames by going through each folder
     function username_exists($username, $allUsers) {
-        echo "Usernames: <br>";
-        echo "<pre>";
-        var_dump($allUsers);
-        echo "</pre>";
-
         for ($i = 0; $i < count($allUsers); $i++) {
             if ($allUsers[$i] === $username) {
                 return true;
@@ -30,13 +25,13 @@
         return false;
     }
 
-    function get_all_users($fileName) {
+    function get_all_users($folderName) {
         $users = [];
 
         // get the name of each user's folder
-        if (file_exists($fileName)) {
-            if (is_dir($fileName)) {
-                $dh = opendir($fileName);
+        if (file_exists($folderName)) {
+            if (is_dir($folderName)) {
+                $dh = opendir($folderName);
                 while (($file = readdir($dh)) !== false) {
                     if (!is_dir($file)) {
                         $users[] = $file;
@@ -47,5 +42,30 @@
         }
 
         return $users;
+    }
+
+    function delete_folder($folderName) {
+
+        // open folder
+        if (is_dir($folderName)) {
+            $dh = opendir($folderName);
+            while (($file = readdir($dh)) !== false) {
+                $newFile = $folderName . $file;
+
+                // delete files
+                if (!is_dir($newFile . "/")) {
+                    unlink($newFile);
+                } 
+
+                // delete folders
+                else if ($file !== "." && $file !== ".."){
+                    delete_folder($newFile . "/");
+                }
+            }
+            closedir($dh);
+
+            // delete root folder
+            rmdir($folderName);
+        }
     }
 ?>
