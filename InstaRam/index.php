@@ -14,6 +14,49 @@
         $_SESSION["page"] = $_GET["page"];
     }
 
+    // delete contents of "users" folder
+    if (array_key_exists("action", $_GET) && $_GET["action"] == "del") {
+        $fileName = "users/";
+
+        // delete contents of folder
+        if (file_exists($fileName)) {
+
+            // loop through "users" folder
+            if (is_dir($fileName)) {
+                $dh = opendir($fileName);
+                while (($file = readdir($dh)) !== false) {
+                    $postsFolder = $fileName . $file . "/posts/";
+
+                    // check if is a folder (folder for each user)
+                    if (!is_dir($file)) {
+
+                        // delete contents of folder
+                        if (is_dir($fileName . $file . "/")) {
+                            $dh2 = opendir($fileName . $file . "/");
+                            while (($newFile = readdir($dh2)) !== false) {
+
+                                // delete files
+                                if (!is_dir($fileName . $file . "/" . $newFile)) {
+                                    unlink($fileName . $file . "/" . $newFile);
+                                } 
+
+                                // delete folders
+                                else if ($newFile !== "." && $newFile !== ".."){
+                                    rmdir($fileName . $file . "/" . $newFile);
+                                }
+                            }
+                            closedir($dh2);
+
+                            // delete user folder
+                            rmdir($fileName . $file);
+                        }
+                    }
+                }
+                closedir($dh);
+            }
+        }
+    }
+
     // show page content
     include "header.inc";
     	
