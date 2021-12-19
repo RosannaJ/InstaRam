@@ -8,8 +8,8 @@
     $target_file = "";
     $imageFileType = "";
 
-    $allProfilesFile = "allProfiles.json";
-    $allUsers = get_all_users($allProfilesFile);
+    // $allProfilesFile = "allProfiles.json";
+    $allUsers = get_all_users($target_dir);
 
     // process form data if submitted from page 2
     if ($_SERVER["REQUEST_METHOD"] == "POST" && $_SESSION["page"] == 2) {
@@ -142,16 +142,6 @@
             $phpArray[] = $newSubmission;
             file_put_contents($dest, json_encode($phpArray, JSON_PRETTY_PRINT));
 
-            // write username and profile to file
-            $newUser = [
-                "username" => $username,
-                "password" => "tempPassword"//$password
-            ];
-
-            // add current user and write to file
-            $allUsers[] = $newUser;
-            file_put_contents($allProfilesFile, json_encode($allUsers, JSON_PRETTY_PRINT));
-
             // upload profile pic
             move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $username . "/" . "pfp" . "." .$imageFileType);
 
@@ -162,6 +152,7 @@
             $_GET['page'] = 3;
             
             // temp
+            echo "New Account Created:<br>";
             echo "<pre>";
             var_dump($phpArray);
             echo "</pre>";

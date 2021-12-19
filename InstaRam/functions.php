@@ -17,14 +17,13 @@
 
     // returns all usernames by going through each folder
     function username_exists($username, $allUsers) {
+        echo "Usernames: <br>";
         echo "<pre>";
         var_dump($allUsers);
         echo "</pre>";
 
-
         for ($i = 0; $i < count($allUsers); $i++) {
-            if ($allUsers[$i]["username"] === $username) {
-                echo "same as $i";
+            if ($allUsers[$i] === $username) {
                 return true;
             }
         }
@@ -32,11 +31,21 @@
     }
 
     function get_all_users($fileName) {
+        $users = [];
+
+        // get the name of each user's folder
         if (file_exists($fileName)) {
-            return json_decode(file_get_contents($fileName), true);
-        } else {
-            file_put_contents($fileName, []);
-            return [];
+            if (is_dir($fileName)) {
+                $dh = opendir($fileName);
+                while (($file = readdir($dh)) !== false) {
+                    if (!is_dir($file)) {
+                        $users[] = $file;
+                    }
+                }
+                closedir($dh);
+            }
         }
+
+        return $users;
     }
 ?>
