@@ -1,8 +1,8 @@
 <?php
 
     $isDataClean = true;
-    $name = $license = $connection = $bio = $grade = $username = $birthdate = "";
-    $nameErr = $profileErr = $licenseErr = $connectionErr = $bioErr = $gradeErr = $usernameErr = $birthdateErr = $passwordErr = $password2Err = "";
+    $name = $license = $connection = $bio = $grade = $username = $birthdate = $password = $password2 = "";
+    $nameErr = $profileErr = $licenseErr = $connectionErr = $bioErr = $gradeErr = $usernameErr = $birthdateErr = $passwordErr = "";
     $target_dir = "users/";
     $file = "userinfo.json";
     $target_file = "";
@@ -13,12 +13,13 @@
     // process form data if submitted from page 2
     if ($_SERVER["REQUEST_METHOD"] == "POST" && $_SESSION["page"] == 2) {
         
+
         // check if username is valid and not already in use
         if (empty($_POST["username"])) {
-            $usernameErr = "Name is required";
+            $usernameErr = "Username is required";
             $isDataClean = false;
-        } else if (!preg_match("/^[a-zA-Z-' ]*$/", $_POST["username"])) {
-            $usernameErr = "Only letters and white space allowed";
+        } else if (!preg_match("/^[a-z0-9-' ]*$/", $_POST["username"]) || str_contains($_POST["username"], " ")) { 
+            $usernameErr = "Only lowercase letters and numbers allowed";
             $isDataClean = false;
         } else if (username_exists($_POST["username"], $allUsers)) {
             $usernameErr = "Sorry, this username is already in use.";
@@ -37,7 +38,7 @@
             $isDataClean = false;
             $name = clean_data($_POST["name"]);
         } else {
-            $name = strtolower(clean_data($_POST["name"])); //maybe make all lowercase for consistency
+            $name = clean_data($_POST["name"]); 
         }
 
         // check if license is valid
@@ -85,9 +86,9 @@
             $imageFileType = mime_content_type($_FILES["fileToUpload"]["tmp_name"]);
                 
             // check if filetype and size is valid
-            if (strcmp($imageFileType, "image/jpg") != 0 && strcmp($imageFileType, "image/png") != 0) {
+            if (strcmp($imageFileType, "image/jpg") !== 0 && strcmp($imageFileType, "image/png") !== 0 && strcmp($imageFileType, "image/jpeg") !== 0) {
                 $isDataClean = false;
-                $profileErr = "Only jpg or png files are allowed.";
+                $profileErr = "Only jpg, jpeg, or png files are allowed.";
             } else if ($_FILES["fileToUpload"]["size"] > 4000000) {
                 $isDataClean = false;
                 $profileErr = "Files must be 4MB and under.";
@@ -98,12 +99,38 @@
         }
         
         // check if birthdate is valid
-        if (!array_key_exists("birthdate", $_POST)){
+        if (!array_key_exists("birthdate", $_POST) && empty($_POST["birthdate"])){
             $birthdateErr = "Birthdate is required";
             $isDataClean = false;
         } else {
-            $birthdate = clean_data($_POST["birthdate"]);
+            $birthdate = $_POST["birthdate"];
         }
+
+        // find a way to keep birthday if form is incomplete
+        // maybe password too if we want that ?
+
+        // also for password we shouldn't clean the data but if the data isn't clean should we just throw an error message?
+
+        // the password is hashed (javascript) before it gets sent 
+        // to the php, so by the time we get to validating it,
+        // it would be numbers only right?
+
+        // check if password is valid
+        $tempPass = $_POST["password"];
+        $tempPass2 = $_POST["password2"];
+        if (strlen($tempPass) < 8) {
+            $passwordErr = "Password must be at least 8 characters";
+            $isDataClean = false;
+        } else if (strcmp($tempPass, $tempPass2) !== 0) {
+            $passwordErr = "Passwords are not the same"; // change this to better message
+            $isDataClean = false;
+        } else {
+            $password = $tempPass;
+            $password2 = $tempPass2;
+        }
+
+        echo "pass1: " . $tempPass;
+        echo "pass2: " . $tempPass2;
 
         // save data if valid
         if ($isDataClean){
@@ -135,6 +162,7 @@
                 "bio" => $bio,
                 "birthdate" => $birthdate,
                 "imageFileType" => $imageFileType
+                "password" => $password;
             ];
             
             // add current profile and write to file

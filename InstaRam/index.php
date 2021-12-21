@@ -19,7 +19,9 @@
     if (array_key_exists("action", $_GET) && $_GET["action"] == "del") {
 
         // delete postID file
-        unlink("postID.txt");
+        if (file_exists("postID.txt")) {
+            unlink("postID.txt");
+        }
 
         // delete users folder
         delete_folder("users/");

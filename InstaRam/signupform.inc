@@ -1,4 +1,4 @@
-<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data">
+<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data" onsubmit="hashPassword()">
    <h1>InstaRam👍</h1>
    
    <br>Create Account<br><br>
@@ -64,7 +64,7 @@
       minlength="8" value=""><br>
    
    <label for="password2">Confirm Password:</label>
-   <span class="error">* <?php echo $password2Err;?></span><br>
+   <span class="error">* </span><br>
    <input type="password" id="password2" name="password2"
       minlength="8" value="">
    

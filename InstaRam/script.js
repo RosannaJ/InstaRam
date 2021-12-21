@@ -14,27 +14,80 @@ function displayGrade() {
 } // displayGrade
 
 function hashPassword() {
-	let password1 = document.getElementById("password");
-	let password2 = document.getElementById("password2");
+	let password1 = document.getElementById("password").value;	let password2 = document.getElementById("password2").value;
+	let wholePass1 = "";
+	let wholePass2 = "";
 
-	// hash password1
-	password1.value = hash(password1.value);
+	password1 = hash(password1);
+	password2 = hash(password2);
+	
 
-	// if exists, hash password2 
-	if (password2) {
-		password2.value = hash(password2.value);
+    //	random number randNumClient
+	randNumClient = Math.floor(Math.random() * 200);
+
+	// fetch randNum from server
+	randNumServer = 10; // temp
+
+	// hash entire password
+	wholePass1 = hash(randNumClient + password1 + randNumServer);
+
+	if (password2) { // ?
+		wholePass2 = hash(randNumClient + password2 + randNumServer);
 	}
+	
+	document.getElementById("password").value = wholePass1;
+
+	if (password2) {
+		document.getElementById("password2").value = wholePass2;
+	}
+
+	
 
 	// tell browser form can be submitted
 	return true;
+
+	// store hash(password) on sign up
+	// on log in, hash the entered password -> newlyEntered
+	// compare stored hash(hash(password) + newRandNum + newRandNum2) with hash (newlyEntered + newRandNum + newRandNum2)
+
+
 }
 
-function hash(textToHash) {
-	let hash = 0;
+// should this be a php function
+function compareLogIn(originalHash, enteredPassword) {
+	let allHash1 = "";
+	let allHash2 = "";
+	let entered = enteredPassword;
 
-	// ...hashing function goes here...
-    
-	return hash;
+	entered = hash(entered);
+
+	//	random number randNumClient
+	randNumClient = Math.floor(Math.random() * 200);
+
+	// fetch randNum from server
+	randNumServer = 10; // temp
+
+	allHash1 = hash(randNumClient + originalHash + randNumServer);
+	allHash2 = hash(randNumClient + entered + randNumServer);
+
+}
+
+// got function from https://stackoverflow.com/questions/6122571/simple-non-secure-hash-function-for-javascript
+function hash(text) {
+    var hash = 0;
+
+	text = text.toString();
+
+    if (text.length < 8) {
+        return hash;
+    }
+
+    for (var i = 0; i < text.length; i++) {
+        var char = text.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash; // Convert to 32bit integer
+    }
+    return hash;
 }
 
 function fetchData(request, functionToCall) {
