@@ -1,4 +1,4 @@
-<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data">
+<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data" name="form" onsubmit="calcHash()">
 
    <h1>InstaRam👍</h1>
        
@@ -13,7 +13,7 @@
 
    <label for="password">Password:</label>
    <span class="error">* <?php echo $loginPasswordErr;?></span><br>
-   <input type="password" id="password" name="password" value=""><br>
+   <input type="password" id="pw" name="pw" value=""><br>
    <br><br>
 
    <input type="submit" value="submit"><br><br>

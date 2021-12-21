@@ -106,31 +106,16 @@
             $birthdate = $_POST["birthdate"];
         }
 
-        // find a way to keep birthday if form is incomplete
-        // maybe password too if we want that ?
-
-        // also for password we shouldn't clean the data but if the data isn't clean should we just throw an error message?
-
-        // the password is hashed (javascript) before it gets sent 
-        // to the php, so by the time we get to validating it,
-        // it would be numbers only right?
-
         // check if password is valid
         $tempPass = $_POST["password"];
         $tempPass2 = $_POST["password2"];
-        if (strlen($tempPass) < 8) {
-            $passwordErr = "Password must be at least 8 characters";
-            $isDataClean = false;
-        } else if (strcmp($tempPass, $tempPass2) !== 0) {
+        if (strcmp($tempPass, $tempPass2) !== 0) {
             $passwordErr = "Passwords are not the same"; // change this to better message
             $isDataClean = false;
         } else {
             $password = $tempPass;
             $password2 = $tempPass2;
         }
-
-        echo "pass1: " . $tempPass;
-        echo "pass2: " . $tempPass2;
 
         // save data if valid
         if ($isDataClean){
@@ -161,8 +146,8 @@
                 "grade" => $grade,
                 "bio" => $bio,
                 "birthdate" => $birthdate,
-                "imageFileType" => $imageFileType
-                "password" => $password;
+                "imageFileType" => $imageFileType,
+                "password" => $password
             ];
             
             // add current profile and write to file
@@ -171,18 +156,10 @@
 
             // upload profile pic
             move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $username . "/" . "pfp" . "." .$imageFileType);
-
-            // temp
-            echo("submitted successfully");
             
             // redirect to other page if form was submitted successfully
             $_GET['page'] = 3;
-            
-            // temp
-            echo "New Account Created:<br>";
-            echo "<pre>";
-            var_dump($phpArray);
-            echo "</pre>";
+
         } else {
             // temp
             echo "unsuccessful submission of signup form";

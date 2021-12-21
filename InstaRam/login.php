@@ -4,11 +4,13 @@
     $loginUsername = "";
     $loginUsernameErr = "";
     $loginPasswordErr = "";
-
     $target_dir = "users/";
+    $randNum = 0;
 
-    // this is also in signup.php, should it be moved?
-    // $allProfilesFile = "allProfiles.json";
+    // randomize randNum
+    if ($randNum = 0) {
+        $randNum = rand();
+    }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST" && $_SESSION["page"] == 1) {
         $phpArray = [];
@@ -29,20 +31,18 @@
         // make username stay in input field
         $loginUsername = clean_data($_POST["username"]);
 
-        // check if password is valid
-        if (empty($_POST["password"])) {
-            $loginPasswordErr = "Please enter a password.";
-            $isDataClean = false;
-        } 
-
         // store previous data in array if there is any
 		if (file_exists("users/$loginUsername/userinfo.json")) {
-			$phpArray = json_decode(file_get_contents($dest), true);
-            $password = $phpArray["password"];
+			$phpArray = json_decode(file_get_contents("users/$loginUsername/userinfo.json"), true);
+            $password = $phpArray[0]["password"];
 		}
 
-        // TODO: check if username and password match
-        // call compareLogIn($password, $_POST["password"]);
+        // check if username and password match
+        if ($_POST["password"] !== hash("sha256", $password . $_POST["salt"] . $randNum)) {
+            $loginPasswordErr = "Username or password is incorrect.";
+            $isDataClean = false;
+            $randNum = 0;
+        }
 
         // log in
         if ($isDataClean) {
@@ -52,5 +52,8 @@
             echo "log in failed";
         }
     }
+
+    // send randNum to client
+    echo "<input type='hidden' id='rand' value='$randNum'>";
 
 ?>

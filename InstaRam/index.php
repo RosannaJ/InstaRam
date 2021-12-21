@@ -30,6 +30,13 @@
         unset($_SESSION["username"]);
     }
 
+    // log out
+    if (array_key_exists("action", $_GET) && $_GET["action"] == "logout") {
+
+        // log out
+        unset($_SESSION["username"]);
+    }
+
     // show page content
     include "header.inc";
     	

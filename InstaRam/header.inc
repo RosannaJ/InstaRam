@@ -20,12 +20,12 @@
 
     <a href="?page=4">New Post</a>
     <a href='?action=del'>Reset Everything</a>
-
+	<a href='?action=logout'>Log Out</a>
     <?php
 	
-			if (array_key_exists("username", $_SESSION) && $_SESSION['username'] !== null) {
-				echo "Logged in as: " . $_SESSION['username'];
-			} else {
-				echo "Not Logged in.";
-			}
-		?>
+		if (array_key_exists("username", $_SESSION) && $_SESSION['username'] !== null) {
+			echo "Logged in as: " . $_SESSION['username'];
+		} else {
+			echo "Not Logged in.";
+		}
+	?>
