@@ -60,7 +60,7 @@
 							if (strcmp($imageFileType, "image/jpg") === 0 || strcmp($imageFileType, "image/png") === 0 || strcmp($imageFileType, "image/jpeg") === 0) {
 								
 								// display image
-								echo "<img src='$folderName$file' width='240' onclick='displayLightBox(\"$folderName$file\")'>\n";
+								echo "<img src='$folderName$file' width='240' class='thumbnail' onclick='displayLightBox(\"$folderName$file\")'>\n";
 								//echo "<br>Caption: " . $postsArray[$fileNum]["caption"] . "<br>";
 							}
 						}
