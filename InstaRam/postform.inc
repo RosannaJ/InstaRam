@@ -11,7 +11,7 @@
    <label for="caption">Caption:</label>
    <span class="error"><?php echo $captionErr;?></span>
    <br>
-   <textarea id="caption" name="caption" rows="4" cols="50"><?php echo $caption;?></textarea>
+   <textarea id="captionInput" name="caption" rows="4" cols="50"><?php echo $caption;?></textarea>
    <br><br>
    
    <br><br><input type="submit" value="Post">

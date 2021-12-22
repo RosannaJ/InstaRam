@@ -8,7 +8,7 @@
     $target_file = "";
     $imageFileType = "";
 
-    $allUsers = get_all_users($target_dir);
+    $allUsers = get_all_usernames();
 
     // process form data if submitted from page 2
     if ($_SERVER["REQUEST_METHOD"] == "POST" && $_SESSION["page"] == 2) {
@@ -99,7 +99,7 @@
         }
         
         // check if birthdate is valid
-        if (!array_key_exists("birthdate", $_POST) && empty($_POST["birthdate"])){
+        if (!array_key_exists("birthdate", $_POST) || empty($_POST["birthdate"])){
             $birthdateErr = "Birthdate is required";
             $isDataClean = false;
         } else {
@@ -149,6 +149,8 @@
                 "imageFileType" => $imageFileType,
                 "password" => $password
             ];
+
+            $_SESSION['username'] = $username;
             
             // add current profile and write to file
             $phpArray[] = $newSubmission;

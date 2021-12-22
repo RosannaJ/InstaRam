@@ -15,7 +15,7 @@
         echo $js_code;
     }
 
-    // returns all usernames by going through each folder
+    // checks if the username passed in exists in the array passed in
     function username_exists($username, $allUsers) {
         for ($i = 0; $i < count($allUsers); $i++) {
             if ($allUsers[$i] === $username) {
@@ -25,7 +25,8 @@
         return false;
     }
 
-    function get_all_users($folderName) {
+    function get_all_usernames() {
+        $folderName = "users/";
         $users = [];
 
         // get the name of each user's folder
@@ -42,6 +43,33 @@
         }
 
         return $users;
+    }
+
+    function get_all_user_data() {
+        $users = [];
+
+        foreach (get_all_usernames() as $username) {
+            $dest = "users/" . $username . "/userinfo.json";
+            if (is_file($dest)) {
+                $users[] = json_decode(file_get_contents($dest), true)[0];
+            }
+        }
+
+        return $users;
+    }
+
+    // returns all posts under each username
+    function get_all_posts() {
+        $posts = [];
+
+        foreach (get_all_usernames() as $username) {
+            $dest = "users/" . $username . "/posts/posts.json";
+            if (is_file($dest)) {
+                $posts[$username] = json_decode(file_get_contents($dest), true);
+            }
+        }
+
+        return $posts;
     }
 
     function delete_folder($folderName) {

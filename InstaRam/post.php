@@ -6,13 +6,13 @@
 	$caption = "";
 
 	// go to login page if not logged in and on post form page
-	if ((array_key_exists("page", $_GET) && $_GET["page"] == 4)
+	if ((array_key_exists("page", $_GET) && $_GET["page"] == 7)
 		&& (!array_key_exists("username", $_SESSION) || $_SESSION['username'] === null)) {
 		$_GET['page'] = 1;
 	}
 
 	// process form data if submitted
-	if ($_SERVER["REQUEST_METHOD"] == "POST" && $_SESSION["page"] == 4) {
+	if ($_SERVER["REQUEST_METHOD"] == "POST" && $_SESSION["page"] == 7) {
 
 		// validate caption
 	    $caption = clean_data($_POST["caption"]);

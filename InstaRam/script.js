@@ -12,86 +12,6 @@ function displayGrade() {
 	} // else
 } // displayGrade
 
-/*
-function hashPassword() {
-	let password1 = document.getElementById("password").value;	let password2 = document.getElementById("password2").value;
-	let wholePass1 = "";
-	let wholePass2 = "";
-
-	password1 = hash(password1);
-	password2 = hash(password2);
-	
-
-    //	random number randNumClient
-	randNumClient = Math.floor(Math.random() * 200);
-
-	// fetch randNum from server
-	randNumServer = 10; // temp
-
-	// hash entire password
-	wholePass1 = hash(randNumClient + password1 + randNumServer);
-
-	if (password2) { // ?
-		wholePass2 = hash(randNumClient + password2 + randNumServer);
-	}
-	
-	document.getElementById("password").value = wholePass1;
-
-	if (password2) {
-		document.getElementById("password2").value = wholePass2;
-	}
-
-	
-
-	// tell browser form can be submitted
-	return true;
-
-	// send hash(password) and randNum to server/php
-	// in php, calc and store hash(password + randNums)
-	// on login, compare hash(hash(enteredPassword) + randNums) with storedPassword
-
-}
-*/
-/*
-// should this be a php function
-function compareLogIn(originalHash, enteredPassword) {
-	let allHash1 = "";
-	let allHash2 = "";
-	let entered = enteredPassword;
-
-	entered = hash(entered);
-
-	//	random number randNumClient
-	randNumClient = Math.floor(Math.random() * 200);
-
-	// fetch randNum from server
-	randNumServer = 10; // temp
-
-	allHash1 = hash(randNumClient + originalHash + randNumServer);
-	allHash2 = hash(randNumClient + entered + randNumServer);
-
-}
-*/
-/*
-// got function from https://stackoverflow.com/questions/6122571/simple-non-secure-hash-function-for-javascript
-function hash(text) {
-    var hash = 0;
-
-	text = text.toString();
-
-    if (text.length < 8) {
-        return hash;
-    }
-
-    for (var i = 0; i < text.length; i++) {
-        var char = text.charCodeAt(i);
-        hash = ((hash << 5) - hash) + char;
-        hash = hash & hash; // Convert to 32bit integer
-    }
-    return hash;
-}
-*/
-
 function hashPassword() {
 	let form = document.forms["form"];
 	let pw1 = document.getElementById("pw");
@@ -249,24 +169,20 @@ function fetchData(request, functionToCall) {
 	.catch(err => console.log("error occurred " + err));
 }
 
-function nextImage(num) {
+function nextImage(dir) {
 	let thumbnails = document.getElementById("thumbnails").children;
 	let lightboxImage = document.getElementById("content");
-	
+
 	for (let i = 0; i < thumbnails.length; i++) {
 		
 		// look for image with same uid as current lightbox image
 		if (getUID(lightboxImage.src) == getUID(thumbnails[i].src)) {
 			
 			// return next image
-			if (i + num < thumbnails.length && i + num >= 0) {
-				
-				fetchData("UID=" + getUID(thumbnails[i + num ].src), function(data) {
-					updateContents(data);
+			if (i + dir < thumbnails.length && i + dir >= 0) {
 
-					displayLightBox("profileimages/" + data.UID + "." + data.imageType);
-				});
-				
+				displayLightBox(thumbnails[i + dir].src);
+				break;
 			} // if
 		} // if
 	} // for
@@ -308,6 +224,7 @@ function displayLightBox(imageFile) { // set alt as well?
 	let reqUID = 0;
 
 	image.src = imageFile;
+	console.log("src:" + image.src);
 	
 	// set boundary size to size of image
 	image.onload = function() {
@@ -327,16 +244,17 @@ function displayLightBox(imageFile) { // set alt as well?
 	// get the name of the file without the entension and directory
 	reqUID = getUID(imageFile);
 	
+	// update caption and alt
 	if (imageFile != "") {
-		fetchData("UID=" + reqUID, updateContents);
+		fetchData("UID=" + reqUID, updatePostContents);
 	}
 	
-	// set download link
-	document.getElementById("imageDownload").href = imageFile;
+	/*// set download link
+	document.getElementById("imageDownload").href = imageFile;*/
 	
 }
 
-// updates content of lightbox caption
+/*// updates content of lightbox caption
 function updateContents(data) {
 	let gradeText = (data.grade) ? "Grade: " + data.grade + "<br>": "";
 	let connectionText = (data.connection === "currentStudent") ? "Student" : data.connection;
@@ -349,6 +267,14 @@ function updateContents(data) {
 													+ gradeText
 													+ "Description: " + data.text;
 												
+ }*/
+
+ // sets caption and alt for lightbox image using data passed in
+ function updatePostContents(data) {
+	let caption = data.caption;
+
+	document.getElementById("caption").innerHTML = caption;
+	document.getElementById("content").alt = caption;
  }
 
 // change the visibility of divId

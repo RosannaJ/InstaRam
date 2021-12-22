@@ -23,7 +23,7 @@
         } else if (!preg_match("/^[a-zA-Z1-9-' ]*$/", $_POST["username"]) || str_contains($_POST["username"], " ")) {
             $loginUsernameErr = "Please enter a valid username.";
             $isDataClean = false;
-        } else if (!username_exists($_POST["username"], get_all_users($target_dir))) {
+        } else if (!username_exists($_POST["username"], get_all_usernames())) {
             $loginUsernameErr =  "Username does not exist.";
             $isDataClean = false;
         }
@@ -47,6 +47,7 @@
         // log in
         if ($isDataClean) {
             $_SESSION['username'] = $loginUsername;
+            $_GET['page'] = 3;
             echo "logged in";
         } else {
             echo "log in failed";
