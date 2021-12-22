@@ -65,10 +65,6 @@
     <span class="error">* </span><br>
     <input type="password" id="pw2" name="pw2"
         minlength="8" value="" required>
-   
-    <input type="hidden" name="salt" id="salt" value="">
-    <input type="hidden" name="password" id="password" value="">
-    <input type="hidden" name="password2" id="password2" value="">
 
     <br><br><input type="submit" value="Create Account">
     <br><br>Already Have an Account? <a href="?page=1">Log In</a>
