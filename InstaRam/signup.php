@@ -86,7 +86,7 @@
             $imageFileType = mime_content_type($_FILES["fileToUpload"]["tmp_name"]);
                 
             // check if filetype and size is valid
-            if (strcmp($imageFileType, "image/jpg") !== 0 && strcmp($imageFileType, "image/png") !== 0 && strcmp($imageFileType, "image/jpeg") !== 0) {
+            if (strcmp($imageFileType, "image/png") !== 0 && strcmp($imageFileType, "image/jpeg") !== 0 || strcmp($imageFileType, "image/pjpeg") === 0) {
                 $isDataClean = false;
                 $profileErr = "Only jpg, jpeg, or png files are allowed.";
             } else if ($_FILES["fileToUpload"]["size"] > 4000000) {
@@ -119,7 +119,7 @@
 
         // save data if valid
         if ($isDataClean){
-            $phpArray = array();
+            //$phpArray = array();
             $newSubmission = "";
             $dest = $target_dir . $username . "/". $file;
             $newUser = [];
@@ -153,8 +153,8 @@
             $_SESSION['username'] = $username;
             
             // add current profile and write to file
-            $phpArray[] = $newSubmission;
-            file_put_contents($dest, json_encode($phpArray, JSON_PRETTY_PRINT));
+            //$phpArray[] = $newSubmission;
+            file_put_contents($dest, json_encode($newSubmission, JSON_PRETTY_PRINT));
 
             // upload profile pic
             move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $username . "/" . "pfp" . "." .$imageFileType);

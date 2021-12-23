@@ -160,7 +160,7 @@ function sha256(ascii) {
     return result;
 }
 
-function fetchData(request, functionToCall) {
+function fetchData(request, functionToCall) { // delete?
 	fetch ("getData.php?" + request, {
 		method: "GET",
 	})
@@ -224,7 +224,6 @@ function displayLightBox(imageFile) { // set alt as well?
 	let reqUID = 0;
 
 	image.src = imageFile;
-	console.log("src:" + image.src);
 	
 	// set boundary size to size of image
 	image.onload = function() {
@@ -254,27 +253,26 @@ function displayLightBox(imageFile) { // set alt as well?
 	
 }
 
-/*// updates content of lightbox caption
-function updateContents(data) {
-	let gradeText = (data.grade) ? "Grade: " + data.grade + "<br>": "";
-	let connectionText = (data.connection === "currentStudent") ? "Student" : data.connection;
-	
-	// capitalize first letter of connectionText
-	connectionText = connectionText.charAt(0).toUpperCase() + connectionText.slice(1);
-	
-	document.getElementById("caption").innerHTML = "Name: " + data.name + "<br>"
-													+ "Connection: " + connectionText + "<br>" 
-													+ gradeText
-													+ "Description: " + data.text;
-												
- }*/
-
  // sets caption and alt for lightbox image using data passed in
  function updatePostContents(data) {
-	let caption = data.caption;
+	let elem = document.getElementById("like");
+	let lightboxImage = document.getElementById("content");
+    
+	// toggle like
+	fetchData("action=checkIfLiked&UID=" + getUID(lightboxImage.src), function(data) {
+		
+		// toggle icon
+		if (data.isLiked === true) {
+    		elem.innerHTML = "favorite";
+		} else {
+    		elem.innerHTML = "favorite_border";
+		}
+	});
 
-	document.getElementById("caption").innerHTML = caption;
-	document.getElementById("content").alt = caption;
+	document.getElementById("caption").innerHTML = data.caption + "<br>"
+													+ data.likes.length + " likes" + "<br>"
+													+ "liked by: " + data.likes;
+	document.getElementById("content").alt = data.caption;
  }
 
 // change the visibility of divId
@@ -301,4 +299,17 @@ function closeLightBox() {
 function getUID(fileName) {
 	return fileName.split("/")[fileName.split("/").length - 1].split(".")[0];
 }
-//----------End of LightBox---------------
+
+function toggleLike() {
+	let elem = document.getElementById("like");
+	let lightboxImage = document.getElementById("content");
+    
+	// toggle like
+	fetchData("action=like&UID=" + getUID(lightboxImage.src));
+
+	// update displayed info after a few seconds
+	setTimeout(function() {
+		fetchData("UID=" + getUID(lightboxImage.src), updatePostContents);
+	}, 100);
+	
+}

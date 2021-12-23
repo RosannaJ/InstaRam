@@ -34,7 +34,7 @@
         // store previous data in array if there is any
 		if (file_exists("users/$loginUsername/userinfo.json")) {
 			$phpArray = json_decode(file_get_contents("users/$loginUsername/userinfo.json"), true);
-            $password = $phpArray[0]["password"];
+            $password = $phpArray["password"];
 		}
 
         // check if username and password match

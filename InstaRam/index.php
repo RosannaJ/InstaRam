@@ -45,7 +45,7 @@
     } else if ($_SESSION["page"] == 2) {	
         include "signupform.inc";	
     } else if ($_SESSION["page"] == 3) {	
-        include "home.php";	
+        //include "home.php";	
     } else if ($_SESSION["page"] == 4 ) {	
         include "explore.php";	
     } else if ($_SESSION["page"] == 5) {	

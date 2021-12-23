@@ -6,8 +6,7 @@
 	$caption = "";
 
 	// go to login page if not logged in and on post form page
-	if ((array_key_exists("page", $_GET) && $_GET["page"] == 7)
-		&& (!array_key_exists("username", $_SESSION) || $_SESSION['username'] === null)) {
+	if ((array_key_exists("page", $_GET) && $_GET["page"] == 7) && !array_key_exists("username", $_SESSION)) {
 		$_GET['page'] = 1;
 	}
 
@@ -20,7 +19,7 @@
 	    // check if file is valid ----copied from signup.php, should this be a function?-----
 	    if (isset($_FILES["fileToUpload"]) && $_FILES["fileToUpload"]["size"] > 0) {
 	        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-	        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+	        $imageFileType = "";
 	 
 	        // Check if image file is an actual image or fake image
 	        $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
@@ -33,7 +32,7 @@
 	        $imageFileType = mime_content_type($_FILES["fileToUpload"]["tmp_name"]);
 	            
 	        // check if filetype and size is valid
-	        if (strcmp($imageFileType, "image/jpg") != 0 && strcmp($imageFileType, "image/png") != 0) {
+	        if (strcmp($imageFileType, "image/jpeg") != 0 && strcmp($imageFileType, "image/png") != 0) {
 	            $isDataClean = false;
 	            $fileErr = "Only jpg or png files are allowed.";
 	        } else if ($_FILES["fileToUpload"]["size"] > 4000000) {
@@ -74,7 +73,8 @@
 			$newPost = [
 				"caption" => $caption,
 				"UID" => $newUID,
-				"imageFileType" => $imageFileType
+				"imageFileType" => $imageFileType,
+				"likes" => []
 			];
 
 			// store previous posts in array if there are any
