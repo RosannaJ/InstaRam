@@ -22,9 +22,9 @@
 	        $imageFileType = "";
 	 
 	        // Check if image file is an actual image or fake image
-	        $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+	        $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);//??
 	        if ($check === false) {
-	            $fileErr = "Valid file type is required"; //??
+	            $fileErr = "Valid file type is required"; 
 	            $isDataClean = false;
 	        }
 
@@ -56,7 +56,7 @@
 			$identifierFileName = "postID.txt";
 			$newUID = 0;
 		
-			// create identifier file if doesn't exist
+			// get next uid if file exists
 			if (file_exists($identifierFileName)) {
 				$newUID = file_get_contents($identifierFileName);
 			}

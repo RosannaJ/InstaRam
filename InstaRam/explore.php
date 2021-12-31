@@ -2,11 +2,12 @@
 
 <?php
 
-	include "navbar.inc";
+	// go to login page if not logged in and on post form page
+	if ((array_key_exists("page", $_GET) && $_GET["page"] == 4) && !array_key_exists("username", $_SESSION)) {
+		$_GET['page'] = 1;
+	}
+
 	include "explorepage.inc";
-
-
-
 
 	// $jsonString = "";
 	// $phpArray = "";

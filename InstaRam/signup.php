@@ -150,7 +150,8 @@
                 "password" => $password
             ];
 
-            $_SESSION['username'] = $username;
+            //$_SESSION['username'] = $username;
+            log_in($username);
             
             // add current profile and write to file
             //$phpArray[] = $newSubmission;

@@ -129,4 +129,35 @@
             rmdir($folderName);
         }
     }
+
+    function update_post($UID, $function) {
+        // find post with uid
+		$reqPostUsername = get_username_of_post($_GET["UID"]);
+		
+		// get contents of file
+		$dest = "users/" . $reqPostUsername . "/posts/posts.json";
+		$posts = json_decode(file_get_contents($dest), true);
+
+		// loop through posts
+		for ($i = 0; $i < count($posts); $i++) {
+
+			// find post with requested UID
+			if ($posts[$i]["UID"] == $_GET["UID"]) {
+				$function($posts[$i]);
+				break;
+			}
+		}
+
+		// update posts.json file
+		file_put_contents($dest, json_encode($posts, JSON_PRETTY_PRINT));
+    }
+
+    function log_in($username) { // needed?
+        if (username_exists($username, get_all_usernames())) {
+            $_SESSION["username"] = $username;
+            return true;
+        }
+
+        return false;
+    }
 ?>

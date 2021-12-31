@@ -15,6 +15,11 @@
             unlink("postID.txt");
         }
 
+        // delete commentID file
+        if (file_exists("commentUID.txt")) {
+            unlink("commentUID.txt");
+        }
+
         // delete users folder
         delete_folder("users/");
 
@@ -56,7 +61,7 @@
         include "postform.inc";	
     } else if ($_SESSION["page"] == 8) {	
         //include "editprofile.php";	
-    }  else {	
+    } else {	
         include "loginform.inc";	
     }
 

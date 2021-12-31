@@ -45,8 +45,8 @@
         }
 
         // log in
-        if ($isDataClean) {
-            $_SESSION['username'] = $loginUsername;
+        if ($isDataClean && log_in($loginUsername)) {
+            //$_SESSION['username'] = $loginUsername;
             $_GET['page'] = 3;
             echo "logged in";
         } else {

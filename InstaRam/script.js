@@ -160,11 +160,19 @@ function sha256(ascii) {
     return result;
 }
 
-function fetchData(request, functionToCall) { // delete?
+function fetchData(request, functionToCall, method, body) { // delete?
+
 	fetch ("getData.php?" + request, {
-		method: "GET",
+		method: method,
+		body: body
 	})
-	.then(response => response.json())
+	.then(response => {
+		if (response) {
+			return response.json();
+		} else {
+			return response.text();
+		}
+	})
 	.then(data => functionToCall(data))
 	.catch(err => console.log("error occurred " + err));
 }
@@ -204,7 +212,7 @@ function updateThumbnails(data) {
 	}	
 	
 	// for every image, create a new image object and add to thumbnails div
-	for (i in data){
+	for (var i in data){
 		let img = new Image();
 		img.src = "thumbnails/" + data[i].UID + "." + data[i].imageType;
 		
@@ -217,7 +225,6 @@ function updateThumbnails(data) {
 	}
 }
 
-//----------LightBox---------------
 function displayLightBox(imageFile) { // set alt as well?
 	let image = new Image();
 	let lightBoxImage = document.getElementById("content");
@@ -245,21 +252,21 @@ function displayLightBox(imageFile) { // set alt as well?
 	
 	// update caption and alt
 	if (imageFile != "") {
-		fetchData("UID=" + reqUID, updatePostContents);
+		updatePostContents();
 	}
 	
 	/*// set download link
 	document.getElementById("imageDownload").href = imageFile;*/
-	
 }
 
  // sets caption and alt for lightbox image using data passed in
- function updatePostContents(data) {
+ function updatePostContents() {
 	let elem = document.getElementById("like");
-	let lightboxImage = document.getElementById("content");
-    
-	// toggle like
-	fetchData("action=checkIfLiked&UID=" + getUID(lightboxImage.src), function(data) {
+	let UID = getUID(document.getElementById("content").src);
+	let comments = document.getElementById("comments");
+
+	// show like button
+	fetchData("action=checkIfLiked&UID=" + UID, function(data) {
 		
 		// toggle icon
 		if (data.isLiked === true) {
@@ -269,10 +276,39 @@ function displayLightBox(imageFile) { // set alt as well?
 		}
 	});
 
-	document.getElementById("caption").innerHTML = data.caption + "<br>"
+	// update info about post
+	fetchData("UID=" + UID, function(data) {
+		document.getElementById("caption").innerHTML = data.caption + "<br>"
 													+ data.likes.length + " likes" + "<br>"
 													+ "liked by: " + data.likes;
-	document.getElementById("content").alt = data.caption;
+		document.getElementById("content").alt = data.caption;
+
+		// remove all existing comments
+		while (comments.firstChild) {
+			comments.removeChild(comments.firstChild);
+		}
+		
+		// display comments
+		if (data.comments) {
+			for (let i = 0; i < Object.keys(data.comments).length; i++) {
+				let comment = document.createElement("div");
+				let deleteButton = document.createElement("button");
+				
+				comment.innerHTML = data.comments[i].username + ": " + data.comments[i].text;
+				comment.class = "comment";
+
+				deleteButton.innerHTML = "Delete";
+				deleteButton.onclick = function() {
+					deleteComment(data.comments[i].UID)
+				};
+
+				comment.appendChild(deleteButton);
+				comments.appendChild(comment);
+			}
+		}
+		
+	});
+	
  }
 
 // change the visibility of divId
@@ -301,15 +337,45 @@ function getUID(fileName) {
 }
 
 function toggleLike() {
+
 	let elem = document.getElementById("like");
 	let lightboxImage = document.getElementById("content");
     
 	// toggle like
-	fetchData("action=like&UID=" + getUID(lightboxImage.src));
+	fetchData("action=like&UID=" + getUID(lightboxImage.src), function(data) {});
 
-	// update displayed info after a few seconds
+	// update displayed info after some time
 	setTimeout(function() {
-		fetchData("UID=" + getUID(lightboxImage.src), updatePostContents);
+		updatePostContents();
 	}, 100);
 	
+}
+
+function addComment() {
+	let UID = getUID(document.getElementById("content").src);
+
+	// add comment
+	fetchData("action=addComment&UID=" + UID, function(data) {}, "post", new FormData(document.forms["commentForm"]));
+
+	// update displayed info after some time
+	setTimeout(function() {
+		updatePostContents();
+	}, 100);
+
+	document.getElementById("text").value = "";
+
+	// prevent submission of form
+	return false;
+}
+
+function deleteComment(commentUID) {
+	let imageUID = getUID(document.getElementById("content").src);
+
+	// delete comment
+	fetchData("action=deleteComment&UID=" + imageUID + "&commentUID=" + commentUID, function(data) {}, "get");
+
+	// update displayed info after some time
+	setTimeout(function() {
+		updatePostContents();
+	}, 100);
 }

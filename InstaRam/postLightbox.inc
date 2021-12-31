@@ -12,6 +12,14 @@
 		<img id="content" src="" alt="">
 		
 	</div>
-	<span class="material-icons" id="like" onclick="toggleLike()" >favorite</span>
+	<span class="material-icons" id="like" onclick="toggleLike()" >favorite_border</span>
 	<p id="caption"></p>
+
+	<form name="commentForm" onsubmit="return addComment()">
+		<input type="text" name="text" id="text" value="">
+		<input type="submit" value="Add Comment">
+	</form>
+
+	<div id="comments"></div>
+
 </div>

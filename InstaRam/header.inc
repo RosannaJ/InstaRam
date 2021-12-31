@@ -18,8 +18,8 @@
 
     <a href="?page=1">Log In</a>
     <a href="?page=2">Create Account</a>
-
 	<a href="?page=7">New Post</a>
+
 	<a href='?action=del'>Reset Everything</a>
 	<a href='?action=logout'>Log Out</a>
 
