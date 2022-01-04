@@ -45,7 +45,7 @@
 		for ($i = 0; $i < count($users); $i++) {
 			
 			// check if name or username contains search terms
-			if (empty($search) || strpos($users[$i]["name"], $search) !== false || strpos($users[$i]["username"], $search) !== false) {
+			if (empty($search) || stripos($users[$i]["name"], $search) !== false || stripos($users[$i]["username"], $search) !== false) {
 				
 				// check if meets filter condition
 				if (strcmp($connectionFilter, "all") == 0 || $users[$i]["connection"] == $connectionFilter) {

@@ -180,7 +180,7 @@ function fetchData(request, functionToCall, method, body) { // delete?
 function nextImage(dir) {
 	let thumbnails = document.getElementById("thumbnails").children;
 	let lightboxImage = document.getElementById("content");
-	console.log("clicked");
+
 	for (let i = 0; i < thumbnails.length; i++) {
 		
 		// look for image with same uid as current lightbox image
@@ -215,8 +215,7 @@ function updateProfileThumbnails(data) {
 	}	
 	
 	// for every image, create a new image object and add to thumbnails div
-	for (let i in data){
-		console.log(data[i]);
+	for (let i in data) {
 
 		let card = document.createElement("div");
 		let img = document.createElement("img");
@@ -305,7 +304,7 @@ function displayLightBox(imageFile) {
 
 		// update info about post
 		fetchData("UID=" + UID, function(data) {
-			console.log(data.likes);
+
 			document.getElementById("caption").innerHTML = data.caption + "<br>"
 														+ Object.keys(data.likes).length + " likes" + "<br>"
 														+ "liked by: " + data.likes;
