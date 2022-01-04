@@ -36,6 +36,37 @@
 		}
 	}
 
+	else if (isset($_GET["connection"]) || isset($_GET["search"])) {
+		$users = get_all_user_data();
+		$newArray = [];
+		$search = isset($_GET["search"]) ? $_GET["search"] : "";
+		$connectionFilter = isset($_GET["connection"]) ? $_GET["connection"] : "all";
+
+		for ($i = 0; $i < count($users); $i++) {
+			
+			// check if name or username contains search terms
+			if (empty($search) || strpos($users[$i]["name"], $search) !== false || strpos($users[$i]["username"], $search) !== false) {
+				
+				// check if meets filter condition
+				if (strcmp($connectionFilter, "all") == 0 || $users[$i]["connection"] == $connectionFilter) {
+					//$newArray[] = $users[$i];
+					$newArray[] = [
+						"username" => $users[$i]['username'],
+						"name" => $users[$i]['name'],
+						"connection" => $users[$i]['connection'],
+						"grade" => $users[$i]['grade'],
+						"bio" => $users[$i]['bio'],
+						"birthdate" => $users[$i]['birthdate'],
+						"imageFileType" => $users[$i]['imageFileType']
+					];
+				}
+			}
+		}
+		
+		// echo requested profiles
+		echo json_encode($newArray, JSON_PRETTY_PRINT);
+	}
+
 	// toggle liking the post with requested UID if logged in (or check whether the post has been liked)
 	else if (array_key_exists("action", $_GET) && ($_GET["action"] == "like" || $_GET["action"] == "checkIfLiked") 
 		&& array_key_exists("UID", $_GET)			// TODO: check if uid is valid (check with postIdentifier file)
@@ -55,7 +86,7 @@
 				echo json_encode(["isLiked" => true], JSON_PRETTY_PRINT);
 			} else {
 				unset($post["likes"][$alreadyLiked]);
-				array_values($post["likes"]);
+				$post["likes"] = array_values($post["likes"]);
 				echo json_encode(["isLiked" => false], JSON_PRETTY_PRINT);
 			}
 		});

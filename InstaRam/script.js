@@ -180,7 +180,7 @@ function fetchData(request, functionToCall, method, body) { // delete?
 function nextImage(dir) {
 	let thumbnails = document.getElementById("thumbnails").children;
 	let lightboxImage = document.getElementById("content");
-
+	console.log("clicked");
 	for (let i = 0; i < thumbnails.length; i++) {
 		
 		// look for image with same uid as current lightbox image
@@ -195,32 +195,63 @@ function nextImage(dir) {
 	} // for
 }
 
-function filterImages() {
-	let filter = document.getElementById("connectionFilter").value;
+function filterProfiles() {
+	let filter = document.getElementById("connectionFilter");
+	let search = document.getElementById("searchBar");
 	
-	let search = document.getElementById("searchBar").value;
-	
-	fetchData("connection=" + filter + "&search=" + search, updateThumbnails);
+	if (!filter || !search) { return; }
+
+	fetchData("connection=" + filter.value + "&search=" + search.value, updateProfileThumbnails);
 
 }
 
-function updateThumbnails(data) {
+// updates displayed profile thumbnails with data passed in
+function updateProfileThumbnails(data) {
+	let thumbnails = document.getElementById("thumbnails");
+
 	// remove all existing children in thumbnails div
 	while (thumbnails.firstChild) {
 		thumbnails.removeChild(thumbnails.firstChild);
 	}	
 	
 	// for every image, create a new image object and add to thumbnails div
-	for (var i in data){
-		let img = new Image();
-		img.src = "thumbnails/" + data[i].UID + "." + data[i].imageType;
-		
-		img.alt = data[i].description;
+	for (let i in data){
+		console.log(data[i]);
+
+		let card = document.createElement("div");
+		let img = document.createElement("img");
+		let username = document.createElement("a");
+		let name = document.createElement("p");
+
+		// set profile pic
 		img.className = "thumbnail";
-		img.onclick = function() { 
-			displayLightBox("profileimages/" + data[i].UID + "." + data[i].imageType);
+		img.src = "users/" + data[i].username + "/pfp." + data[i].imageFileType;
+		img.alt = data[i].username;
+
+		// set username (linked to profile page)
+		username.href = "?page=6&user=" + data[i].username;
+		username.innerHTML = data[i].username;
+		username.onclick = e => {
+
+			// prevent display of lightbox
+			e.stopPropagation();
+		}
+
+		// set name
+		name.innerHTML = data[i].name;
+
+		// set div
+		card.className = "card";
+		card.id = data[i].username;
+		card.onclick = function() {
+			displayLightBox(img.src);
 		};
-		thumbnails.appendChild(img);
+
+		card.appendChild(img);
+		card.appendChild(username);
+		card.appendChild(name);
+
+		thumbnails.appendChild(card);
 	}
 }
 
@@ -274,9 +305,11 @@ function displayLightBox(imageFile) {
 
 		// update info about post
 		fetchData("UID=" + UID, function(data) {
+			console.log(data.likes);
 			document.getElementById("caption").innerHTML = data.caption + "<br>"
-														+ data.likes.length + " likes" + "<br>"
+														+ Object.keys(data.likes).length + " likes" + "<br>"
 														+ "liked by: " + data.likes;
+
 			document.getElementById("content").alt = data.caption;
 
 			// remove all existing comments

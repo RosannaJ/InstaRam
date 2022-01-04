@@ -14,7 +14,7 @@
 		<script src="script.js"></script>
 	</head>
   
-	<body onload="displayGrade()">
+	<body onload="displayGrade();filterProfiles();">
 
     <a href="?page=1">Log In</a>
     <a href="?page=2">Create Account</a>
@@ -26,7 +26,7 @@
 
     <?php
 	
-		if (array_key_exists("username", $_SESSION) && $_SESSION['username'] !== null) {
+		if (isset($_SESSION['username'])) {
 			echo "Logged in as: " . $_SESSION['username'];
 		} else {
 			echo "Not Logged in.";

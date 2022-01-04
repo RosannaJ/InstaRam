@@ -60,8 +60,8 @@
 }
 
 #content {
-	max-width: 70vw;
-	max-height: 70vh;
+	max-width: 50vw;
+	max-height: 50vh;
     width: auto;
     height: auto;
 
@@ -130,9 +130,10 @@
 
 
 .thumbnail {
-	display:inline-block;
-	margin:10px;
+	display: inline-block;
+	margin: 10px;
 	background-color: white;
+	width: 180px;
 	z-index: -1;
 }
 
