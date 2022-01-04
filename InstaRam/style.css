@@ -131,13 +131,26 @@
 
 .thumbnail {
 	display:inline-block;
-	border:thin dotted black;
 	margin:10px;
+	background-color: white;
 	z-index: -1;
 }
 
-.thumbnail:hover {
+.card {
+    width: 200px;
+    text-align: center;
+    background-color: lightgray;
+    margin: 10px;
+    padding: 10px;
+
+}
+
+.card:hover {
 	cursor: pointer;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#thumbnails {
+    display: flex;
 }
 

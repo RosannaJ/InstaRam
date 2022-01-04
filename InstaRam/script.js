@@ -184,12 +184,11 @@ function nextImage(dir) {
 	for (let i = 0; i < thumbnails.length; i++) {
 		
 		// look for image with same uid as current lightbox image
-		if (getUID(lightboxImage.src) == getUID(thumbnails[i].src)) {
+		if (getUID(lightboxImage.src) == thumbnails[i].id) {
 			
-			// return next image
+			// display next image
 			if (i + dir < thumbnails.length && i + dir >= 0) {
-
-				displayLightBox(thumbnails[i + dir].src);
+				thumbnails[i + dir].click();
 				break;
 			} // if
 		} // if
@@ -225,10 +224,9 @@ function updateThumbnails(data) {
 	}
 }
 
-function displayLightBox(imageFile) { // set alt as well?
+function displayLightBox(imageFile) {
 	let image = new Image();
 	let lightBoxImage = document.getElementById("content");
-	let reqUID = 0;
 
 	image.src = imageFile;
 	
@@ -247,9 +245,6 @@ function displayLightBox(imageFile) { // set alt as well?
 		changeVisibility("positionBigImage");
 	}
 	
-	// get the name of the file without the entension and directory
-	reqUID = getUID(imageFile);
-	
 	// update caption and alt
 	if (imageFile != "") {
 		updatePostContents();
@@ -260,54 +255,68 @@ function displayLightBox(imageFile) { // set alt as well?
 }
 
  // sets caption and alt for lightbox image using data passed in
- function updatePostContents() {
+ function updatePostContents() { // rename?
 	let elem = document.getElementById("like");
 	let UID = getUID(document.getElementById("content").src);
 	let comments = document.getElementById("comments");
 
-	// show like button
-	fetchData("action=checkIfLiked&UID=" + UID, function(data) {
+	if (isPost(document.getElementById("content").src)) {
+		// show like button
+		fetchData("action=checkIfLiked&UID=" + UID, function(data) {
 		
-		// toggle icon
-		if (data.isLiked === true) {
-    		elem.innerHTML = "favorite";
-		} else {
-    		elem.innerHTML = "favorite_border";
-		}
-	});
-
-	// update info about post
-	fetchData("UID=" + UID, function(data) {
-		document.getElementById("caption").innerHTML = data.caption + "<br>"
-													+ data.likes.length + " likes" + "<br>"
-													+ "liked by: " + data.likes;
-		document.getElementById("content").alt = data.caption;
-
-		// remove all existing comments
-		while (comments.firstChild) {
-			comments.removeChild(comments.firstChild);
-		}
-		
-		// display comments
-		if (data.comments) {
-			for (let i = 0; i < Object.keys(data.comments).length; i++) {
-				let comment = document.createElement("div");
-				let deleteButton = document.createElement("button");
-				
-				comment.innerHTML = data.comments[i].username + ": " + data.comments[i].text;
-				comment.class = "comment";
-
-				deleteButton.innerHTML = "Delete";
-				deleteButton.onclick = function() {
-					deleteComment(data.comments[i].UID)
-				};
-
-				comment.appendChild(deleteButton);
-				comments.appendChild(comment);
+			// toggle icon
+			if (data.isLiked === true) {
+    			elem.innerHTML = "favorite";
+			} else {
+    			elem.innerHTML = "favorite_border";
 			}
-		}
+		});
+
+		// update info about post
+		fetchData("UID=" + UID, function(data) {
+			document.getElementById("caption").innerHTML = data.caption + "<br>"
+														+ data.likes.length + " likes" + "<br>"
+														+ "liked by: " + data.likes;
+			document.getElementById("content").alt = data.caption;
+
+			// remove all existing comments
+			while (comments.firstChild) {
+				comments.removeChild(comments.firstChild);
+			}
 		
-	});
+			// display comments
+			if (data.comments) {
+				for (let i = 0; i < Object.keys(data.comments).length; i++) {
+					let comment = document.createElement("div");
+					let deleteButton = document.createElement("button");
+				
+					comment.innerHTML = data.comments[i].username + ": " + data.comments[i].text;
+					comment.class = "comment";
+
+					deleteButton.innerHTML = "Delete";
+					deleteButton.onclick = function() {
+						deleteComment(data.comments[i].UID)
+					};
+
+					comment.appendChild(deleteButton);
+					comments.appendChild(comment);
+				}
+			}
+		});
+	} else {
+		// update displayed profile info
+
+		// fetch profile info
+		fetchData("user=" + UID, function(data) {
+
+			// update caption
+			document.getElementById("caption").innerHTML = "Username: " + data.username + "<br>"
+															+ "Name: " + data.name + "<br>"
+															+ "Connection: " + data.connection;
+			document.getElementById("content").alt = data.username;
+		});
+	}
+	
 	
  }
 
@@ -333,7 +342,16 @@ function closeLightBox() {
 } // closeLightBox
 
 function getUID(fileName) {
+
+	if (!isPost(fileName)) {
+		return fileName.split("/")[fileName.split("/").length - 2];
+	}
+
 	return fileName.split("/")[fileName.split("/").length - 1].split(".")[0];
+}
+
+function isPost(fileName) {
+	return !isNaN(fileName.split("/")[fileName.split("/").length - 1].split(".")[0]);
 }
 
 function toggleLike() {

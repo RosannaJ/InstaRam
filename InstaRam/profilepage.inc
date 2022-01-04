@@ -44,7 +44,9 @@
 					echo "<div id='thumbnails'>\n";
 					foreach ($posts as $post) {
 						$dest = "users/{$user['username']}/posts/" . $post['UID'] . "." . $post['imageFileType'];
-						echo "<img src='$dest' width='240' class='thumbnail' onclick='displayLightBox(\"$dest\")'>\n";
+						echo "<div class='card' id='{$post['UID']}' onclick='displayLightBox(\"$dest\")'>";
+						echo "<img src='$dest' width='180' class='thumbnail'>\n";
+						echo "</div>";
 					}
 					echo "</div>";
 				}

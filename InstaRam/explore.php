@@ -7,25 +7,20 @@
 		$_GET['page'] = 1;
 	}
 
-	include "explorepage.inc";
+	include "profileLightbox.inc";
 
-	// $jsonString = "";
-	// $phpArray = "";
-	
-	// $thumbnailDir = "thumbnails/";
-	// $imageDir = "profileimages/";
-
-	// // if formDataFile exists, store previous data in array
-	// if (file_exists($formDataFile)) {
-	// 	$jsonString = file_get_contents($formDataFile);
-	// 	$phpArray = json_decode($jsonString, true);
-	// }
-
-	// /*// show form data
-	// echo "<pre>";
-	// var_dump($phpArray);
-	// echo "</pre>";
-	// echo "\n";*/
+	echo "<br>";
+	echo "<div id='thumbnails'>";
+	foreach (get_all_user_data() as $user) {
+		$profileImage = "users/" . $user['username'] . "/pfp." . $user['imageFileType'];
+		echo "<div class='card' id='{$user['username']}' onclick='displayLightBox(\"$profileImage\")'>";
+		echo "<img src='$profileImage' alt='{$user['username']}' class='thumbnail' width='180'>\n"; 		
+		echo "<a href='?page=6&user={$user['username']}'>" . $user['username'] . "</a>";
+		echo "<br>";
+		echo "<p>" . $user['name'] . "</p>";
+		echo "</div>";
+	}
+	echo "</div>";
 	
 	// // show uploaded images
 	// if (is_dir($thumbnailDir)) {

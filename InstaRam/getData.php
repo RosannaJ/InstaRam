@@ -6,13 +6,32 @@
 	if (!array_key_exists("action", $_GET) 
 		&& array_key_exists("UID", $_GET)) { // is page check needed? 
 		
-		// find post with requested uid and var_dump
+		// find post with requested uid
 		foreach (get_all_posts() as $user) {
 			foreach ($user as $post) {
 				if ($post["UID"] == $_GET["UID"]) {
 					echo json_encode($post, JSON_PRETTY_PRINT);
 					break 2;
 				}
+			}
+		}
+	}
+
+	else if (!array_key_exists("action", $_GET) 
+		&& array_key_exists("user", $_GET)) {
+
+		// find requested user and echo their profile info
+		foreach (get_all_user_data() as $user) {
+			if ($user['username'] == $_GET['user']) {
+				echo json_encode([
+					"username" => $user['username'],
+					"name" => $user['name'],
+					"connection" => $user['connection'],
+					"grade" => $user['grade'],
+					"bio" => $user['bio'],
+					"birthdate" => $user['birthdate'],
+				], JSON_PRETTY_PRINT);
+				break;
 			}
 		}
 	}
