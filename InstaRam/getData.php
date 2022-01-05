@@ -2,7 +2,7 @@
 	session_start();
 	include "functions.php";
 
-	// return info of post with requested UID
+	// echos info of post with requested UID
 	if (!array_key_exists("action", $_GET) 
 		&& array_key_exists("UID", $_GET)) { // is page check needed? 
 		
@@ -17,6 +17,7 @@
 		}
 	}
 
+	// echos info of requested user
 	else if (!array_key_exists("action", $_GET) 
 		&& array_key_exists("user", $_GET)) {
 
@@ -148,7 +149,76 @@
 		});
 	}
 
-	// prevent end of json errors // is this a good idea??
+	// toggles between sending/unsending friend requests and accepting/deleting friends depending on the current state of the two users
+	// echos the new message to be displayed on the button
+	else if (array_key_exists("action", $_GET) && $_GET["action"] == "friend" 
+		&& array_key_exists("user", $_GET)
+		&& array_key_exists("username", $_SESSION) && username_exists($_SESSION["username"], get_all_usernames())) {
+		$otherUserData = get_user_data($_GET['user']);
+		$currentUserData = get_user_data($_SESSION["username"]);
+
+		// check that they are not friends
+		if (!isset($otherUserData['friends']) || !in_array($_SESSION['username'], $otherUserData['friends'])) { // should both users be checked?
+
+			// ADD FRIEND
+			// check if other user is already in current user's friend request list
+			if (isset($currentUserData['friendRequests']) && in_array($_GET['user'], $currentUserData['friendRequests'])) {
+
+				// remove from requests list
+				$index = array_search($_GET['user'], $currentUserData['friendRequests']);
+				unset($currentUserData['friendRequests'][$index]);
+
+				// add to friends list
+				$otherUserData['friends'][] = $_SESSION['username'];
+				$currentUserData['friends'][] = $_GET['user'];
+
+				echo json_encode(["message" => "Delete Friend"], JSON_PRETTY_PRINT);
+			} 
+			
+			// SEND FRIEND REQUEST
+			// check that a friend request has not been sent already
+			else if (!isset($otherUserData['friendRequests']) || !in_array($_SESSION['username'], $otherUserData['friendRequests'])) {
+
+				// add friend request
+				$otherUserData['friendRequests'][] = $_SESSION['username'];
+
+				echo json_encode(["message" => "Unsend friend request"], JSON_PRETTY_PRINT);
+			} 
+			
+			// UNSEND FRIEND REQUEST
+			else {
+
+				// remove friend request (remove current user from other user's requests list)
+				$index = array_search($_SESSION['username'], $otherUserData['friendRequests']);
+				unset($otherUserData['friendRequests'][$index]);
+				$otherUserData['friendRequests'] = array_values($otherUserData['friendRequests']);
+
+				echo json_encode(["message" => "Send Friend Request"], JSON_PRETTY_PRINT);
+			}
+		} 
+		
+		// DELETE FRIEND
+		else {
+			
+			// delete other user from current user's friend list
+			$index = array_search($_GET['user'], $currentUserData['friends']);
+			unset($currentUserData['friends'][$index]);
+			$currentUserData['friends'] = array_values($currentUserData['friends']);
+
+			// delete current user from other user's friend list
+			$index = array_search($_SESSION['username'], $otherUserData['friends']);
+			unset($otherUserData['friends'][$index]);
+			$otherUserData['friends'] = array_values($otherUserData['friends']);
+
+			echo json_encode(["message" => "Send Friend Request"], JSON_PRETTY_PRINT);
+		}
+
+		// update userinfo.json files
+		update_user_data($_GET['user'], $otherUserData);
+		update_user_data($_SESSION['username'], $currentUserData);
+	}
+
+	// prevent end of json errors
 	else {
 		echo json_encode(["fetchFailed" => true], JSON_PRETTY_PRINT);
 	}

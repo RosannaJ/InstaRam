@@ -160,6 +160,8 @@ function sha256(ascii) {
     return result;
 }
 
+// calls the function passed in after doing a fetch request with the request passed in
+// method and body are optional parameters
 function fetchData(request, functionToCall, method, body) { // delete?
 
 	fetch ("getData.php?" + request, {
@@ -428,4 +430,11 @@ function deleteComment(commentUID) {
 	setTimeout(function() {
 		updatePostContents();
 	}, 100);
+}
+
+function toggleFriend(user) {
+	fetchData("action=friend&user=" + user, function(data) {
+		// update button text
+		document.getElementById("friendRequest").value = data.message;
+	});
 }

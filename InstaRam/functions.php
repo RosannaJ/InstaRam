@@ -16,7 +16,7 @@
     }
 
     // checks if the username passed in exists in the array passed in
-    function username_exists($username, $allUsers) {
+    function username_exists($username, $allUsers) { //*** use in_array() instead?, // rename to user_exists?
         for ($i = 0; $i < count($allUsers); $i++) {
             if ($allUsers[$i] === $username) {
                 return true;
@@ -50,11 +50,12 @@
     function get_all_user_data() {
         $users = [];
 
-        foreach (get_all_usernames() as $username) {
-            $dest = "users/" . $username . "/userinfo.json";
+        foreach (get_all_usernames() as $username) { // loop through all folders instead?
+            /*$dest = "users/" . $username . "/userinfo.json";
             if (is_file($dest)) {
                 $users[] = json_decode(file_get_contents($dest), true);
-            }
+            }*/
+            $users[] = get_user_data($username);
         }
 
         return $users;
@@ -160,4 +161,27 @@
 
         return false;
     }
+
+    function get_user_data($user) {
+        $userData = [];
+        $dest = "users/" . $user . "/userinfo.json";
+
+        if (is_file($dest)) {
+            $userData = json_decode(file_get_contents($dest), true);
+        }
+
+        return $userData;
+    }
+
+    function update_user_data($user, $data) {
+        $dest = "users/" . $user . "/userinfo.json";
+        file_put_contents($dest, json_encode($data, JSON_PRETTY_PRINT));
+    }
+
+    // returns whether the specified index of the user's info contains the value passed in
+    function contains($value, $user, $index) { // needed?
+        $userData = get_user_data($user);
+        return isset($userData[$index]) && in_array($value, $userData[$index]);
+    }
+
 ?>
