@@ -20,6 +20,7 @@
     <a href="?page=2">Create Account</a>
 	<a href="?page=7">New Post</a>
 	<a href="?page=4">Explore</a>
+	<a href="?page=3">Home</a>
 	<!--<a href="?page=8">Edit Profile</a>-->
 
 	<a href='?action=del'>Reset Everything</a>

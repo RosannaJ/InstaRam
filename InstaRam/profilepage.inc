@@ -19,7 +19,7 @@
 
 				// display profile pic
 				if (!empty($user["imageFileType"])) {
-					echo "<img src='users/{$user['username']}/pfp.{$user['imageFileType']}' width='240'>";
+					echo "<img src='users/{$user['username']}/pfp.{$user['imageFileType']}' width='240'>"; // delete width
 				}
 
 				// display bio
@@ -73,7 +73,7 @@
 				echo "<hr>POSTS:<br>";
 
 				// get all posts
-				$posts = get_all_posts();
+				$posts = get_posts(get_all_usernames());
 
 				//check if the user has any posts
 				if (array_key_exists($user['username'], $posts)) {

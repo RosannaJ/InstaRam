@@ -7,7 +7,7 @@
 		&& array_key_exists("UID", $_GET)) { // is page check needed? 
 		
 		// find post with requested uid
-		foreach (get_all_posts() as $user) {
+		foreach (get_posts(get_all_usernames()) as $user) {
 			foreach ($user as $post) {
 				if ($post["UID"] == $_GET["UID"]) {
 					echo json_encode($post, JSON_PRETTY_PRINT);

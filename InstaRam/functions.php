@@ -62,13 +62,33 @@
     }
 
     // returns all posts under each username
-    function get_all_posts() {
+    function get_posts($users) {
         $posts = [];
 
-        foreach (get_all_usernames() as $username) {
+        foreach ($users as $username) {
             $dest = "users/" . $username . "/posts/posts.json";
             if (is_file($dest)) {
                 $posts[$username] = json_decode(file_get_contents($dest), true);
+            }
+        }
+
+        return $posts;
+    }
+
+    // returns all posts not organized by user
+    function get_posts_separated($users) {
+        $posts = [];
+
+        // loop through all user folders
+        foreach ($users as $username) {
+            $dest = "users/" . $username . "/posts/posts.json";
+
+            // check if posts json file exists
+            if (is_file($dest)) {
+
+                // add user's posts to array
+                $userPosts = json_decode(file_get_contents($dest), true);
+                $posts = array_merge($posts, $userPosts);
             }
         }
 
