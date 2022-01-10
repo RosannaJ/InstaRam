@@ -42,6 +42,10 @@
         $_SESSION["page"] = $_GET["page"];
     }
 
+    if (!isset($_SESSION["username"]) && $_SESSION["page"] != 2) {
+        $_SESSION["page"] = 1;
+    }
+
     // show page content
     include "header.inc";
 
@@ -60,7 +64,7 @@
     } else if ($_SESSION["page"] == 7) { 	
         include "postform.inc";	
     } else if ($_SESSION["page"] == 8) {	
-        //include "editprofile.php";	
+        include "editprofile.php";	
     } else {	
         include "loginform.inc";	
     }
