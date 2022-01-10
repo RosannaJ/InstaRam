@@ -16,17 +16,19 @@
     }
 
     // checks if the username passed in exists in the array passed in
-    function username_exists($username, $allUsers) { //*** use in_array() instead?, // rename to user_exists?
+    function username_exists($username, $allUsers) { // fix**
         for ($i = 0; $i < count($allUsers); $i++) {
             if ($allUsers[$i] === $username) {
                 return true;
             }
         }
         return false;
+
+        $allUsers = get_all_user_data();
     }
 
     // returns an array of all existing usernames
-    function get_all_usernames() {
+    function get_all_usernames() { // fix**
         $folderName = "users/";
         $users = [];
 
@@ -173,11 +175,9 @@
 		file_put_contents($dest, json_encode($posts, JSON_PRETTY_PRINT));
     }
 
-    function log_in($username) { // needed?
-        if (username_exists($username, get_all_usernames())) {
-            $_SESSION["username"] = $username;
-            return true;
-        }
+    function log_in($uid) { // needed?
+        $_SESSION["username"] = $uid;
+        return true;
 
         return false;
     }

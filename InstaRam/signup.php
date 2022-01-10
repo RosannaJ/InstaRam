@@ -7,7 +7,6 @@
     $file = "userinfo.json";
     $target_file = "";
     $imageFileType = "";
-
     $allUsers = get_all_usernames();
 
     // process form data if submitted from page 2
@@ -118,27 +117,42 @@
         }
 
         // save data if valid
-        if ($isDataClean){
+        if ($isDataClean) {
             //$phpArray = array();
             $newSubmission = "";
-            $dest = $target_dir . $username . "/". $file;
+            $uid = 0;
+            $dest = "";
             $newUser = [];
+            $identifierFileName = "identifier.txt";
+            
+
+            // get next uid if file exists
+			if (file_exists($identifierFileName)) {
+				$uid = file_get_contents($identifierFileName);
+			}
+			
+			// update uid
+			file_put_contents($identifierFileName, $uid + 1);
+
+            // update destination
+            $dest += $target_dir . $uid . "/". $file;
 
             // create folders if they don't exist
             if (!is_dir($target_dir)) {
                 mkdir($target_dir);
             }
 
-            if (!is_dir($target_dir . $username . "/")) {
-                mkdir($target_dir . $username . "/");
+            if (!is_dir($target_dir . $uid . "/")) {
+                mkdir($target_dir . $uid . "/");
             }
 
-            if (!is_dir($target_dir . $username . "/" . "posts/")) {
-                mkdir($target_dir . $username . "/" . "posts/");
+            if (!is_dir($target_dir . $uid . "/" . "posts/")) {
+                mkdir($target_dir . $uid . "/" . "posts/");
             }
 
             // write form data to json file
             $newSubmission = [
+                "UID" => $uid,
                 "username" => $username,
                 "name" => $name,
                 "license" => $license,
@@ -158,7 +172,7 @@
             file_put_contents($dest, json_encode($newSubmission, JSON_PRETTY_PRINT));
 
             // upload profile pic
-            move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $username . "/" . "pfp" . "." .$imageFileType);
+            move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $uid . "/" . "pfp" . "." .$imageFileType);
             
             // redirect to other page if form was submitted successfully
             $_GET['page'] = 3;

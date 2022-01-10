@@ -13,7 +13,7 @@
     //$password = 
 
 	// place in already inputted data 
-    /*$phpArray = json_decode(file_get_contents("users/" . $_SESSION['username'] . "/userinfo.json"), true);
+    $phpArray = json_decode(file_get_contents("users/" . $_SESSION['username'] . "/userinfo.json"), true);
     $username = $phpArray["username"];
     $connection = $phpArray["connection"];
     $bio = $phpArray["bio"];
@@ -27,7 +27,7 @@
     if ($phpArray["imageFileType"] != ""){
         $imageFileType = $phpArray["imageFileType"];
         $profilePic = "users/" . $_SESSION['username'] . "/pfp.$imageFileType";
-    } */
+    } 
     
     //include "editprofile.inc";
 
@@ -116,7 +116,7 @@
 
      
         // save data if valid
-        if ($isDataClean){
+        if ($isDataClean) {
             //$phpArray = array();
             $newSubmission = "";
             $dest = $target_dir . $_SESSION['username'] . "/". $file;
@@ -137,6 +137,7 @@
 
             // write form data to json file
             $newSubmission = [
+                "UID" => $_SESSION["username"],
                 "username" => $username,
                 "name" => $name,
                 "license" => $license,
@@ -147,9 +148,6 @@
                 "imageFileType" => $imageFileType,
                 "password" => $password
             ];
-
-            //$_SESSION['username'] = $username;
-            log_in($username);
             
             // add current profile and write to file
             //$phpArray[] = $newSubmission;
