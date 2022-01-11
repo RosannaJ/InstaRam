@@ -286,6 +286,7 @@ function displayLightBox(imageFile) {
 	document.getElementById("imageDownload").href = imageFile;*/
 }
 
+
  // sets caption and alt for lightbox image using data passed in
  function updatePostContents() { // rename?
 	let elem = document.getElementById("like");

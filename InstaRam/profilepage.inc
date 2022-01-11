@@ -1,7 +1,7 @@
 <?php
 	include "postLightbox.inc";
 
-	if (array_key_exists("user", $_GET) && username_exists($_GET["user"], get_all_usernames())) {
+	if (array_key_exists("user", $_GET) && username_exists($_GET["user"])) {
 		
 		// loop through all users to find current one
 		foreach (get_all_user_data() as $user) {
@@ -73,7 +73,7 @@
 				echo "<hr>POSTS:<br>";
 
 				// get all posts
-				$posts = get_posts(get_all_usernames());
+				$posts = get_all_posts();
 
 				//check if the user has any posts
 				if (array_key_exists($user['username'], $posts)) {

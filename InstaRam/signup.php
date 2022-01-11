@@ -7,7 +7,6 @@
     $file = "userinfo.json";
     $target_file = "";
     $imageFileType = "";
-    $allUsers = get_all_usernames();
 
     // process form data if submitted from page 2
     if ($_SERVER["REQUEST_METHOD"] == "POST" && $_SESSION["page"] == 2) {
@@ -20,7 +19,7 @@
         } else if (!preg_match("/^[a-z0-9-' ]*$/", $_POST["username"]) || str_contains($_POST["username"], " ")) { 
             $usernameErr = "Only lowercase letters and numbers allowed";
             $isDataClean = false;
-        } else if (username_exists($_POST["username"], $allUsers)) {
+        } else if (username_exists($_POST["username"])) {
             $usernameErr = "Sorry, this username is already in use.";
             $isDataClean = false;
         }
@@ -109,7 +108,10 @@
         $tempPass = $_POST["password"];
         $tempPass2 = $_POST["password2"];
         if (strcmp($tempPass, $tempPass2) !== 0) {
-            $passwordErr = "Passwords are not the same"; // change this to better message
+            $passwordErr = "Passwords must be identical";
+            $isDataClean = false;
+        } else if (strlen($tempPass) < 8) {
+            $passwordErr = "Passwords must be 8 characters"; 
             $isDataClean = false;
         } else {
             $password = $tempPass;
@@ -135,7 +137,7 @@
 			file_put_contents($identifierFileName, $uid + 1);
 
             // update destination
-            $dest += $target_dir . $uid . "/". $file;
+            $dest = $target_dir . $uid . "/". $file;
 
             // create folders if they don't exist
             if (!is_dir($target_dir)) {

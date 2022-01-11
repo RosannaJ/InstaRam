@@ -16,17 +16,22 @@
   
 	<body onload="displayGrade();filterProfiles();">
 
-    <a href="?page=1">Log In</a>
+    <!-- <a href="?page=1">Log In</a>
     <a href="?page=2">Create Account</a>
+	<a href="?page=5">Inbox</a>
 	<a href="?page=7">New Post</a>
 	<a href="?page=4">Explore</a>
-	<a href="?page=3">Home</a>
+	<a href="?page=3">Home</a> -->
 	<!--<a href="?page=8">Edit Profile</a>-->
 
 	<a href='?action=del'>Reset Everything</a>
 	<a href='?action=logout'>Log Out</a>
 
     <?php
+
+		if ($_SESSION["page"] > 2) {
+			include "navbar.inc";
+		}
 	
 		if (isset($_SESSION['username'])) {
 			echo "Logged in as: " . $_SESSION['username'];
@@ -35,7 +40,7 @@
 		}
 
 		echo "<br>User Profiles: ";
-		foreach (get_all_usernames() as $user) {
-			echo "<a href='?page=6&user=$user'>$user</a> ";
+		foreach (get_all_user_data() as $user) {
+			echo "<a href='?page=6&user=" . $user["username"] . "'>" . $user["username"] . "</a> ";
 		}
 	?>

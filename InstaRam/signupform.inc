@@ -1,5 +1,7 @@
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data" name="form" onsubmit="hashPassword()">
 	<h1>InstaRam👍</h1>
+
+	<?php include "tos.inc";?>
    
 	<br>Create Account<br><br>
 	<label for="username">Username:</label>
@@ -20,7 +22,7 @@
 	<input type="file" id="fileToUpload" name="fileToUpload"><br><br>
    
 	<input type="checkbox" id="license" name="license" value="agree" <?php if ($license == "agree") echo "checked"; ?>>
-	<label for="license">I agree to the <a href="">Terms of Service.</a></label>
+	<label for="license">I agree to the </label><a onclick="changeVisibility('termsofservice')">Terms of Service.</a>
 	<span class="error">* <?php echo $licenseErr;?></span>
 	<br><br>
    
