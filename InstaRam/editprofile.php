@@ -22,7 +22,7 @@
         } else if (!preg_match("/^[a-z0-9-' ]*$/", $_POST["username"]) || str_contains($_POST["username"], " ")) { 
             $usernameErr = "Only lowercase letters and numbers allowed";
             $isDataClean = false;
-        } else if (username_exists($_POST["username"]) && strcmp($_POST["username"], $_SESSION["username"]) != 0) {
+        } else if (username_exists($_POST["username"]) && strcmp($_POST["username"], get_username($_SESSION["username"])) != 0) {
             $usernameErr = "Sorry, this username is already in use.";
             $isDataClean = false;
         }

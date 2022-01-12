@@ -15,6 +15,7 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST" && $_SESSION["page"] == 1) {
         $phpArray = [];
         $password = "";
+        $userID = -1;
         
         // check if username is valid
         if (empty($_POST["username"])) {
@@ -23,7 +24,7 @@
         } else if (!preg_match("/^[a-zA-Z1-9-' ]*$/", $_POST["username"]) || str_contains($_POST["username"], " ")) {
             $loginUsernameErr = "Please enter a valid username.";
             $isDataClean = false;
-        } else if (!username_exists($_POST["username"], get_all_usernames())) {
+        } else if (!username_exists($_POST["username"])) {
             $loginUsernameErr =  "Username does not exist.";
             $isDataClean = false;
         }
@@ -31,9 +32,16 @@
         // make username stay in input field
         $loginUsername = clean_data($_POST["username"]);
 
-        // store previous data in array if there is any
-		if (file_exists("users/$loginUsername/userinfo.json")) {
-			$phpArray = json_decode(file_get_contents("users/$loginUsername/userinfo.json"), true);
+        // get userID from username
+        foreach (get_all_user_data() as $user) {
+            if ($user["username"] === $loginUsername) {
+                $userID = $user["UID"];
+            }
+        }
+
+        // get user info
+		if (file_exists("users/$userID/userinfo.json")) {
+			$phpArray = json_decode(file_get_contents("users/$userID/userinfo.json"), true);
             $password = $phpArray["password"];
 		}
 
@@ -45,8 +53,8 @@
         }
 
         // log in
-        if ($isDataClean && log_in($loginUsername)) {
-            //$_SESSION['username'] = $loginUsername;
+        if ($isDataClean) {
+            log_in($loginUsername);
             $_GET['page'] = 3;
             echo "logged in";
         } else {

@@ -3,7 +3,6 @@
 ?>
 
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data">
-	<h1>InstaRam👍</h1>
    
 	<br>Edit Profile<br><br>
 	<label for="username">Username:</label>

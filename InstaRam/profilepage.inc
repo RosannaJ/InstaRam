@@ -9,7 +9,7 @@
 
 			// display profile info
 			if ($user["username"] === $_GET["user"]) {
-				$folderName = "users/{$user['username']}/posts/"; //  posts folder
+				$folderName = "users/{$user['UID']}/posts/"; //  posts folder
 
 				// display username
 				echo "<h1>" . $user['username'] . "</h1>";
@@ -25,7 +25,7 @@
 				// display bio
 				echo "<br>Bio: " . $user['bio'] . "<br><br>";
 
-				// DISPLAY FRIEND REQUEST BUTTON
+				// DISPLAY FRIEND REQUEST BUTTON AND DECLINE
 				// check that this is not the current user's own profile page
 				if (isset($_SESSION['username']) && strcmp($_SESSION['username'], $user['username']) !== 0) {
 
@@ -43,6 +43,11 @@
 						echo "<input type='button' id='friendRequest' value='$message' onclick='toggleFriend(\"" . $user['username'] . "\");'>";
 					} else {
 						echo "<input type='button' id='friendRequest' value='Delete Friend' onclick='toggleFriend(\"" . $user['username'] . "\")'>";
+					}
+
+					// display decline button if pending friend request
+					if (strcmp($message, "Accept Friend Request") === 0){
+						echo "<input type='button' id='decline' value='Decline Friend Request' onclick='toggleFriend(\"" . $user['username'] . "\");toggleFriend(\"" . $user['username'] . "\");'>";
 					}
 					
 				}
@@ -65,7 +70,7 @@
 				if (isset($user['friendRequests'])) {
 					echo "<br>Friend Requests: ";
 					foreach ($user['friendRequests'] as $request) {
-						echo $request . ", ";
+						echo $request . ", "; 
 					}
 				}
 

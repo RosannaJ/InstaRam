@@ -1,5 +1,4 @@
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data" name="form" onsubmit="hashPassword()">
-	<h1>InstaRam👍</h1>
 
 	<?php include "tos.inc";?>
    

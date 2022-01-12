@@ -71,7 +71,7 @@
 	// toggle liking the post with requested UID if logged in (or check whether the post has been liked)
 	else if (array_key_exists("action", $_GET) && ($_GET["action"] == "like" || $_GET["action"] == "checkIfLiked") 
 		&& array_key_exists("UID", $_GET)			// TODO: check if uid is valid (check with postIdentifier file)
-		&& array_key_exists("username", $_SESSION) && username_exists($_SESSION["username"]) {
+		&& array_key_exists("username", $_SESSION)) {
 
 		update_post($_GET["UID"], function(&$post) {
 			$alreadyLiked = array_search($_SESSION["username"], $post["likes"]);
@@ -96,7 +96,7 @@
 	// add comment to post with requested UID
 	else if (array_key_exists("action", $_GET) && $_GET["action"] == "addComment" 
 		&& array_key_exists("UID", $_GET)			// TODO: check if uid is valid (check with postIdentifier file)
-		&& array_key_exists("username", $_SESSION) && username_exists($_SESSION["username"]) {
+		&& array_key_exists("username", $_SESSION)) {
 		
 		echo json_encode($_POST, JSON_PRETTY_PRINT); // temp
 
@@ -128,7 +128,7 @@
 	else if (array_key_exists("action", $_GET) && $_GET["action"] == "deleteComment" 
 		&& array_key_exists("UID", $_GET)			// TODO: check if uid is valid (check with postIdentifier file)
 		&& array_key_exists("commentUID", $_GET)	// TODO: check if uid is valid 
-		&& array_key_exists("username", $_SESSION) && username_exists($_SESSION["username"]) {
+		&& array_key_exists("username", $_SESSION)) {
 
 		// delete comment
 		update_post($_GET["UID"], function(&$post) {
@@ -153,8 +153,11 @@
 	// echos the new message to be displayed on the button
 	else if (array_key_exists("action", $_GET) && $_GET["action"] == "friend" 
 		&& array_key_exists("user", $_GET)
-		&& array_key_exists("username", $_SESSION) && username_exists($_SESSION["username"]) {
-		$otherUserData = get_user_data($_GET['user']);
+		&& array_key_exists("username", $_SESSION)) {
+			
+		$otherID = get_userID($_GET['user']);
+
+		$otherUserData = get_user_data($otherID);
 		$currentUserData = get_user_data($_SESSION["username"]);
 
 		// check that they are not friends
@@ -214,8 +217,8 @@
 		}
 
 		// update userinfo.json files
-		update_user_data($_GET['user'], $otherUserData);
-		update_user_data($_SESSION['username'], $currentUserData);
+		update_user_data($otherUserData["UID"], $otherUserData);
+		update_user_data($currentUserData["UID"], $currentUserData);
 	}
 
 	// prevent end of json errors

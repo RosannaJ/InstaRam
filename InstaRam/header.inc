@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<title>Rambook</title>
+		<title>Ramstagram</title>
 
 		<!-- include an external style sheet -->
 		<link rel="stylesheet" href="style.css">  
@@ -15,32 +15,14 @@
 	</head>
   
 	<body onload="displayGrade();filterProfiles();">
+	<div id="top">
+		<div id="header">
+			<h1 id="logo" href="?page=3">Ramstagram</h1>
 
-    <!-- <a href="?page=1">Log In</a>
-    <a href="?page=2">Create Account</a>
-	<a href="?page=5">Inbox</a>
-	<a href="?page=7">New Post</a>
-	<a href="?page=4">Explore</a>
-	<a href="?page=3">Home</a> -->
-	<!--<a href="?page=8">Edit Profile</a>-->
-
-	<a href='?action=del'>Reset Everything</a>
-	<a href='?action=logout'>Log Out</a>
-
-    <?php
-
-		if ($_SESSION["page"] > 2) {
-			include "navbar.inc";
-		}
-	
-		if (isset($_SESSION['username'])) {
-			echo "Logged in as: " . $_SESSION['username'];
-		} else {
-			echo "Not Logged in.";
-		}
-
-		echo "<br>User Profiles: ";
-		foreach (get_all_user_data() as $user) {
-			echo "<a href='?page=6&user=" . $user["username"] . "'>" . $user["username"] . "</a> ";
-		}
-	?>
+			<?php
+				if ($_SESSION["page"] > 2) {
+					include "navbar.inc";
+				}
+			?>
+		</div>
+	</div>

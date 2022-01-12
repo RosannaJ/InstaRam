@@ -7,6 +7,10 @@
     include "signup.php";
     include "post.php";
 
+    if (isset($_SESSION["username"])) { // if logged in
+        include "editprofile.php";
+    }
+
     // reset everything
     if (array_key_exists("action", $_GET) && $_GET["action"] == "del") {
 
@@ -18,6 +22,11 @@
         // delete commentID file
         if (file_exists("commentUID.txt")) {
             unlink("commentUID.txt");
+        }
+
+        // delete identifier file
+        if (file_exists("identifier.txt")) {
+            unlink("identifier.txt");
         }
 
         // delete users folder
@@ -58,13 +67,13 @@
     } else if ($_SESSION["page"] == 4) {	
         include "explore.php";	
     } else if ($_SESSION["page"] == 5) {	
-        //include "inbox.php";	
+        include "inbox.inc";	
     } else if ($_SESSION["page"] == 6) {	
         include "profilepage.inc";	
     } else if ($_SESSION["page"] == 7) { 	
         include "postform.inc";	
     } else if ($_SESSION["page"] == 8) {	
-        include "editprofile.php";	
+        include "editprofile.inc";	
     } else {	
         include "loginform.inc";	
     }

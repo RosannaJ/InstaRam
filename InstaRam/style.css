@@ -1,11 +1,77 @@
+/* colour pallette
+192231 raisin black
+494E6B independence
+D5DFEC beau blue
+98878F taupe gray
+985E6D rose dust */
+
+* {
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+    color: #192231;
+    margin-left: 0;
+	margin-right: 0;
+}
 
 .grade {
 	display: none;
 }
 
 .error {
-	color: rgb(255, 0, 0);
+	color: #985E6D;
 }
+
+#top {
+	display: block;
+}
+
+#header {
+	display: block;
+    overflow: hidden;
+    top: 0;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+	padding-left: 5px;
+	padding-right: 5px;
+	height:50px;
+	background: #D5DFEC;
+	color: #192231;
+	font-size: 20px;
+}
+
+#header a {
+	position:relative;
+}
+
+
+#logo {
+	display: inline;
+	text-align: left;
+}
+
+.topnav {
+	display: inline;
+	float:right;
+	top:0;
+	height:50px;
+	line-height:50px;
+	vertical-align: middle;
+}
+
+
+
+
+.loginsignup {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100vw;
+	height: 100vh;
+	border: 5px solid #D5DFEC;
+
+}
+
 
 /* Lightbox */
 #lightbox {

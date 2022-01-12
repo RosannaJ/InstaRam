@@ -176,6 +176,9 @@
             // upload profile pic
             move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $uid . "/" . "pfp" . "." .$imageFileType);
             
+            echo "dest: " . $dest;
+            echo "<br>file: " . $file;
+
             // redirect to other page if form was submitted successfully
             $_GET['page'] = 3;
 
