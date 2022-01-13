@@ -15,9 +15,8 @@
       <input type="password" placeholder="Password" id="pw" class="loginsignupinfo" name="pw" value=""><br>
       <br>
 
-      <input type="submit" value="Log In"><br><br>
+      <button type="submit">Log In</button><br><br>
       Don't Have an Account? <a href="?page=2">Create Account</a>
-      <br><br>
 </div>  
    </div>
    </div>

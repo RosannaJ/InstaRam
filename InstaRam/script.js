@@ -186,7 +186,7 @@ function nextImage(dir) {
 	for (let i = 0; i < thumbnails.length; i++) {
 		
 		// look for image with same uid as current lightbox image
-		if (getUID(lightboxImage.src) == thumbnails[i].id) {
+		if (getUID(lightboxImage.src) == thumbnails[i].id || lightboxImage.alt == thumbnails[i].id) {
 			
 			// display next image
 			if (i + dir < thumbnails.length && i + dir >= 0) {
@@ -205,6 +205,24 @@ function filterProfiles() {
 
 	fetchData("connection=" + filter.value + "&search=" + search.value, updateProfileThumbnails);
 
+}
+
+// edit post (only caption)
+function displayEdit(imageFile){
+	displayLightBox(imageFile);
+	changeVisibility("editPage");
+
+}
+
+// savePostEdits
+function savePost(){
+	captionInput.innerHTML = 
+	displayEdit();
+
+}
+
+function currentCaption(){
+	return document.getElementById("caption").innerHTML;
 }
 
 // updates displayed profile thumbnails with data passed in
@@ -226,11 +244,17 @@ function updateProfileThumbnails(data) {
 
 		// set profile pic
 		img.className = "thumbnail";
-		img.src = "users/" + data[i].UID + "/pfp." + data[i].imageFileType;
+
+		if (data[i].imageFileType !== "") {
+			img.src = "users/" + data[i].UID + "/pfp." + data[i].imageFileType;
+		} else {
+			img.src = "images/defaultpfp.jpg";
+		}
+		
 		img.alt = data[i].username;
 
 		// set username (linked to profile page)
-		username.href = "?page=6&user=" + data[i].username;
+		username.href = "?page=6&user=" + data[i].UID;
 		username.innerHTML = data[i].username;
 		username.onclick = e => {
 
@@ -245,7 +269,7 @@ function updateProfileThumbnails(data) {
 		card.className = "card";
 		card.id = data[i].username;
 		card.onclick = function() {
-			displayLightBox(img.src);
+			displayLightBox(img.src, data[i].UID);
 		};
 
 		card.appendChild(img);
@@ -256,7 +280,7 @@ function updateProfileThumbnails(data) {
 	}
 }
 
-function displayLightBox(imageFile) {
+function displayLightBox(imageFile, uid) {
 	let image = new Image();
 	let lightBoxImage = document.getElementById("content");
 
@@ -269,7 +293,8 @@ function displayLightBox(imageFile) {
 	}
 	
 	// set content
-	lightBoxImage.src = "" + image.src;
+	lightBoxImage.src = image.src;
+	lightBoxImage.alt = uid;
 	
 	// show lightbox if not already visible
 	if (isVisible("lightbox") == false) {
@@ -339,8 +364,9 @@ function displayLightBox(imageFile) {
 			}
 		});
 	} else {
-		// update displayed profile info
+		UID = document.getElementById("content").alt;
 
+		// update displayed profile info
 		// fetch profile info
 		fetchData("user=" + UID, function(data) {
 
@@ -442,4 +468,9 @@ function toggleFriend(user) {
 
 function hideDeclineButton() {
 	document.getElementById("decline").style.display = "none";
+}
+
+function deletePost() {
+	fetchData("action=deletePost&UID=" + getUID(document.getElementById("content").src), function (data) {});
+	closeLightBox();
 }

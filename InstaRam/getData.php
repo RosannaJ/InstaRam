@@ -42,7 +42,7 @@
 
 		// find requested user and echo their profile info
 		foreach (get_all_user_data() as $user) {
-			if ($user['username'] == $_GET['user']) {
+			if ($user['UID'] == $_GET['user']) {
 				echo json_encode([
 					"username" => $user['username'],
 					"name" => $user['name'],
@@ -240,6 +240,26 @@
 		update_user_data($otherUserData["UID"], $otherUserData);
 		update_user_data($currentUserData["UID"], $currentUserData);
 	}
+
+	else if (array_key_exists("action", $_GET) && $_GET["action"] == "deletePost" 
+	&& array_key_exists("UID", $_GET)) {
+		$reqPostUser = get_user_of_post($_GET["UID"]);
+
+		// check if post to delete is the current user's post
+		if ($_SESSION["userID"] == $reqPostUser) {
+			$dest = "users/" . $reqPostUser . "/posts/posts.json";
+			$posts = json_decode(file_get_contents($dest), true);
+
+			foreach ($posts as $index => $post) {
+				if ($post["UID"] == $_GET["UID"]) {
+					unset($posts[$index]);
+					break;
+				} // if
+			} // foreach
+		} // if
+
+		echo json_encode(["deleted" => true], JSON_PRETTY_PRINT);
+	} // else if
 
 	// prevent end of json errors
 	else {

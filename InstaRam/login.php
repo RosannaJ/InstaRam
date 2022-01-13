@@ -56,10 +56,6 @@
         if ($isDataClean) {
             log_in($loginUsername);
             $_GET['page'] = 3;
-            echo "logged in";
-            echo $_SESSION["userID"];
-        } else {
-            echo "log in failed";
         }
     }
 

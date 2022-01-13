@@ -16,7 +16,7 @@
     }
 
     // checks if the username passed in exists in the array passed in
-    function username_exists($username) { // optimize?**
+    function username_exists($username) {
         foreach (get_all_user_data() as $user) {
             if ($user["username"] === $username) {
                 return true;

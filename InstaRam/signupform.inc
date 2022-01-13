@@ -79,9 +79,9 @@
 	<span class="error"></span><br>
 	<input type="password" placeholder="Confirm Password" class="loginsignupinfo" id="pw2" name="pw2"
 		minlength="8" value="" required>
-
-	<br><br><input type="submit" value="Create Account">
-	<br><br>Already Have an Account? <a href="?page=1">Log In</a>
+<br><br>
+		<button type="submit">Create Account</button><br><br>
+	Already Have an Account? <a href="?page=1">Log In</a> <br><br>
 	</div>  
    </div>
    </div>

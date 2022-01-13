@@ -1,10 +1,16 @@
 <!-- <div id="lightbox" class="hidden">
 </div> -->
-
+<?php 
+	if (isset($_GET["edit"])){
+		include "postEdit.php";
+	}
+?>
 <div id="lightbox" class="hidden">
 	<span id="prev" onclick="nextImage(-1)">&#10094;</span>
 	<span id="next" onclick="nextImage(1)">&#10095;</span>
 	<span id="x" onclick="closeLightBox()">&times;</span><br>
+	<span id="editpost" onclick="displayEdit()">edit</span>
+	<span id="deletePost" onclick="deletePost()">delete</span>
 
 	<div id="boundaryBigImage">
 		

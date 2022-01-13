@@ -28,12 +28,12 @@
 
 			// loop through all posts
 			foreach ($allPosts as $post) {
-				$user = get_username_of_post($post['UID']);
+				$user = get_user_of_post($post['UID']);
 				$imageFile = "users/$user/posts/" . $post['UID'] . "." . $post['imageFileType'];
 
 				// display username, image, and caption for each post
 				echo "<div class='card' id='{$post['UID']}' onclick='displayLightBox(\"$imageFile\")'>";
-				echo "<a href='?page=6&user=" . $user . "' onclick='event.stopPropagation()'>" . $user . "</a>";
+				echo "<a href='?page=6&user=" . $user . "' onclick='event.stopPropagation()'>" . get_username($user) . "</a>";
 				echo "<img src='$imageFile' class='thumbnail'>";
 				echo "<p>" . $post['caption'] . "</p>";
 				echo "</div>";
