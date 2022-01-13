@@ -3,14 +3,21 @@
 494E6B independence
 D5DFEC beau blue
 98878F taupe gray
-985E6D rose dust */
+985E6D rose dust 
+
+font-family: 'Lato', sans-serif;
+*/
 
 * {
     box-sizing: border-box;
     font-family: 'Lato', sans-serif;
-    color: #192231;
     margin-left: 0;
 	margin-right: 0;
+}
+
+body {
+	background-image: linear-gradient(to bottom right, #192231, #494E6B, #985E6D);
+	color: #D5DFEC;
 }
 
 .grade {
@@ -35,7 +42,7 @@ D5DFEC beau blue
 	padding-left: 5px;
 	padding-right: 5px;
 	height:50px;
-	background: #D5DFEC;
+	background: rgba(213, 223, 236, 0.8);
 	color: #192231;
 	font-size: 20px;
 }
@@ -48,6 +55,7 @@ D5DFEC beau blue
 #logo {
 	display: inline;
 	text-align: left;
+	height: 50px;
 }
 
 .topnav {
@@ -59,7 +67,9 @@ D5DFEC beau blue
 	vertical-align: middle;
 }
 
-
+button {
+	cursor: pointer;
+}
 
 
 .loginsignup {
@@ -68,8 +78,162 @@ D5DFEC beau blue
 	align-items: center;
 	width: 100vw;
 	height: 100vh;
-	border: 5px solid #D5DFEC;
+}
 
+.logsign {
+	border: 10px solid #D5DFEC;
+	filter: drop-shadow(-5px 5px 0.75rem #192231);
+	background-color: #494E6B;
+	text-align:center;
+	border-radius: 6px;
+	position: absolute;
+	display: table;
+}
+
+#loginbox {
+	width: 40%;
+	height: 40%;
+
+}
+
+#table {
+	display: table-cell; 
+	vertical-align: middle; 
+	text-align: center; 
+}
+
+.title {
+	font-size: 40px;
+	font-weight: 300;
+	margin: 0;
+}
+
+.logsign a {
+	color: #D5DFEC;
+}
+
+#tos {
+	text-decoration: underline;
+	color: #D5DFEC;
+}
+
+#loginbox button {
+	border: 2px solid #D5DFEC;
+	border-radius: 6px;
+	background-color: #D5DFEC;
+	color:#192231;
+	font-size: 20px;
+	font-weight: 300;
+	width: 100px;
+	height: 50px;
+}
+
+::placeholder {
+	color:#192231;
+	text-align: center;
+	font-size: 15px;
+}
+
+input[type="text"], .loginsignupinfo {
+	background-color: #D5DFEC;
+	border: 2px solid #192231;
+	font-size: 15px;
+	height:50px;
+	width: 250px;
+	text-align: center;
+	border-radius: 4px;
+	color: #192231;
+}
+
+#signupbox{
+	width: 40%;
+	height: 90%;
+}
+
+#bio {
+	resize: none;
+	background-color: #D5DFEC;
+	border: 2px solid #192231;
+	font-size: 15px;
+	height:50px;
+	width: 250px;
+	text-align: center;
+	border-radius: 4px;
+	color: #192231;
+}
+
+#grade {
+	height: 30px;
+	width: 120px;
+	background-color: #D5DFEC;
+	color: #192231;
+}
+
+#wrapper {
+	position: relative;
+}
+
+#birthdate {
+	background-color: #D5DFEC;
+	height: 40px;
+	width: 150px;
+	border: 2px solid #192231;
+	font-size: 15px;
+	text-align: center;
+	border-radius: 4px;
+}
+
+input[type="file"] {
+	opacity: 0;
+}
+
+#tos {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+#profile {
+	position: absolute;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	
+}
+
+#profilepicinput {
+	width: 200px;
+	cursor:pointer;
+	height: 60px; 
+	color:#192231;
+	border-radius: 4px;
+	background-color: #D5DFEC;
+	border: 2px solid #192231;
+	font-size: 15px;
+	width: 180px;
+	text-align: center;
+	border-radius: 4px;
+}
+
+#signupbox input[type="radio"] {
+	background-color: #985E6D;
+	cursor: pointer;
+}
+
+#fileToUpload {
+	height: 50px;
+	width: 200px;
+	cursor: pointer;
+}
+
+#signupbox button[type="submit"] {
+	border: 4px solid #D5DFEC;
+	border-radius: 6px;
+	background-color: #D5DFEC;
+	color:#192231;
+	font-size: 20px;
+	font-weight: 300;
+	width: 180px;
+	height: 50px;
 }
 
 

@@ -2,24 +2,24 @@
 
     
    <div id="login" class="loginsignup">
-      <div id="loginbox">
-      <br>Log In<br>
-         
-      <label for="username">Username:</label>
-      <span class="error">* <?php echo $loginUsernameErr;?></span>
+      <div id="loginbox" class="logsign">
+      <div id="table">
+      <p class="title">Log In</p> <br>
+      <span class="error"><?php echo $loginUsernameErr;?></span>
       <br>
       
-      <input type="text" id="username" name="username" value="<?php echo $loginUsername;?>">
-      <br><br>
+      <input type="text" placeholder="Username" class="loginsignupinfo" id="username" name="username" value="<?php echo $loginUsername;?>">
+      <br>
 
-      <label for="password">Password:</label>
-      <span class="error">* <?php echo $loginPasswordErr;?></span><br>
-      <input type="password" id="pw" name="pw" value=""><br>
-      <br><br>
+      <span class="error"><?php echo $loginPasswordErr;?></span><br>
+      <input type="password" placeholder="Password" id="pw" class="loginsignupinfo" name="pw" value=""><br>
+      <br>
 
-      <input type="submit" value="submit"><br><br>
+      <button type="submit">Log In</button><br><br>
       Don't Have an Account? <a href="?page=2">Create Account</a>
-      </div>
+      <br><br>
+</div>  
+   </div>
    </div>
 </form>
 
