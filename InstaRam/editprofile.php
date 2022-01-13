@@ -22,13 +22,10 @@
         } else if (!preg_match("/^[a-z0-9-' ]*$/", $_POST["username"]) || str_contains($_POST["username"], " ")) { 
             $usernameErr = "Only lowercase letters and numbers allowed";
             $isDataClean = false;
-        } else if (username_exists($_POST["username"]) && strcmp($_POST["username"], get_username($_SESSION["username"])) != 0) {
+        } else if (username_exists($_POST["username"]) && strcmp($_POST["username"], get_username($_SESSION["userID"])) != 0) {
             $usernameErr = "Sorry, this username is already in use.";
             $isDataClean = false;
         }
-
-        echo "username:";
-        var_dump($isDataClean);
 
         // keep username in input field
         $username = clean_data($_POST["username"]);
@@ -70,10 +67,10 @@
         if ($isDataClean) {
             $phpArray = array();
             $newSubmission = "";
-            $dest = $target_dir . $_SESSION['username'] . "/". $file;
+            $dest = $target_dir . $_SESSION["userID"] . "/". $file;
 
             // get old user info
-            $phpArray = json_decode(file_get_contents("users/" . $_SESSION['username'] . "/userinfo.json"), true);
+            $phpArray = json_decode(file_get_contents("users/" . $_SESSION["userID"] . "/userinfo.json"), true);
 
             // update user info
             $phpArray["username"] = $username;
@@ -81,7 +78,6 @@
             $phpArray["connection"] = $connection;
             $phpArray["grade"] = $grade;
             $phpArray["bio"] = $bio;
-
 
             // put new user info in file
             file_put_contents($dest, json_encode($phpArray, JSON_PRETTY_PRINT));

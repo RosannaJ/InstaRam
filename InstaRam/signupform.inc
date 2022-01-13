@@ -33,7 +33,7 @@
 	<input type="file" id="fileToUpload" name="fileToUpload"><br><br>
    
 	<input type="checkbox" id="license" name="license" value="agree" <?php if ($license == "agree") echo "checked"; ?>>
-	<label for="license">I agree to the </label><a id="tos" onclick="changeVisibility('termsofservice')">Terms of Service.</a>
+	<label for="license">I agree to the </label><a onclick="changeVisibility('termsofservice')">Terms of Service.</a>
 	<span class="error">* <?php echo $licenseErr;?></span>
 	<br><br>
    
@@ -69,7 +69,7 @@
 	<label for="birthday">Enter Birthdate:</label>
 	<span class="error">* <?php echo $birthdateErr;?></span><br>
 	<input type="date" id="birthdate" name="birthdate" value="<?php echo $birthdate;?>" min="1900-01-01" max="2009-12-31">
-	<br>
+	<br><br>
    
 	
 	<span class="error"><?php echo $passwordErr;?></span><br>
@@ -79,9 +79,9 @@
 	<span class="error"></span><br>
 	<input type="password" placeholder="Confirm Password" class="loginsignupinfo" id="pw2" name="pw2"
 		minlength="8" value="" required>
-	<br><br>
-	<button type="submit">Create Account</button><br><br>
-	Already Have an Account? <a href="?page=1">Log In</a> <br><br>
+
+	<br><br><input type="submit" value="Create Account">
+	<br><br>Already Have an Account? <a href="?page=1">Log In</a>
 	</div>  
    </div>
    </div>

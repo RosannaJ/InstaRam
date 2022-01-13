@@ -1,5 +1,5 @@
 <?php
-	$userInfo = get_user_data($_SESSION["username"]);
+	$userInfo = get_user_data($_SESSION["userID"]);
 ?>
 
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data">

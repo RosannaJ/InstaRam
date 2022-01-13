@@ -7,7 +7,7 @@
     include "signup.php";
     include "post.php";
 
-    if (isset($_SESSION["username"])) { // if logged in
+    if (isset($_SESSION["userID"])) { // if logged in
         include "editprofile.php";
     }
 
@@ -33,14 +33,14 @@
         delete_folder("users/");
 
         // log out
-        unset($_SESSION["username"]);
+        unset($_SESSION["userID"]);
     }
 
     // log out
     if (array_key_exists("action", $_GET) && $_GET["action"] == "logout") {
 
         // log out
-        unset($_SESSION["username"]);
+        unset($_SESSION["userID"]);
     }
 
     // decide which page to show
@@ -51,7 +51,7 @@
         $_SESSION["page"] = $_GET["page"];
     }
 
-    if (!isset($_SESSION["username"]) && $_SESSION["page"] != 2) {
+    if (!isset($_SESSION["userID"]) && $_SESSION["page"] != 2) {
         $_SESSION["page"] = 1;
     }
 

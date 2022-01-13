@@ -16,7 +16,7 @@
     }
 
     // checks if the username passed in exists in the array passed in
-    function username_exists($username) {
+    function username_exists($username) { // optimize?**
         foreach (get_all_user_data() as $user) {
             if ($user["username"] === $username) {
                 return true;
@@ -25,42 +25,21 @@
         return false;
     }
 
-    /*// returns an array of all existing usernames
-    function get_all_usernames() { // fix**
-        $folderName = "users/";
-        $users = [];
-
-        // get the name of each user's folder
-        if (file_exists($folderName)) {
-            if (is_dir($folderName)) {
-                $dh = opendir($folderName);
-                while (($file = readdir($dh)) !== false) {
-                    if (!is_dir($file)) {
-                        $users[] = $file;
-                    }
-                }
-                closedir($dh);
-            }
-        }
-
-        return $users;
-    }*/
-
     // returns contents of all userinfo.json files as a single array
     function get_all_user_data() {
         $users = [];
 
-        /*foreach (get_all_usernames() as $username) { // loop through all folders instead?
-            $users[] = get_user_data($username);
-        }*/
-
         $folderName = "users/";
 
+        // open users folder
         if (file_exists($folderName)) {
             if (is_dir($folderName)) {
                 $dh = opendir($folderName);
+
+                // go through each user's folder
                 while (($file = readdir($dh)) !== false) {
 
+                    // put user's info into array
                     if (!is_dir($file)) {
                         $dest = $folderName . $file . "/userinfo.json";
                         $users[] = json_decode(file_get_contents($dest), true);
@@ -76,15 +55,6 @@
     // returns all posts under each user id
     function get_all_posts() {
         $posts = [];
-
-
-        /*foreach ($users as $user) { // loop through all folders instead
-            $dest = "users/" . $user . "/posts/posts.json";
-            if (is_file($dest)) {
-                $posts[$user] = json_decode(file_get_contents($dest), true);
-            }
-        }*/
-
         $folderName = "users/";
 
         // go through users folder
@@ -95,12 +65,11 @@
                 // go through each user's folder
                 while (($file = readdir($dh)) !== false) {
                     if (!is_dir($file)) {
-                        $dest = $folderName . $file . "/posts/post.json";
+                        $dest = $folderName . $file . "/posts/posts.json";
 
                         // put json from file into array
                         if (file_exists($dest)) {
-                            $username = get_username($file);
-                            $posts[$username] = json_decode(file_get_contents($dest), true);
+                            $posts[$file] = json_decode(file_get_contents($dest), true);
                         }
                         
                     }
@@ -144,16 +113,16 @@
                 // go through each user's folder
                 while (($file = readdir($dh)) !== false) {
                     if (!is_dir($file)) {
-                        $dest = $folderName . $file . "/posts/post.json";
+                        $dest = $folderName . $file . "/posts/posts.json";
 
                         // get their posts as an array
-                        if (is_file($dest)) {
+                        if (!is_dir($dest) && file_exists($dest)) {
                             $posts = json_decode(file_get_contents($dest), true);
-            
+
                             // go through all posts and return id if uid is matching
                             foreach ($posts as $post) {
                                 if ($post["UID"] == $UID) {
-                                    return $userId;
+                                    return $file;
                                 } // if
                             } // foreach
                         } // if
@@ -162,6 +131,8 @@
                 closedir($dh);
             } // if
         } // if
+
+        return -1;
     } // get_user_of_post
 
     // compares the parameters passed in by UID
@@ -203,8 +174,8 @@
 
     function update_post($UID, $function) {
         // find user who posted the post with uid passed in
-		$reqPostUser = get_user_of_post($_GET["UID"]);
-		
+		$reqPostUser = get_user_of_post($UID);
+
 		// get contents of file
 		$dest = "users/" . $reqPostUser . "/posts/posts.json";
 		$posts = json_decode(file_get_contents($dest), true);
@@ -213,7 +184,7 @@
 		for ($i = 0; $i < count($posts); $i++) {
 
 			// find post with requested UID
-			if ($posts[$i]["UID"] == $_GET["UID"]) {
+			if ($posts[$i]["UID"] == $UID) {
 				$function($posts[$i]);
 				break;
 			}
@@ -224,7 +195,7 @@
     }
 
     function log_in($username) { // needed?
-        $_SESSION["username"] = get_userID($username);
+        $_SESSION["userID"] = get_userID($username);
     }
 
     function get_user_data($user) {

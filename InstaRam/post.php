@@ -46,7 +46,7 @@
 	    if ($isDataClean) {
 	    	$phpArray = [];
 			$newPost = [];
-			$target_dir = "users/" . $_SESSION['username'] . "/posts/";
+			$target_dir = "users/" . $_SESSION["userID"] . "/posts/";
 			$dest = $target_dir . "posts.json";
 			$identifierFileName = "postID.txt";
 			$newUID = 0;

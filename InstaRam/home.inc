@@ -8,9 +8,9 @@
 	echo "<br>HOME PAGE: Your friend's posts are displayed here.";
 
 	// show posts if logged in
-	if (isset($_SESSION['username'])) {
+	if (isset($_SESSION["userID"])) {
 		$allPosts = [];
-		$userData = get_user_data($_SESSION['username']);
+		$userData = get_user_data($_SESSION["userID"]);
 
 		if (isset($userData['friends'])) {
 			// get friends of current user

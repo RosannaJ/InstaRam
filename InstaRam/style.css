@@ -67,9 +67,7 @@ body {
 	vertical-align: middle;
 }
 
-button {
-	cursor: pointer;
-}
+
 
 
 .loginsignup {
@@ -112,11 +110,6 @@ button {
 	color: #D5DFEC;
 }
 
-#tos {
-	text-decoration: underline;
-	color: #D5DFEC;
-}
-
 #loginbox button {
 	border: 2px solid #D5DFEC;
 	border-radius: 6px;
@@ -127,7 +120,6 @@ button {
 	width: 100px;
 	height: 50px;
 }
-
 ::placeholder {
 	color:#192231;
 	text-align: center;
@@ -136,29 +128,21 @@ button {
 
 input[type="text"], .loginsignupinfo {
 	background-color: #D5DFEC;
-	border: 2px solid #192231;
 	font-size: 15px;
 	height:50px;
 	width: 250px;
 	text-align: center;
-	border-radius: 4px;
-	color: #192231;
+	border-radius: 2px;
 }
 
 #signupbox{
-	width: 40%;
-	height: 90%;
+	width: 60%;
+	height: 80%;
 }
 
 #bio {
 	resize: none;
 	background-color: #D5DFEC;
-	border: 2px solid #192231;
-	font-size: 15px;
-	height:50px;
-	width: 250px;
-	text-align: center;
-	border-radius: 4px;
 	color: #192231;
 }
 
@@ -176,11 +160,7 @@ input[type="text"], .loginsignupinfo {
 #birthdate {
 	background-color: #D5DFEC;
 	height: 40px;
-	width: 150px;
-	border: 2px solid #192231;
-	font-size: 15px;
-	text-align: center;
-	border-radius: 4px;
+	width: 130px;
 }
 
 input[type="file"] {
@@ -203,37 +183,16 @@ input[type="file"] {
 #profilepicinput {
 	width: 200px;
 	cursor:pointer;
-	height: 60px; 
-	color:#192231;
-	border-radius: 4px;
+	height: 50px; 
 	background-color: #D5DFEC;
-	border: 2px solid #192231;
-	font-size: 15px;
-	width: 180px;
-	text-align: center;
-	border-radius: 4px;
-}
-
-#signupbox input[type="radio"] {
-	background-color: #985E6D;
-	cursor: pointer;
+	color:#192231;
+	border-radius: 2px;
 }
 
 #fileToUpload {
 	height: 50px;
 	width: 200px;
 	cursor: pointer;
-}
-
-#signupbox button[type="submit"] {
-	border: 4px solid #D5DFEC;
-	border-radius: 6px;
-	background-color: #D5DFEC;
-	color:#192231;
-	font-size: 20px;
-	font-weight: 300;
-	width: 180px;
-	height: 50px;
 }
 
 

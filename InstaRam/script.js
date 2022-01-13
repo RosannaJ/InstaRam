@@ -226,7 +226,7 @@ function updateProfileThumbnails(data) {
 
 		// set profile pic
 		img.className = "thumbnail";
-		img.src = "users/" + data[i].username + "/pfp." + data[i].imageFileType;
+		img.src = "users/" + data[i].UID + "/pfp." + data[i].imageFileType;
 		img.alt = data[i].username;
 
 		// set username (linked to profile page)
@@ -438,4 +438,8 @@ function toggleFriend(user) {
 		// update button text
 		document.getElementById("friendRequest").value = data.message;
 	});
+}
+
+function hideDeclineButton() {
+	document.getElementById("decline").style.display = "none";
 }
