@@ -37,10 +37,10 @@
 			}
 
 			if ($user["connection"] == "alum") {
-				echo "Mount Douglas Almunus<br><br><br>";
+				echo "Mount Douglas Alumnus<br><br><br>";
 			} else if ($user["connection"] == "current") {
 				$grade = explode('g', $user['grade']);
-				echo "Mount Douglas Student, currently in grade " . $grade[1] . "<br><br><br>";
+				echo "Mount Douglas Student. Grade " . $grade[1] . "<br><br><br>";
 			}
 			
 

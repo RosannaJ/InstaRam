@@ -19,7 +19,7 @@
 	<body onload="displayGrade();filterProfiles();">
 	<div id="top">
 		<div id="header">
-			<h1 id="logo" href="?page=3">Ramstagram</h1>
+			<a href="?page=4" id='logolink'><h1 id="logo">Ramstagram</h1></a>
 
 			<?php
 				// temp

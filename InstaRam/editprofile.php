@@ -83,7 +83,7 @@
             file_put_contents($dest, json_encode($phpArray, JSON_PRETTY_PRINT));
 
             // redirect to other page if form was submitted successfully
-            $_GET['page'] = 3;
+            $_GET['page'] = 8;
 
         } else {
             // temp

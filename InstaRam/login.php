@@ -55,7 +55,7 @@
         // log in
         if ($isDataClean) {
             log_in($loginUsername);
-            $_GET['page'] = 3;
+            $_GET['page'] = 4;
         }
     }
 

@@ -28,6 +28,11 @@ body {
 	overflow: hidden;
 }
 
+#logolink {
+	text-decoration: none;
+	color: #192231;
+}
+
 .grade {
 	display: none;
 }
@@ -494,6 +499,7 @@ input[type="text"], .loginsignupinfo {
 
 .caption {
 	color: #192231;
+	overflow-x: hidden;
 }
 
 
