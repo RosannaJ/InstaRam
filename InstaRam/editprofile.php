@@ -83,7 +83,8 @@
             file_put_contents($dest, json_encode($phpArray, JSON_PRETTY_PRINT));
 
             // redirect to other page if form was submitted successfully
-            $_GET['page'] = 8;
+            $_GET['page'] = 6;
+            $_GET['user'] = $_SESSION['userID'];    
 
         } else {
             // temp

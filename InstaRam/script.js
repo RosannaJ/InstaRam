@@ -198,27 +198,30 @@ function nextImage(dir) {
 }
 
 function filterProfiles() {
-	let filter = document.getElementById("connectionFilter");
+	let connection = document.getElementById("connectionFilter");
 	let search = document.getElementById("searchBar");
+	let grade = document.getElementById("searchBar");
 	
-	if (!filter || !search) { return; }
+	if (!connection || !search || !grade) { return; }
 
-	fetchData("connection=" + filter.value + "&search=" + search.value, updateProfileThumbnails);
+	fetchData("connection=" + connection.value + "&search=" + search.value + "&grade=" + grade.value, updateProfileThumbnails);
 
 }
 
+// editCaption
+function editCaption() {
+	let UID = getUID(document.getElementById("content").src);
+
+	fetchData("action=editPost&UID=" + UID, function(data) {}, "post", new FormData(document.forms["changeCaption"]));
+}
 		
 // edit post (only caption)	
 function displayEdit(imageFile){	
+	let caption = document.getElementById("caption").innerHTML;
+
 	displayLightBox(imageFile);	
-	changeVisibility("editPage");	
-}
-
-// savePostEdits
-function savePost(){
-	captionInput.innerHTML = 
-	displayEdit();
-
+	changeVisibility("editPage");
+	document.getElementById("postCaption").innerHTML = caption;	
 }
 
 function currentCaption(){
@@ -447,6 +450,7 @@ function addComment() {
 	// prevent submission of form
 	return false;
 }
+
 
 function deleteComment(commentUID) {
 	let imageUID = getUID(document.getElementById("content").src);

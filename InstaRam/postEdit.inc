@@ -12,7 +12,9 @@
 		<img id="content" src="" alt="">
 		
 	</div>
-	<textarea id="captionInput" name="caption" rows="4" cols="50"><?php echo $caption;?></textarea>
-    <button type="button" onclick="savePost()">Save</button>
+	<form name="changeCaption" onsubmit="return editCaption()">
+		<input type="textarea" name="postCaption" id="postCaption" value="">
+		<input type="submit" value="Save">
+	</form>
 
 </div>

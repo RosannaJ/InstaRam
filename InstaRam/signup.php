@@ -122,7 +122,7 @@
         if ($isDataClean) {
             //$phpArray = array();
             $newSubmission = "";
-            $uid = 0;
+            $uid = "0";
             $dest = "";
             $newUser = [];
             $identifierFileName = "identifier.txt";

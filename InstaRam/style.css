@@ -87,6 +87,22 @@ button {
 	height: 50px;
 }
 
+#newpostbox button {
+	border: 2px solid #D5DFEC;
+	border-radius: 6px;
+	background-color: #D5DFEC;
+	color:#192231;
+	font-size: 20px;
+	font-weight: 300;
+	width: 50%;
+	height: 60px;
+}
+
+#newpostbox button[type="submit"] {
+	width: 100px;
+	height: 50px;
+}
+
 #header a {
 	position:relative;
 }
@@ -143,6 +159,12 @@ button {
 
 }
 
+#newpostbox {
+	width: 40%;
+	height: 40%;
+
+}
+
 #table {
 	display: table-cell; 
 	vertical-align: middle; 
@@ -187,6 +209,8 @@ input[type="text"], .loginsignupinfo {
 #signupbox{
 	width: 40%;
 	height: 90%;
+	margin-top: 3%;
+	overflow-x: scroll;
 }
 
 #signup {
@@ -325,6 +349,16 @@ input[type="text"], .loginsignupinfo {
 	border-radius: 50%;
 	object-fit: cover;
 }
+
+
+#captionInput {
+	resize: none;
+	width: 50%;
+	border-radius: 6px;
+	background-color: #D5DFEC;
+	color: #192231;
+}
+
 
 
 

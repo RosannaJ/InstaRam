@@ -73,7 +73,7 @@
 
 				// display decline button if pending friend request
 				if (strcmp($message, "Accept Friend Request") === 0) {
-					echo "<input type='button' id='decline' value='Decline Friend Request' onclick='toggleFriend(\"" . $user['username'] . "\");toggleFriend(\"" . $user['username'] . "\");hideDeclineButton();'>";
+					echo "<input type='button' id='decline' class='profilebuttons' value='Decline Friend Request' onclick='toggleFriend(\"" . $user['username'] . "\");toggleFriend(\"" . $user['username'] . "\");hideDeclineButton();'>";
 				}
 				
 			} else if (isset($_SESSION["userID"]) && strcmp($_SESSION["userID"], $user['UID']) == 0) {

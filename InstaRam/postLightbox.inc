@@ -9,8 +9,14 @@
 	<span id="prev" onclick="nextImage(-1)">&#10094;</span>
 	<span id="next" onclick="nextImage(1)">&#10095;</span>
 	<span id="x" onclick="closeLightBox()">&times;</span><br>
-	<span id="editpost" onclick="displayEdit()">edit</span>
-	<span id="deletePost" onclick="deletePost()">delete</span>
+	
+	<?php 
+		if ($_SESSION['userID'] == $_GET["user"]){
+			echo "<span id='editpost' onclick='displayEdit()'>edit</span>";
+			echo "<span id='deletePost' onclick='deletePost()'>delete</span>";
+		}
+	?>
+	
 
 	<div id="boundaryBigImage">
 		
