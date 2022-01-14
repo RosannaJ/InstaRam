@@ -186,7 +186,7 @@ function nextImage(dir) {
 	for (let i = 0; i < thumbnails.length; i++) {
 		
 		// look for image with same uid as current lightbox image
-		if (getUID(lightboxImage.src) == thumbnails[i].id || lightboxImage.alt == thumbnails[i].id) {
+		if (getUID(lightboxImage.src) == thumbnails[i].id || (!isPost(lightboxImage.src) &&  lightboxImage.alt == thumbnails[i].id)) {
 			
 			// display next image
 			if (i + dir < thumbnails.length && i + dir >= 0) {
@@ -207,11 +207,11 @@ function filterProfiles() {
 
 }
 
-// edit post (only caption)
-function displayEdit(imageFile){
-	displayLightBox(imageFile);
-	changeVisibility("editPage");
-
+		
+// edit post (only caption)	
+function displayEdit(imageFile){	
+	displayLightBox(imageFile);	
+	changeVisibility("editPage");	
 }
 
 // savePostEdits
@@ -264,6 +264,7 @@ function updateProfileThumbnails(data) {
 
 		// set name
 		name.innerHTML = data[i].name;
+		name.className = "caption";
 
 		// set div
 		card.className = "card";
@@ -472,5 +473,6 @@ function hideDeclineButton() {
 
 function deletePost() {
 	fetchData("action=deletePost&UID=" + getUID(document.getElementById("content").src), function (data) {});
-	closeLightBox();
+	//closeLightBox();
+	window.location.reload();
 }

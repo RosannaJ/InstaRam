@@ -13,16 +13,11 @@
 		$posts = [];
 
 		// display profile info
-		if ($user["UID"] === $_GET["user"]) {
+		if ($user["UID"] == $_GET["user"]) {
 			$folderName = "users/{$user['UID']}/posts/"; //  posts folder
 
-			echo "<br>" . $user['name'] . "<br>";
-
-			// display username
-			echo "<h1>" . $user['username'] . "</h1>";
-
-			// display name
 			
+			echo "<br><br><br><br><br>";
 
 			// display profile pic
 			if (!empty($user["imageFileType"])) {
@@ -31,8 +26,23 @@
 				echo "<img src='images/defaultpfp.jpg' class='pfp'>";
 			}
 
+			echo "<h1 id='nameonprofile'>" . $user['name'] . "</h1>";
+
+			// display username
+			echo "<h2 id='usernameonprofile' >" . $user['username'] . "</h2>";
+
 			// display bio
-			echo "<br>Bio: " . $user['bio'] . "<br><br>";
+			if (!empty($user['bio'])) {
+				echo "<p id='bioonprofile'>" . $user['bio'] . "<br><br>";
+			}
+
+			if ($user["connection"] == "alum") {
+				echo "Mount Douglas Almunus<br><br><br>";
+			} else if ($user["connection"] == "current") {
+				$grade = explode('g', $user['grade']);
+				echo "Mount Douglas Student, currently in grade " . $grade[1] . "<br><br><br>";
+			}
+			
 
 			// DISPLAY FRIEND REQUEST BUTTON AND DECLINE
 			// check that this is not the current user's own profile page
@@ -56,9 +66,9 @@
 					}
 
 					// display friend request button
-					echo "<input type='button' id='friendRequest' value='$message' onclick='toggleFriend(\"" . $user['username'] . "\");$hideButton'>";
+					echo "<input type='button' id='friendRequest' class='profilebuttons' value='$message' onclick='toggleFriend(\"" . $user['username'] . "\");$hideButton'>";
 				} else {
-					echo "<input type='button' id='friendRequest' value='Delete Friend' onclick='toggleFriend(\"" . $user['username'] . "\")'>";
+					echo "<input type='button' id='friendRequest' class='profilebuttons' value='Delete Friend' onclick='toggleFriend(\"" . $user['username'] . "\")'>";
 				}
 
 				// display decline button if pending friend request
@@ -66,6 +76,14 @@
 					echo "<input type='button' id='decline' value='Decline Friend Request' onclick='toggleFriend(\"" . $user['username'] . "\");toggleFriend(\"" . $user['username'] . "\");hideDeclineButton();'>";
 				}
 				
+			} else if (isset($_SESSION["userID"]) && strcmp($_SESSION["userID"], $user['UID']) == 0) {
+
+				?>
+
+		<button type='button' id='editprofilebutton' class='profilebuttons' onclick='window.location.href="?page=8"'>Edit Profile</button>
+				<!-- <a href="?page=8"><img src="images/editprofile.png" alt="edit profile"></a>; -->
+
+				<?php
 			}
 
 			// display friends --- temp?
@@ -90,10 +108,24 @@
 				}
 			}
 
+			if (isset($_SESSION["userID"]) && strcmp($_SESSION["userID"], $user['UID']) == 0) {
+
+				?>
+	<br><br>
+			<button type='button' id='logoutbutton' class='profilebuttons' onclick='window.location.href="?action=logout"'>Log Out</button>
+			<br><br><br><br>
+			<button type='button' onclick='window.location.href="?action=del"'>(temporary) reset everything</button>
+
+				<?php
+			}
+
+			// <a href='?action=del'><img src="images/reset.png" alt="reset"></a>
+			// <a href='?action=logout'><img src="images/logout.png" alt="logout"></a>
+
 			echo "</div> </div> </div> <div id='postsonprofile'>";
 
 			// temp
-			echo "POSTS:<br>";
+			echo "<br><br><br>";
 
 			// get all posts
 			$posts = get_all_posts();
@@ -112,7 +144,7 @@
 				foreach ($posts as $post) {
 					$dest = "users/{$user['UID']}/posts/" . $post['UID'] . "." . $post['imageFileType'];
 					echo "<div class='card' id='{$post['UID']}' onclick='displayLightBox(\"$dest\")'>";
-					echo "<img src='$dest' width='180' class='thumbnail'>\n";
+					echo "<img src='$dest' class='homethumbnail'>\n";
 					echo "</div>";
 				}
 				echo "</div>";

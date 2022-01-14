@@ -24,11 +24,11 @@
 			<?php
 				// temp
 
-				if (isset($_SESSION["userID"])) {
-					echo "Logged in as: " . get_username($_SESSION["userID"]);
-				} else {
-					echo "Not Logged In";
-				}
+				// if (isset($_SESSION["userID"])) {
+				// 	echo "Logged in as: " . get_username($_SESSION["userID"]);
+				// } else {
+				// 	echo "Not Logged In";
+				// }
 
 				if ($_SESSION["page"] > 2) {
 					include "navbar.inc";

@@ -5,7 +5,7 @@
 	
 	// if not logged in, display all? or redirect to login page?
 
-	echo "<br>HOME PAGE: Your friend's posts are displayed here.";
+	// echo "<br>HOME PAGE: Your friend's posts are displayed here.";
 
 	// show posts if logged in
 	if (isset($_SESSION["userID"])) {
@@ -34,8 +34,8 @@
 				// display username, image, and caption for each post
 				echo "<div class='card' id='{$post['UID']}' onclick='displayLightBox(\"$imageFile\")'>";
 				echo "<a href='?page=6&user=" . $user . "' onclick='event.stopPropagation()'>" . get_username($user) . "</a>";
-				echo "<img src='$imageFile' class='thumbnail'>";
-				echo "<p>" . $post['caption'] . "</p>";
+				echo "<img src='$imageFile' class='homethumbnail'>";
+				echo "<p class='caption'>" . $post['caption'] . "</p>";
 				echo "</div>";
 			}
 

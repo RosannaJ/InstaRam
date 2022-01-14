@@ -205,7 +205,7 @@
 				// add friend request
 				$otherUserData['friendRequests'][] = $_SESSION["userID"];
 
-				echo json_encode(["message" => "Unsend Friend request"], JSON_PRETTY_PRINT);
+				echo json_encode(["message" => "Unsend Friend Request"], JSON_PRETTY_PRINT);
 			} 
 			
 			// UNSEND FRIEND REQUEST
@@ -253,9 +253,19 @@
 			foreach ($posts as $index => $post) {
 				if ($post["UID"] == $_GET["UID"]) {
 					unset($posts[$index]);
+
+					// delete post image
+					if (file_exists("users/" . $reqPostUser . "/posts/" . $post["UID"] . $post)) {
+						unlink("identifier.txt");
+					}
+
 					break;
 				} // if
 			} // foreach
+
+			// update posts.json file
+			file_put_contents($dest, json_encode($posts, JSON_PRETTY_PRINT));
+
 		} // if
 
 		echo json_encode(["deleted" => true], JSON_PRETTY_PRINT);

@@ -90,13 +90,6 @@
 
 			// redirect to next page
 			$_SESSION['page'] = 3;
-
-			echo "Posts:<br>";
-            echo "<pre>";
-            var_dump($phpArray);
-            echo "</pre>";
-	    } else {
-	    	echo "unsuccessful post";
 	    }
 	}
 

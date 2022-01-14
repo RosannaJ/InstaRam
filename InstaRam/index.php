@@ -67,7 +67,7 @@
     } else if ($_SESSION["page"] == 4) {	
         include "explore.php";	
     } else if ($_SESSION["page"] == 5) {	
-        include "inbox.inc";	
+        //include "inbox.inc";	
     } else if ($_SESSION["page"] == 6) {	
         include "profilepage.inc";	
     } else if ($_SESSION["page"] == 7) { 	
