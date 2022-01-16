@@ -338,8 +338,8 @@ function displayLightBox(imageFile, uid) {
 		fetchData("UID=" + UID, function(data) {
 
 			document.getElementById("caption").innerHTML = data.caption + "<br>"
-														+ Object.keys(data.likes).length + " likes" + "<br>"
-														+ "liked by: " + data.likes;
+														+ Object.keys(data.likes).length + " likes";
+														// + <br>" + "liked by: " + data.likes;
 
 			document.getElementById("content").alt = data.caption;
 
@@ -355,15 +355,17 @@ function displayLightBox(imageFile, uid) {
 					let deleteButton = document.createElement("button");
 				
 					comment.innerHTML = data.comments[i].username + ": " + data.comments[i].text;
-					comment.class = "comment";
+					comment.className = "comment";
 
 					deleteButton.innerHTML = "Delete";
+					deleteButton.className = "deletecomment"
 					deleteButton.onclick = function() {
 						deleteComment(data.comments[i].UID)
 					};
 
 					comment.appendChild(deleteButton);
 					comments.appendChild(comment);
+
 				}
 			}
 		});

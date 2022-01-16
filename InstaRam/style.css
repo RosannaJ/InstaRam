@@ -359,7 +359,98 @@ input[type="text"], .loginsignupinfo {
 	color: #192231;
 }
 
+#postnav {
+	width: 100%;
+}
 
+#postnav > * {
+	margin: 0 3%;
+}
+
+#comments {
+	width: 100%;
+	height: 75px;
+	overflow-y: scroll;
+
+}
+
+.comment {
+	color: #D5DFEC;
+	text-align: center;
+}
+
+#addcomment {
+	border: 2px solid #D5DFEC;
+	border-radius: 6px;
+	background-color: #D5DFEC;
+	color:#192231;
+	font-size: 15px;
+	font-weight: 300;
+	width: 120px;
+	height: 35px;
+	margin-left: 0.5%;
+}
+
+.deletecomment {
+	border: 2px solid #D5DFEC;
+	border-radius: 6px;
+	background-color: #D5DFEC;
+	color:#192231;
+	font-size: 15px;
+	font-weight: 300;
+	width: 80px;
+	height: 30px;
+	margin-top:5px;
+	margin-left: 0.5%;
+}
+
+.editdelete {
+	border: 2px solid #D5DFEC;
+	border-radius: 6px;
+	background-color: #D5DFEC;
+	color:#192231;
+	font-size: 15px;
+	font-weight: 300;
+	width: 80px;
+	height: 30px;
+	margin-top:5px;
+}
+
+#commentform {
+	width: 100%;
+	text-align: center;
+}
+
+#editpost {
+	display: inline;
+	justify-content: flex-start;
+}
+
+#x {
+	color: white;
+	font-size: 40px;
+	font-weight: bold;
+	display: inline;
+	justify-content: center;
+}
+
+#x:hover {
+	cursor: pointer;
+	opacity: 50%;
+}
+
+#deletepost {
+	display: inline;
+	justify-content: flex-end;
+}
+
+#like {
+
+	color: #985E6D;
+	
+	cursor: pointer;
+
+}
 
 
 /* Lightbox */
@@ -367,10 +458,10 @@ input[type="text"], .loginsignupinfo {
 	position: fixed;
 	top: 0px;
 	left: 0px;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.8); 
-	
+	width: 100vw;
+	height: 100vh;
+	background: linear-gradient(to bottom right, #192231, #494E6B, #985E6D);
+	opacity: 0.95;
 	flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -432,13 +523,15 @@ input[type="text"], .loginsignupinfo {
 }
 
 #content {
+	min-width: 10vw;
+	
 	max-width: 50vw;
 	max-height: 50vh;
     width: auto;
     height: auto;
 
 	display: block;
-	margin: auto;
+
 	z-index: 4;
 }
 
@@ -446,23 +539,14 @@ input[type="text"], .loginsignupinfo {
 	padding: 3vh;
 	background-color: rgba(0, 0, 0, 0.05);
 	color: white;
-	text-align: left;
+	text-align: center;
 	z-index: 4;
 }
 
 
 
 /* Buttons */
-#x {
-	color: white;
-	font-size: 40px;
-	font-weight: bold;
-}
 
-#x:hover {
-	cursor: pointer;
-	opacity: 50%;
-}
 
 #prev, #next {
     width: auto;
