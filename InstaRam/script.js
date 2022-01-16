@@ -316,7 +316,10 @@ function displayLightBox(imageFile, uid) {
 	lightBoxImage.src = image.src;
 	lightBoxImage.alt = uid;
 
-	lightBoxImage2.src = image.src;
+    if (lightBoxImage2) {
+    	lightBoxImage2.src = image.src;
+    }
+	
 	//lightBoxImage2.alt = uid;
 	
 	// show lightbox if not already visible
