@@ -1,16 +1,12 @@
-<!-- <div id="editPage" class="hidden">
-</div> -->
 
-<div id="editPage" class="hidden">
-	<span id="x" onclick="closeEdit()">&times;</span><br>
-	<span id="editpost" onclick="displayEdit()">Edit</span>
+<div id="editLightbox" class="hidden">
 
-	<div id="boundaryBigImage">
-		
-		<!-- <a id="imageDownload" href="" download>Download Image</a><br> -->
-		
-		<img id="content" src="" alt="">
-		
+	<div id="postnavEdit">	
+		<span id="xEdit" onclick="toggleEdit()">&times;</span><br>
+	</div>
+
+	<div id="boundaryBigImageEdit">
+		<img id="contentEdit" src="" alt="">
 	</div>
 	<form name="changeCaption" onsubmit="return editCaption()">
 		<input type="textarea" name="postCaption" id="postCaption" value="">

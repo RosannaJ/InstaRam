@@ -48,10 +48,10 @@
 	<label class="grade"><br>Current Grade:</label>
 	<select name="grade" class="grade" id="grade">
 		<option value="" <?php echo $grade == '' ? 'selected' : ''; ?>>Choose a Grade</option>
-		<option value="g9" <?php echo $grade == 'g9' ? 'selected' : ''; ?>>Grade 9</option>
-		<option value="g10" <?php echo $grade == 'g10' ? 'selected' : ''; ?>>Grade 10</option>
-		<option value="g11" <?php echo $grade == 'g11' ? 'selected' : ''; ?>>Grade 11</option>
-		<option value="g12" <?php echo $grade == 'g12' ? 'selected' : ''; ?>>Grade 12</option>
+		<option value="9" <?php echo $grade == '9' ? 'selected' : ''; ?>>Grade 9</option>
+		<option value="10" <?php echo $grade == '10' ? 'selected' : ''; ?>>Grade 10</option>
+		<option value="11" <?php echo $grade == '11' ? 'selected' : ''; ?>>Grade 11</option>
+		<option value="12" <?php echo $grade == '12' ? 'selected' : ''; ?>>Grade 12</option>
 	</select>
 	
 	

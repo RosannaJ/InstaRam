@@ -200,12 +200,17 @@ function nextImage(dir) {
 function filterProfiles() {
 	let connection = document.getElementById("connectionFilter");
 	let search = document.getElementById("searchBar");
-	let grade = document.getElementById("searchBar");
+	let grade = document.getElementById("gradeFilter");
 	
 	if (!connection || !search || !grade) { return; }
 
 	fetchData("connection=" + connection.value + "&search=" + search.value + "&grade=" + grade.value, updateProfileThumbnails);
 
+	if (connection.value === "current") {
+		grade.disabled = false;
+	} else {
+		grade.disabled = true;
+	}
 }
 
 // editCaption
@@ -213,15 +218,25 @@ function editCaption() {
 	let UID = getUID(document.getElementById("content").src);
 
 	fetchData("action=editPost&UID=" + UID, function(data) {}, "post", new FormData(document.forms["changeCaption"]));
+	
+	changeVisibility("editLightbox");
+	updatePostContents();
+	changeVisibility("lightbox");
+	return false;
 }
 		
 // edit post (only caption)	
-function displayEdit(imageFile){	
-	let caption = document.getElementById("caption").innerHTML;
+function displayEdit(){	
+	let caption = document.getElementById("caption").innerHTML.split("<br>")[0];
 
-	displayLightBox(imageFile);	
-	changeVisibility("editPage");
-	document.getElementById("postCaption").innerHTML = caption;	
+	toggleEdit();
+
+	document.getElementById("postCaption").value = caption;	
+}
+
+function toggleEdit() {
+	changeVisibility("editLightbox");
+	changeVisibility("lightbox");
 }
 
 function currentCaption(){
@@ -287,6 +302,7 @@ function updateProfileThumbnails(data) {
 function displayLightBox(imageFile, uid) {
 	let image = new Image();
 	let lightBoxImage = document.getElementById("content");
+	let lightBoxImage2 = document.getElementById("contentEdit");
 
 	image.src = imageFile;
 	
@@ -299,6 +315,9 @@ function displayLightBox(imageFile, uid) {
 	// set content
 	lightBoxImage.src = image.src;
 	lightBoxImage.alt = uid;
+
+	lightBoxImage2.src = image.src;
+	//lightBoxImage2.alt = uid;
 	
 	// show lightbox if not already visible
 	if (isVisible("lightbox") == false) {

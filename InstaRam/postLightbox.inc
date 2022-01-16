@@ -1,9 +1,5 @@
-<!-- <div id="lightbox" class="hidden">
-</div> -->
 <?php 
-	if (isset($_GET["edit"])){
-		include "postEdit.php";
-	}
+	include "postEdit.inc";
 ?>
 <div id="lightbox" class="hidden">
 	<span id="prev" onclick="nextImage(-1)">&#10094;</span>
@@ -23,13 +19,10 @@
 	
 
 	<div id="boundaryBigImage">
-		
-		<!-- <a id="imageDownload" href="" download>Download Image</a><br> -->
-		
 		<img id="content" src="" alt="">
-		
 	</div>
 	<span class="material-icons" id="like" style="font-size:40px;" onclick="toggleLike()" >favorite_border</span>
+	
 	<p id="caption"></p>
 
 	<form name="commentForm" id="commentform" onsubmit="return addComment()">

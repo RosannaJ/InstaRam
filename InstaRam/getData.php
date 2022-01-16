@@ -61,7 +61,8 @@
 		$newArray = [];
 		$search = isset($_GET["search"]) ? $_GET["search"] : "";
 		$connectionFilter = isset($_GET["connection"]) ? $_GET["connection"] : "all";
-		$gradeFilter = $_GET["grade"];
+		$gradeFilter = isset($_GET["grade"]) ? $_GET["grade"] : "all";
+
 
 		for ($i = 0; $i < count($users); $i++) {
 			
@@ -69,9 +70,9 @@
 			if (empty($search) || stripos($users[$i]["name"], $search) !== false || stripos($users[$i]["username"], $search) !== false) {
 				
 				// check if meets filter condition
-				if (strcmp($connectionFilter, "all") == 0 || $users[$i]["connection"] == $connectionFilter) { 
-					//if (strcmp($gradeFilter, "all") == 0 || $users[$i]["grade"] == $gradeFilter) {
-						$newArray[] = [
+				if (strcmp($connectionFilter, "all") == 0 || ($users[$i]["connection"] == $connectionFilter 
+					&& (strcmp($gradeFilter, "all") == 0 || $users[$i]["grade"] == $gradeFilter))) {
+					$newArray[] = [
 							"username" => $users[$i]['username'],
 							"UID" => $users[$i]['UID'],
 							"name" => $users[$i]['name'],
@@ -124,6 +125,9 @@
 
 		if (!empty($_POST["text"])) {
 
+			// clean data
+			$_POST["text"] = clean_data($_POST["text"]);
+
 			// add new comment
 			update_post($_GET["UID"], function(&$post) {
 				$identifierFileName = "commentUID.txt";
@@ -150,20 +154,18 @@
 	else if (array_key_exists("action", $_GET) && $_GET["action"] == "editPost" 
 		&& array_key_exists("UID", $_GET)			// TODO: check if uid is valid (check with postIdentifier file)
 		&& array_key_exists("userID", $_SESSION)) {
-		
-		echo json_encode($_POST, JSON_PRETTY_PRINT); // temp
 
 		// clean data
-		$caption = clean_data($_POST["caption"]);
+		$_POST["postCaption"] = clean_data($_POST["postCaption"]);
 
 		// update post caption
-		if (get_user_of_post($_GET["UID"]) != $_SESSION["userID"]) {
+		if (get_user_of_post($_GET["UID"]) == $_SESSION["userID"]) {
 			update_post($_GET["UID"], function(&$post) {
 				$post["caption"] = $_POST["postCaption"];
 			});
 		}
 
-		echo json_encode(["edited" => true], JSON_PRETTY_PRINT);
+		echo json_encode(["edited" => $_POST["postCaption"]], JSON_PRETTY_PRINT);
 
 	}
 

@@ -31,10 +31,10 @@
    
 	<select name="grade" class="grade" id="grade">
 		<option value="" <?php echo $userInfo["grade"] == '' ? 'selected' : ''; ?>>Choose a Grade</option>
-		<option value="g9" <?php echo $userInfo["grade"] == 'g9' ? 'selected' : ''; ?>>Grade 9</option>
-		<option value="g10" <?php echo $userInfo["grade"] == 'g10' ? 'selected' : ''; ?>>Grade 10</option>
-		<option value="g11" <?php echo $userInfo["grade"] == 'g11' ? 'selected' : ''; ?>>Grade 11</option>
-		<option value="g12" <?php echo $userInfo["grade"] == 'g12' ? 'selected' : ''; ?>>Grade 12</option>
+		<option value="9" <?php echo $userInfo["grade"] == '9' ? 'selected' : ''; ?>>Grade 9</option>
+		<option value="10" <?php echo $userInfo["grade"] == '10' ? 'selected' : ''; ?>>Grade 10</option>
+		<option value="11" <?php echo $userInfo["grade"] == '11' ? 'selected' : ''; ?>>Grade 11</option>
+		<option value="12" <?php echo $userInfo["grade"] == '12' ? 'selected' : ''; ?>>Grade 12</option>
 	</select>
 	<br>
    
