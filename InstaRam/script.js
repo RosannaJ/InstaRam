@@ -209,6 +209,7 @@ function filterProfiles() {
 	if (connection.value === "current") {
 		grade.disabled = false;
 	} else {
+		grade.value = "all";
 		grade.disabled = true;
 	}
 }
@@ -220,8 +221,12 @@ function editCaption() {
 	fetchData("action=editPost&UID=" + UID, function(data) {}, "post", new FormData(document.forms["changeCaption"]));
 	
 	changeVisibility("editLightbox");
-	updatePostContents();
-	changeVisibility("lightbox");
+
+	setTimeout(function() {
+		updatePostContents();
+		changeVisibility("lightbox");
+	}, 100);
+	
 	return false;
 }
 		

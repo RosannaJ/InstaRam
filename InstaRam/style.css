@@ -177,6 +177,10 @@ button {
 	margin: 0;
 }
 
+#title {
+	padding-top: 5%;
+}
+
 .logsign a {
 	color: #D5DFEC;
 }
@@ -198,6 +202,15 @@ button {
 }
 
 input[type="text"], .loginsignupinfo {
+	background-color: #D5DFEC;
+	font-size: 15px;
+	height:50px;
+	width: 250px;
+	text-align: center;
+	border-radius: 2px;
+}
+
+#postCaption {
 	background-color: #D5DFEC;
 	font-size: 15px;
 	height:50px;
@@ -361,10 +374,22 @@ input[type="text"], .loginsignupinfo {
 
 #postnav {
 	width: 100%;
+	text-align: center;
 }
 
 #postnav > * {
 	margin: 0 3%;
+}
+
+#explorebox {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 70%;
+	height: 100vh;
+	background-color: #D5DFEC22;
+	padding-left: 5%;
+	padding-right: 5%;
 }
 
 #comments {
@@ -426,7 +451,7 @@ input[type="text"], .loginsignupinfo {
 	justify-content: flex-start;
 }
 
-#x {
+#x, #xEdit {
 	color: white;
 	font-size: 40px;
 	font-weight: bold;
@@ -434,10 +459,11 @@ input[type="text"], .loginsignupinfo {
 	justify-content: center;
 }
 
-#x:hover {
+#x:hover, #xEdit:hover {
 	cursor: pointer;
 	opacity: 50%;
 }
+
 
 #deletepost {
 	display: inline;
@@ -450,6 +476,25 @@ input[type="text"], .loginsignupinfo {
 	
 	cursor: pointer;
 
+}
+
+#saveEditPost {
+	border: 2px solid #D5DFEC;
+	border-radius: 6px;
+	background-color: #D5DFEC;
+	color:#192231;
+	font-size: 15px;
+	font-weight: 300;
+	width: 120px;
+	height: 35px;
+}
+
+#makeNewPost {
+	text-align:center;
+}
+
+#makeNewPost a {
+	color: #D5DFEC;
 }
 
 
@@ -492,7 +537,7 @@ input[type="text"], .loginsignupinfo {
 	display: block;
 }
 
-.unhidden#positionBigImage, .unhidden#lightbox {
+.unhidden#positionBigImage, .unhidden#lightbox, .unhidden#editLightbox {
 	display: flex;
 }
 
@@ -522,7 +567,7 @@ input[type="text"], .loginsignupinfo {
 	z-index: 3;
 }
 
-#content {
+#content, #contentEdit {
 	min-width: 10vw;
 	
 	max-width: 50vw;
@@ -534,6 +579,7 @@ input[type="text"], .loginsignupinfo {
 
 	z-index: 4;
 }
+
 
 #caption {
 	padding: 3vh;
@@ -578,7 +624,7 @@ input[type="text"], .loginsignupinfo {
 	right: 0;
 }
 
-#prev, #next, #x, #like {
+#prev, #next, #x, #like, #xEdit {
 	user-select: none;
 	z-index: 5;
 }

@@ -8,11 +8,11 @@
 	<div id="postnav">
 	<?php 
 		if (array_key_exists('user', $_GET) && $_SESSION['userID'] == $_GET["user"]) {
-			echo "<button type='button' id='editpost' class='editdelete' onclick='displayEdit()'>edit</button>";
+			echo "<button type='button' id='editpost' class='editdelete' onclick='displayEdit()'>Edit</button>";
 		}
 		echo "<span id='x' onclick='closeLightBox()'>&times;</span>";
 		if (array_key_exists('user', $_GET) && $_SESSION['userID'] == $_GET["user"]) {
-			echo "<button type='button' id='deletepost' class='editdelete' onclick='deletePost()'>delete</button>";
+			echo "<button type='button' id='deletepost' class='editdelete' onclick='deletePost()'>Delete</button>";
 		}
 	?>
 	</div>
@@ -21,6 +21,7 @@
 	<div id="boundaryBigImage">
 		<img id="content" src="" alt="">
 	</div>
+	<br>
 	<span class="material-icons" id="like" style="font-size:40px;" onclick="toggleLike()" >favorite_border</span>
 	
 	<p id="caption"></p>

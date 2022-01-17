@@ -129,8 +129,8 @@
 			// get all posts
 			$posts = get_all_posts();
 
-			//check if the user has any posts
-			if (array_key_exists($user['UID'], $posts)) {
+			// check if the user has any posts
+			if (array_key_exists($user['UID'], $posts) && $posts[$user["UID"]] != []) {
 
 				// get posts of user
 				$posts = $posts[$user['UID']];
@@ -139,7 +139,7 @@
 				usort($posts, "cmp_UID");
 
 				// display posts
-				echo "<div id='thumbnails'>\n";
+				echo "<div id='thumbnails'>";
 				foreach ($posts as $post) {
 					$dest = "users/{$user['UID']}/posts/" . $post['UID'] . "." . $post['imageFileType'];
 					echo "<div class='card' id='{$post['UID']}' onclick='displayLightBox(\"$dest\")'>";
@@ -147,6 +147,14 @@
 					echo "</div>";
 				}
 				echo "</div>";
+
+			} else if (isset($_GET["user"]) && $_GET["user"] == $_SESSION["userID"]) {
+				echo "<div id='makeNewPost'>";
+				echo "<p>This is where you can find your posts</p>";
+				echo "<p><a href='?page=7'>Share your first post now</a></p>";
+				echo "</div>";
+			} else {
+				echo "This person does not have any posts";
 			}
 		}
 	} else {
