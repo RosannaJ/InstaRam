@@ -204,14 +204,16 @@ function filterProfiles() {
 	
 	if (!connection || !search || !grade) { return; }
 
-	fetchData("connection=" + connection.value + "&search=" + search.value + "&grade=" + grade.value, updateProfileThumbnails);
-
 	if (connection.value === "current") {
 		grade.disabled = false;
 	} else {
 		grade.value = "all";
 		grade.disabled = true;
 	}
+
+	fetchData("connection=" + connection.value + "&search=" + search.value + "&grade=" + grade.value, updateProfileThumbnails);
+
+	
 }
 
 // editCaption
@@ -220,9 +222,9 @@ function editCaption() {
 
 	fetchData("action=editPost&UID=" + UID, function(data) {}, "post", new FormData(document.forms["changeCaption"]));
 	
-	changeVisibility("editLightbox");
 
 	setTimeout(function() {
+		changeVisibility("editLightbox");
 		updatePostContents();
 		changeVisibility("lightbox");
 	}, 100);
@@ -507,5 +509,7 @@ function hideDeclineButton() {
 function deletePost() {
 	fetchData("action=deletePost&UID=" + getUID(document.getElementById("content").src), function (data) {});
 	//closeLightBox();
-	window.location.reload();
+	setTimeout(function() {
+		window.location.reload();
+	}, 100);
 }
