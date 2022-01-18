@@ -209,8 +209,8 @@
         return $userData;
     }
 
-    function update_user_data($user, $data) {
-        $dest = "users/" . $user . "/userinfo.json";
+    function update_user_data($data) {
+        $dest = "users/" . $data["UID"] . "/userinfo.json";
         file_put_contents($dest, json_encode($data, JSON_PRETTY_PRINT));
     }
 

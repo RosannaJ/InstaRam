@@ -86,24 +86,15 @@
 			}
 
 			// display friends --- temp?
-
-			echo "<br><br>Refresh to update: ";
 			
 			if (isset($user['friends'])) {
-				echo "<br>";
+				echo "<br><br><br>";
 				echo "This person has " . count($user['friends']) . " friend(s).";
 				echo "<br>";
 
 				echo "<br>Friends: ";
 				foreach ($user['friends'] as $friend) {
 					echo $friend . ", ";
-				}
-			}
-
-			if (isset($user['friendRequests'])) {
-				echo "<br>Friend Requests: ";
-				foreach ($user['friendRequests'] as $request) {
-					echo $request . ", "; 
 				}
 			}
 

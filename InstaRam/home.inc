@@ -4,6 +4,7 @@
 
 	// echo "<br>HOME PAGE: Your friend's posts are displayed here.";
 
+	echo "<div id='homebox'>";
 	echo "<h1 id='title'>Home</h1>";
 	// show posts if logged in
 	if (isset($_SESSION["userID"])) {
@@ -35,7 +36,7 @@
 
 				// display username, image, and caption for each post
 				echo "<div class='card' id='{$post['UID']}' onclick='displayLightBox(\"$imageFile\")'>";
-				echo "<a href='?page=6&user=" . $user . "' onclick='event.stopPropagation()'>" . get_username($user) . "</a>";
+				echo "<a id='usernameonhome' href='?page=6&user=" . $user . "' onclick='event.stopPropagation()'>" . get_username($user) . "</a>";
 				echo "<img src='$imageFile' class='homethumbnail'>";
 				echo "<p class='caption'>" . $post['caption'] . "</p>";
 				echo "</div>";
@@ -44,9 +45,9 @@
 			echo "</div>";
 		} else {
 			echo "<div id='getSomeFriends'>";
-			echo "<h1 id='getStarted'>Get Started Now!</h1>";
-			echo "<p>It seems that you are lonely. <a href='?page=4'>Make some friends!</a></p>";
+			echo "<p>It seems that you are lonely. <a id='makefriends' href='?page=4'>Make some friends!</a></p>";
 			echo "</div>";
 		}
 	}
+	echo "<div>";
 ?>

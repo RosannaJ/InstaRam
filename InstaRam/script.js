@@ -513,3 +513,38 @@ function deletePost() {
 		window.location.reload();
 	}, 100);
 }
+
+function updateNotifs() {
+	let notifications = document.getElementById("notifications");
+
+	// get notifications
+	fetchData("action=notifs", function (data) {
+
+		// update number of unread notifications
+		document.getElementById("unreadAmount").innerHTML = Object.keys(data).length; // change to count number of unread notifs
+
+		// check if on inbox page
+		if (notifications) {
+
+			// remove all existing notifications
+			while (notifications.firstChild) {
+				notifications.removeChild(notifications.firstChild);
+			}
+		
+			// display notifications
+			for (let i = 0; i < Object.keys(data).length; i++) {
+				let notif = document.createElement("div");
+			
+				notif.innerHTML = data[i].user + " " + data[i].message;
+				notif.className = "notifs";
+
+				notifications.appendChild(notif);
+			}
+		}
+	});
+}
+
+function initNotifs() {
+	updateNotifs();
+	setInterval(updateNotifs, 5000);
+}

@@ -16,25 +16,14 @@
 		<script src="script.js"></script>
 	</head>
   
-	<body onload="displayGrade();filterProfiles();">
-	<div id="top">
-		<div id="header">
-			<a href="?page=4" id='logolink'><h1 id="logo">Ramstagram</h1></a>
+	<body onload="displayGrade();filterProfiles();initNotifs();">
+		
+			
 
 			<?php
-				// temp
-
-				// if (isset($_SESSION["userID"])) {
-				// 	echo "Logged in as: " . get_username($_SESSION["userID"]);
-				// } else {
-				// 	echo "Not Logged In";
-				// }
+				
 
 				if ($_SESSION["page"] > 2) {
 					include "navbar.inc";
 				}
 			?>
-		</div>
-	</div>
-
-	<div id="nohead">

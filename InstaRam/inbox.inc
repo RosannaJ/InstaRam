@@ -1,10 +1,7 @@
-<?php
-    echo "<h1 id='title'>Inbox</h1>";
+<div id="inboxpage">
+<div id="inboxbox">
+    <h1 id='title'>Inbox</h1>
+    <div id="notifications"></div>
+</div>
+</div>
 
-    $user = get_user_data($_SESSION['userID']);
-    $notifications = [];
-
-    if (isset($notifications)) {
-        echo "You have notifications.";
-    }
-?>

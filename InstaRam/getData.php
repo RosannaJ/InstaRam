@@ -98,6 +98,7 @@
 
 		update_post($_GET["UID"], function(&$post) {
 			$alreadyLiked = array_search($_SESSION["userID"], $post["likes"]);
+			$userInfo = get_user_data(get_user_of_post($_GET["UID"]));
 
 			// return whether current user has liked the post if that's what's requested
 			if ($_GET["action"] == "checkIfLiked") {
@@ -106,11 +107,42 @@
 
 			// toggle "like"
 			else if ($alreadyLiked === false) {
+
+				// add like
 				$post["likes"][] = $_SESSION["userID"];
+
+				// add new notification if user was not liking own post
+				//if ($userInfo["UID"] != $_SESSION["userID"]) { //**uncomment
+					$userInfo["notifications"][] = [
+						"action" => "like",
+						"user" => $_SESSION["userID"],
+						"message" => "liked your post.",
+						"read" => false
+					];
+
+					// update info to json file
+					update_user_data($userInfo);
+				//}
+
 				echo json_encode(["isLiked" => true], JSON_PRETTY_PRINT);
 			} else {
 				unset($post["likes"][$alreadyLiked]);
 				$post["likes"] = array_values($post["likes"]);
+
+				// find notification and delete
+				foreach ($userInfo["notifications"] as $key => $notif) {
+					if ($notif["user"] == $_SESSION["userID"] && $notif["action"] == "like") {
+
+						// delete notification
+						unset($userInfo["notifications"][$key]);
+						$userInfo["notifications"] = array_values($userInfo["notifications"]);
+
+						// update info to json file
+						update_user_data($userInfo);
+						break;
+					}
+				}
+
 				echo json_encode(["isLiked" => false], JSON_PRETTY_PRINT);
 			}
 		});
@@ -130,6 +162,7 @@
 
 			// add new comment
 			update_post($_GET["UID"], function(&$post) {
+				$userInfo = get_user_data(get_user_of_post($_GET["UID"]));
 				$identifierFileName = "commentUID.txt";
 				$newUID = 0;
 
@@ -146,6 +179,21 @@
 					"text" => $_POST["text"],	//** clean data first? **
 					"UID" => $newUID
 				];
+
+				//**** */
+				// add new notification if user was not commenting on own post
+				//if ($userInfo["UID"] != $_SESSION["userID"]) { //**uncomment
+					$userInfo["notifications"][] = [
+						"action" => "comment",
+						"commentUID" => $newUID,
+						"user" => $_SESSION["userID"],
+						"message" => "commented on your post.",
+						"read" => false
+					];
+
+					// update info to json file
+					update_user_data($userInfo);
+				//}
 			});
 		}
 	}
@@ -188,6 +236,22 @@
 				// delete requested comment
 				unset($post["comments"][$index]);
 				$post["comments"] = array_values($post["comments"]);
+
+				// find notification and delete
+				foreach ($userInfo["notifications"] as $key => $notif) {
+					if ($notif["user"] == $_SESSION["userID"] && $notif["action"] == "comment" 
+					&& $notif["commentUID"] == $_GET["commentUID"]) {
+
+						// delete notification
+						unset($userInfo["notifications"][$key]);
+						$userInfo["notifications"] = array_values($userInfo["notifications"]);
+
+						// update info to json file
+						update_user_data($userInfo);
+						break;
+					}
+				}
+
 				echo json_encode(["commentDeleted" => true], JSON_PRETTY_PRINT);
 			}
 			
@@ -262,12 +326,12 @@
 		}
 
 		// update userinfo.json files
-		update_user_data($otherUserData["UID"], $otherUserData);
-		update_user_data($currentUserData["UID"], $currentUserData);
+		update_user_data($otherUserData);
+		update_user_data($currentUserData);
 	}
 
 	else if (array_key_exists("action", $_GET) && $_GET["action"] == "deletePost" 
-	&& array_key_exists("UID", $_GET)) {
+	&& array_key_exists("UID", $_GET) && array_key_exists("userID", $_SESSION)) {
 		$reqPostUser = get_user_of_post($_GET["UID"]);
 
 		// check if post to delete is the current user's post
@@ -295,6 +359,17 @@
 
 		echo json_encode(["deleted" => true], JSON_PRETTY_PRINT);
 	} // else if
+
+	else if (array_key_exists("action", $_GET) && $_GET["action"] == "notifs"
+	&& array_key_exists("userID", $_SESSION)) {
+		$notifications = get_user_data($_SESSION["userID"])["notifications"];
+
+		foreach ($notifications as $key => $notif) {
+			$notifications[$key]["user"] = get_username($notif["user"]);
+		}
+
+		echo json_encode($notifications, JSON_PRETTY_PRINT);
+	}
 
 	// prevent end of json errors
 	else {

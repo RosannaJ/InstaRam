@@ -46,20 +46,7 @@ body {
 	margin-bottom:50px;
 }
 
-#header {
-	display: block;
-    overflow: hidden;
-    top: 0;
-    width: 100%;
-    position: fixed;
-    z-index: 1;
-	padding-left: 5px;
-	padding-right: 5px;
-	height:50px;
-	background: rgba(213, 223, 236, 1);
-	color: #192231;
-	font-size: 20px;
-}
+
 
 button {
 	cursor: pointer;
@@ -107,6 +94,16 @@ button {
 	position:relative;
 }
 
+#saveeditbio {
+	border: 2px solid #D5DFEC;
+	background-color: #D5DFEC;
+	color:#192231;
+	font-size: 20px;
+	font-weight: 300;
+	width: 160px;
+	height: 50px;
+}
+
 
 
 #logo {
@@ -115,15 +112,82 @@ button {
 	height: 50px;
 }
 
-.topnav {
-    display: inline;
-    float: right;
+#header {
+	display: block;
+    overflow: hidden;
     top: 0;
-    line-height: 50px;
-    vertical-align: middle;
-    margin-right: 0;
-    width: 18%;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+	padding-left: 5px;
+	padding-right: 5px;
+	height:50px;
+	background: rgba(213, 223, 236, 1);
+	color: #192231;
+	font-size: 20px;
 }
+
+/* Hide the links inside the navigation menu (except for logo/home) */
+.topnav a:not(:first-child) {display: none;}
+
+.topnav {
+	height: 50px;
+}
+
+/* Style navigation menu links */
+.topnav a {
+  position:relative;
+  color: white;
+  padding: 14px 16px;
+  text-decoration: none;
+  text-transform:uppercase;
+  font-size: 17px;
+  display: block;
+  background-color:rgba(166, 126, 189, 0.8);;
+}
+
+/* Style the hamburger menu */
+.topnav a.icon {
+  background: rgba(166, 201, 174, 0.8);
+  display: block;
+  position:absolute;
+  float:right;
+  right: 0;
+  top: 0;
+  font-size:20px; 
+
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+	background-color: #A6C9AE;
+	color:#474954;
+  }
+  
+  
+  /* Style the active link (or home/logo) */
+  .active {
+	background-color: rgba(82, 48, 124, 0.8) !important;
+	color: #FDFFFC;
+	font-size: 20px !important;
+  }
+  .active:hover{
+	  color: #FDFFFC !important;
+  }
+  
+	.topnav.responsive {position: fixed;}
+	.topnav.responsive .icon {
+	  position: absolute;
+	  right: 0;
+	  top: 0;
+	}
+	.topnav.responsive a {
+	  float: none;
+	  display: block;
+	  text-align: left;
+	}
+
+
 
 .navlinks img {
     margin-top: -5;
@@ -210,6 +274,24 @@ input[type="text"], .loginsignupinfo {
 	border-radius: 2px;
 }
 
+#searchBar {
+	border: none;
+	margin:0;
+}
+
+.homefilters {
+	background-color: #D5DFEC;
+	color: #192231;
+	font-size: 15px;
+	height:50px;
+	width:100px;
+	text-align: center;
+	border-radius: 2px;
+	border: none;
+	cursor: pointer;
+	margin: 0;
+}
+
 #postCaption {
 	background-color: #D5DFEC;
 	font-size: 15px;
@@ -234,6 +316,12 @@ input[type="text"], .loginsignupinfo {
 	resize: none;
 	background-color: #D5DFEC;
 	color: #192231;
+	padding: 2%;
+}
+
+#bioonprofile {
+	padding: 2%;
+	word-wrap: break-word;
 }
 
 
@@ -381,7 +469,7 @@ input[type="text"], .loginsignupinfo {
 	margin: 0 3%;
 }
 
-#explorebox {
+#explorebox, #homebox, #inboxbox, #editprofilebox {
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
@@ -390,7 +478,22 @@ input[type="text"], .loginsignupinfo {
 	background-color: #D5DFEC22;
 	padding-left: 5%;
 	padding-right: 5%;
+	padding-bottom: 10%;
+	overflow-y: scroll;
 }
+
+
+#usernameonhome {
+	color: #192231;
+}
+
+#makefriends {
+	color:#D5DFEC;
+}
+
+
+
+
 
 #comments {
 	width: 100%;
@@ -685,4 +788,41 @@ input[type="text"], .loginsignupinfo {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+@media only screen and (min-width: 1000px) {
+	/* Add a black background color to the top navigation */
+.topnav {
+	background-color:rgba(166,126,189,0.8);
+	overflow: hidden;
+   top: 0;
+	width: 100%;
+	position:fixed;
+	z-index:1;
+  
+	 
+  }
+
+.topnav a {
+	float:left;
+	font-size:17px;
+}
+.topnav img {
+	width: 24px;
+}
+
+
+   .topnav a:not(:first-child) {display: block;}
+  .icon{
+	  visibility:hidden;
+  }
+
+.topnav a.active {
+
+	color: #FDFFFC;
+	padding:25px;
+	padding-left:45px !important;
+	padding-right:45px !important;
+	font-size:16px !important;
+}
 }
