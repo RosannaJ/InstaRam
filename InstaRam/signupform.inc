@@ -24,7 +24,7 @@
 		<div id="profile">
 			<button id="profilepicinput">
 				<img src="images/upload.png" alt="upload image"><br>
-				<label>Upload Profile Picture</label>
+				<div>Upload Profile Picture</div>
 			</button>
 			<span class="error"><?php echo $profileErr;?></span>
 		</div>
