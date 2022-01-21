@@ -37,9 +37,9 @@
 			}
 
 			if ($user["connection"] == "alum") {
-				echo "<p id='connectprofile'>Mount Douglas Alumnus</p><br><br><br>";
+				echo "<p id='connectprofile'>Mount Douglas Alumnus</p><br><br>";
 			} else if ($user["connection"] == "current") {
-				echo "<p id='connectprofile'>Mount Douglas Student. Grade " . $user['grade'] . "</p><br><br><br>";
+				echo "<p id='connectprofile'>Mount Douglas Student. Grade " . $user['grade'] . "</p><br><br>";
 			}
 			
 

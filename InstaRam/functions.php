@@ -234,5 +234,19 @@
         }
     }
 
+    /*function create_notif($notif) {
+        $identifierFileName = "notifUID.txt";
+		$newUID = 0;
+
+		// get next uid if file exists
+		if (file_exists($identifierFileName)) {
+			$newUID = file_get_contents($identifierFileName);
+		} // if
+			
+		// update uid
+		file_put_contents($identifierFileName, $newUID + 1);
+
+
+    }*/
 
 ?>

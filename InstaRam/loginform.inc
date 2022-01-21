@@ -1,4 +1,4 @@
-<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data" name="form" onsubmit="calcHash()">
+<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data" name="form" onsubmit="loginHash()">
 
     
    <div id="login" class="loginsignup">
@@ -16,7 +16,7 @@
       <br>
 
       <button type="submit">Log In</button><br><br>
-      Don't Have an Account? <a href="?page=2">Create Account</a>
+      <p id="noacc">Don't Have an Account? <a href="?page=2">Create Account</a></p>
 </div>  
    </div>
    </div>

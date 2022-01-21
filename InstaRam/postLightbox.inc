@@ -26,7 +26,7 @@
 	
 	<p id="caption"></p>
 
-	<form name="commentForm" id="commentform" onsubmit="return addComment()">
+	<form name="commentForm" id="commentform" onsubmit="return addComment()" autocomplete="off">
 		<input type="text" name="text" id="text" placeholder="Type Comment..." maxlength="100">
 		<button type="submit" id="addcomment" >Add Comment</button>
 	</form>

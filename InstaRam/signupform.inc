@@ -1,12 +1,11 @@
-<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data" name="form" onsubmit="hashPassword()">
+<div id="signupbox">
+
+<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data" name="form" onsubmit="signupHash()">
 
 	<?php include "tos.inc";?>
-   
-	<div id="signup" class="loginsignup">
-      <div id="signupbox" class="logsign">
-      <div id="table">
+   <br><br>
 
-	<p class=title>Create Account</p>
+	<h1 class=title>Create Account</h1>
 	
 	<span class="error"><?php echo $usernameErr;?></span>
 	<br>
@@ -33,7 +32,7 @@
 	<input type="file" id="fileToUpload" name="fileToUpload"><br><br>
    
 	<input type="checkbox" id="license" name="license" value="agree" <?php if ($license == "agree") echo "checked"; ?>>
-	<label for="license">I agree to the </label><a onclick="changeVisibility('termsofservice')">Terms of Service.</a>
+	<label for="license">I agree to the </label><a id="tos" onclick="changeVisibility('termsofservice')">Terms of Service.</a>
 	<span class="error">* <?php echo $licenseErr;?></span>
 	<br><br>
    
@@ -81,8 +80,8 @@
 		minlength="8" value="" required>
 <br><br>
 		<button type="submit">Create Account</button><br><br>
-	Already Have an Account? <a href="?page=1">Log In</a> <br><br>
-	</div>  
-   </div>
-   </div>
+	Already Have an Account? <a id="tologin" href="?page=1">Log In</a> <br><br>
+	 
 </form>           
+
+</div> 

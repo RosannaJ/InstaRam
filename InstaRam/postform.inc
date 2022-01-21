@@ -3,7 +3,7 @@
 <div id="newpost" class="loginsignup">
       <div id="newpostbox" class="logsign">
       <div id="table">
-      <p class="title">New Post</p> <br>
+      <h1 class="title">New Post</h1>
       <span class="error"><?php echo $fileErr;?></span><br>
    <div id="wrapper">
 		<div id="hidefile">
@@ -25,10 +25,9 @@
    <br>
    <input type="file" id="fileToUpload" name="fileToUpload"><br><br> -->
    
-   <label for="caption">Caption:</label>
    <span class="error"><?php echo $captionErr;?></span>
    <br>
-   <textarea id="captionInput" maxlength="100" name="caption" rows="3" cols="30"><?php echo $caption;?></textarea>
+   <textarea id="captionInput" placeholder="Enter Caption..." maxlength="100" name="caption" rows="3" cols="30"><?php echo $caption;?></textarea>
    <br>
    <br><br><button type="submit">Post</button><br><br>
 </div>
