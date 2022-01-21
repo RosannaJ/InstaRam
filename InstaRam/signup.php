@@ -1,8 +1,8 @@
 <?php
 
     $isDataClean = true;
-    $name = $license = $connection = $bio = $grade = $username = $birthdate = $password = $password2 = "";
-    $nameErr = $profileErr = $licenseErr = $connectionErr = $bioErr = $gradeErr = $usernameErr = $birthdateErr = $passwordErr = "";
+    $name = $license = $connection = $bio = $grade = $username = $password = $password2 = "";
+    $nameErr = $profileErr = $licenseErr = $connectionErr = $bioErr = $gradeErr = $usernameErr = $passwordErr = "";
     $target_dir = "users/";
     $file = "userinfo.json";
     $target_file = "";
@@ -22,7 +22,7 @@
         } else if (username_exists($_POST["username"])) {
             $usernameErr = "Sorry, this username is already in use.";
             $isDataClean = false;
-        }
+        } // else if
 
         // keep username in input field
         $username = clean_data($_POST["username"]);
@@ -37,7 +37,7 @@
             $name = clean_data($_POST["name"]);
         } else {
             $name = clean_data($_POST["name"]); 
-        }
+        } // else
 
         // check if license is valid
         if (!array_key_exists("license", $_POST)) {
@@ -45,7 +45,7 @@
             $isDataClean = false;
         } else {
             $license = clean_data($_POST["license"]);
-        }
+        } // else
 
         // check if connection is valid
         if (!array_key_exists("connection", $_POST)) {
@@ -53,7 +53,7 @@
             $isDataClean = false;
         } else {
             $connection = clean_data($_POST["connection"]);
-        }
+        } // else
 
         // check if grade is valid
         if (array_key_exists("connection", $_POST) && $_POST["connection"] == "current") {
@@ -62,8 +62,8 @@
                 $isDataClean = false;
             } else {
                 $grade = clean_data($_POST["grade"]);
-            }
-        }
+            } // else
+        } // if
 
         // validate bio
         $bio = clean_data($_POST["bio"]);
@@ -78,7 +78,7 @@
             if ($check === false) {
                 $profileErr = "Valid file type is required";
                 $isDataClean = false;
-            }
+            } // if
 
             // get image type
             $imageFileType = mime_content_type($_FILES["fileToUpload"]["tmp_name"]);
@@ -90,19 +90,12 @@
             } else if ($_FILES["fileToUpload"]["size"] > 4000000) {
                 $isDataClean = false;
                 $profileErr = "Files must be 4MB and under.";
-            }
+            } // else if
             
             // set to actual file extension
             $imageFileType = explode("/", $imageFileType)[1];    
-        }
+        } // if
         
-        // check if birthdate is valid
-        if (!array_key_exists("birthdate", $_POST) || empty($_POST["birthdate"])){
-            $birthdateErr = "Birthdate is required";
-            $isDataClean = false;
-        } else {
-            $birthdate = $_POST["birthdate"];
-        }
 
         // check if password is valid
         $tempPass = $_POST["password"];
@@ -116,22 +109,21 @@
         } else {
             $password = $tempPass;
             $password2 = $tempPass2;
-        }
+        } // else
 
         // save data if valid
         if ($isDataClean) {
-            //$phpArray = array();
+     
             $newSubmission = "";
             $uid = "0";
             $dest = "";
             $newUser = [];
             $identifierFileName = "identifier.txt";
-            
-
+           
             // get next uid if file exists
 			if (file_exists($identifierFileName)) {
 				$uid = file_get_contents($identifierFileName);
-			}
+			} // if
 			
 			// update uid
 			file_put_contents($identifierFileName, $uid + 1);
@@ -142,15 +134,15 @@
             // create folders if they don't exist
             if (!is_dir($target_dir)) {
                 mkdir($target_dir);
-            }
+            } // if
 
             if (!is_dir($target_dir . $uid . "/")) {
                 mkdir($target_dir . $uid . "/");
-            }
+            } // if
 
             if (!is_dir($target_dir . $uid . "/" . "posts/")) {
                 mkdir($target_dir . $uid . "/" . "posts/");
-            }
+            } // if
 
             // write form data to json file
             $newSubmission = [
@@ -161,7 +153,6 @@
                 "connection" => $connection,
                 "grade" => $grade,
                 "bio" => $bio,
-                "birthdate" => $birthdate,
                 "imageFileType" => $imageFileType,
                 "password" => $password
             ];
@@ -178,6 +169,6 @@
             // redirect to other page if form was submitted successfully
             $_GET['page'] = 4;
 
-        }
-    }
+        } // if
+    } // if
 ?>		

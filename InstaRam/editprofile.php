@@ -1,10 +1,8 @@
 <?php
-
 	$isDataClean = true;
     $nameErr = $profileErr = $connectionErr = $bioErr = $gradeErr = $usernameErr =  "";
     $target_dir = "users/";
     $file = "userinfo.json";
-
     $username = "";
     $name = "";
     $connection = "";
@@ -25,7 +23,7 @@
         } else if (username_exists($_POST["username"]) && strcmp($_POST["username"], get_username($_SESSION["userID"])) != 0) {
             $usernameErr = "Sorry, this username is already in use.";
             $isDataClean = false;
-        }
+        }// else if
 
         // keep username in input field
         $username = clean_data($_POST["username"]);
@@ -37,10 +35,10 @@
         } else if (!preg_match("/^[a-zA-Z-' ]*$/", $_POST["name"])) {
             $nameErr = "Only letters and white space allowed";
             $isDataClean = false;
-            $name = clean_data($_POST["name"]);
-        } else {
-            $name = clean_data($_POST["name"]); 
-        }
+        }// else if
+
+        // keep name in input field
+        $name = clean_data($_POST["name"]);
 
         // check if connection is valid
         if (!array_key_exists("connection", $_POST)) {
@@ -48,17 +46,17 @@
             $isDataClean = false;
         } else {
             $connection = clean_data($_POST["connection"]);
-        }
+        }// else
 
-        // check if grade is valid
+        // check if grade is valid when connection is student
         if (array_key_exists("connection", $_POST) && $_POST["connection"] == "current") {
             if (empty($_POST["grade"])) {
                 $gradeErr = "Grade is required";
                 $isDataClean = false;
             } else {
                 $grade = clean_data($_POST["grade"]);
-            }
-        }
+            }// else
+        }// else
 
         // validate bio
         $bio = clean_data($_POST["bio"]);
@@ -67,7 +65,7 @@
         if ($isDataClean) {
             $phpArray = array();
             $newSubmission = "";
-            $dest = $target_dir . $_SESSION["userID"] . "/". $file;
+            $dest = $target_dir . $_SESSION["userID"] . "/". $file; // destination is user's userinfo.json
 
             // get old user info
             $phpArray = json_decode(file_get_contents("users/" . $_SESSION["userID"] . "/userinfo.json"), true);
@@ -89,6 +87,6 @@
         } else {
             // temp
             echo "unsuccessful submission of edit profile form";
-        }
-    }
+        }// else 
+    }// if
 ?>

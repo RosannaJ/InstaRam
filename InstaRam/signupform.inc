@@ -5,7 +5,7 @@
 	<?php include "tos.inc";?>
    <br><br>
 
-	<h1 class=title>Create Account</h1>
+	<h1 class="title">Create Account</h1>
 	
 	<span class="error"><?php echo $usernameErr;?></span>
 	<br>
@@ -29,7 +29,7 @@
 			<span class="error"><?php echo $profileErr;?></span>
 		</div>
 	</div>
-	<input type="file" id="fileToUpload" name="fileToUpload"><br><br>
+	<input type="file" id="fileToUpload" class="signupfile" name="fileToUpload"><br><br>
    
 	<input type="checkbox" id="license" name="license" value="agree" <?php if ($license == "agree") echo "checked"; ?>>
 	<label for="license">I agree to the </label><a id="tos" onclick="changeVisibility('termsofservice')">Terms of Service.</a>
@@ -65,11 +65,6 @@
 	<textarea maxlength="180" id="bio" name="bio" rows="3" cols="30"><?php echo $bio;?></textarea>
 	<br><br>
    
-	<label for="birthday">Enter Birthdate:</label>
-	<span class="error">* <?php echo $birthdateErr;?></span><br>
-	<input type="date" id="birthdate" name="birthdate" value="<?php echo $birthdate;?>" min="1900-01-01" max="2009-12-31">
-	<br><br>
-   
 	
 	<span class="error"><?php echo $passwordErr;?></span><br>
 	<input type="password" placeholder="Password (8 characters minimum)" class="loginsignupinfo" id="pw" name="pw"
@@ -80,7 +75,7 @@
 		minlength="8" value="" required>
 <br><br>
 		<button type="submit">Create Account</button><br><br>
-	Already Have an Account? <a id="tologin" href="?page=1">Log In</a> <br><br>
+	Already Have an Account? <a id="tologin" href="?page=1">Log In</a>
 	 
 </form>           
 

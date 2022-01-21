@@ -19,11 +19,10 @@
 	</div>
 	<input type="file" id="fileToUpload" name="fileToUpload"><br><br>
 
-
    <!-- <label for="fileToUpload">Image:</label>
    <span class="error">* <?php echo $fileErr;?></span>
    <br>
-   <input type="file" id="fileToUpload" name="fileToUpload"><br><br> -->
+   <input type="file" id="fileToUpload" name="fileToUpload"><br><br> --> 
    
    <span class="error"><?php echo $captionErr;?></span>
    <br>

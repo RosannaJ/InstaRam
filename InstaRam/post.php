@@ -21,7 +21,7 @@
 	        if ($check === false) {
 	            $fileErr = "Valid file type is required"; 
 	            $isDataClean = false;
-	        }
+	        } // if
 
 	        // get image type
 	        $imageFileType = mime_content_type($_FILES["fileToUpload"]["tmp_name"]);
@@ -33,14 +33,14 @@
 	        } else if ($_FILES["fileToUpload"]["size"] > 4000000) {
 	            $isDataClean = false;
 	            $fileErr = "File must be 4MB and under.";
-	        }
+	        } // else if
 	        
 	        // set to actual file extension
 	        $imageFileType = explode("/", $imageFileType)[1];    
 	    } else {
 	    	$fileErr = "A file must be uploaded.";
 	    	$isDataClean = false;
-	    }
+	    }// else
 
 		// save data if valid
 	    if ($isDataClean) {
@@ -50,11 +50,11 @@
 			$dest = $target_dir . "posts.json";
 			$identifierFileName = "postID.txt";
 			$newUID = 0;
-		
+
 			// get next uid if file exists
 			if (file_exists($identifierFileName)) {
 				$newUID = file_get_contents($identifierFileName);
-			}
+			} // if
 			
 			// update uid
 			file_put_contents($identifierFileName, $newUID + 1);
@@ -62,20 +62,21 @@
 			// create folders if they don't exist
 			if (!is_dir($target_dir)) {
 				mkdir($target_dir);
-			}
+			} // if
 
 			// write form data to json file
 			$newPost = [
 				"caption" => $caption,
 				"UID" => $newUID,
 				"imageFileType" => $imageFileType,
-				"likes" => []
+				"likes" => [],
+				"date" => date(DATE_ISO8601)
 			];
 
 			// store previous posts in array if there are any
 			if (file_exists($dest)) {
 				$phpArray = json_decode(file_get_contents($dest), true);
-			}
+			} // if
 
 			// add new post to array
 			$phpArray[] = $newPost;
@@ -86,11 +87,11 @@
 			// upload image
 			if (!move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $newUID . "." . $imageFileType)) {
 				echo "file upload error.";
-			}
+			} // if
 
 			// redirect to next page
 			$_SESSION['page'] = 3;
-	    }
-	}
+	    } // if
+	} // if
 
 ?>

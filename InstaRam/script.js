@@ -370,10 +370,13 @@ function displayLightBox(imageFile, uid) {
 		// update info about post
 		fetchData("UID=" + UID, function(data) {
 			let likeText = (Object.keys(data.likes).length == 1) ? "like" : "likes";
+			let options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+			let date = (new Date(data.date)).toLocaleString("en-CA", options);
+
 
 			document.getElementById("caption").innerHTML = data.caption + "<br>"
-														+ Object.keys(data.likes).length + " " + likeText;
-														// + <br>" + "liked by: " + data.likes;
+														+ Object.keys(data.likes).length + " " + likeText
+														+ "<br>Posted on " + date;
 
 			document.getElementById("content").alt = data.caption;
 
@@ -539,16 +542,17 @@ function updateNotifs() {
 
 	// get notifications
 	fetchData("action=notifs", function (data) {
+		let unreadAmount = 0;
+		
+		// count number of unread notifications
+		for (let i = 0; i < Object.keys(data).length; i++) {
+			if (!data[i].read) {
+				unreadAmount++;
+			} // if
+		} // if
 
-		// update number of unread notifications **change to count number of unread notifs
-		document.getElementById("unreadAmount").innerHTML = (Object.keys(data).length == 0) ? "" : Object.keys(data).length;
-
-		// show delete all button if there are notifications
-		if (Object.keys(data).length > 0) {
-			document.getElementById("deleteAllNotifs").classList.replace("hidden", "unhidden");
-		} else {
-			document.getElementById("deleteAllNotifs").classList.replace("unhidden", "hidden");
-		} // else
+		// update number of unread notifications
+		document.getElementById("unreadAmount").innerHTML = (unreadAmount == 0) ? "" : unreadAmount;
 
 		// check if on inbox page
 		if (notifications) {
@@ -558,6 +562,14 @@ function updateNotifs() {
 				notifications.removeChild(notifications.firstChild);
 			} // while
 		
+			// display "no notifs" message if their are notifs
+			if (Object.keys(data).length == 0) {
+				let text = document.createElement("p");
+				text.innerHTML = "You have no notifications.";
+				text.className = "noNotifs";
+				notifications.appendChild(text);
+			} // if
+
 			// create and display notifications
 			for (let i = Object.keys(data).length - 1; i >= 0; i--) {
 				let notif = document.createElement("div");
@@ -566,15 +578,30 @@ function updateNotifs() {
 				let profilePic = document.createElement("img");
 				let username = document.createElement("p");
 				let text = document.createElement("p");
+				let date = document.createElement("p");
 				let deleteButton = document.createElement("button");
-			
-				// set class for notif div
-				notif.className = "notifs";
-				notif.classList.add(data[i].read ? "read" : "unread");
+				let dateDiv = document.createElement("div");
 
+				let options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+				let dateText = (new Date(data[i].date)).toLocaleString("en-CA", options).split(", ");
+			
+				let readStatus = data[i].read ? "read" : "unread";
+				
+				// set class for notif div
+				notif.className = "notifs " + readStatus;
+				notif.onclick = () => {
+					document.getElementById(data[i].UID).checked = !document.getElementById(data[i].UID).checked;
+					logCheckbox(data[i].UID);
+				}
+
+				// create checkbox
 				checkbox.type = "checkbox";
-				//checkbox.id = data[i].UID;
-				checkbox.checked = document.getElementById("notifSelectAll").checked;
+				checkbox.id = data[i].UID;
+				checkbox.checked = notifs[data[i].UID];
+				checkbox.onclick = function(e) {
+					logCheckbox(data[i].UID);
+					e.stopPropagation();
+				}
 				checkbox.className = "notifSelect";
 				notif.appendChild(checkbox);
 
@@ -594,14 +621,23 @@ function updateNotifs() {
 				// create link (wraps profile pic and username)
 				link.className = "notifUser";
 				link.href = "?page=6&user=" + data[i].user;
+				link.onclick = e => {
+					e.stopPropagation();
+				}
 				link.appendChild(profilePic);
 				link.appendChild(username);
 				notif.appendChild(link);
+				
 
 				// set text
 				text.innerHTML = " " + data[i].message;
 				text.className = "notifText";
 				notif.appendChild(text);
+
+				date.innerHTML = dateText[0] + "<br>" + dateText[1];
+				date.className = "notifDate";
+				dateDiv.className = "dateDivs";
+				dateDiv.appendChild(date);
 
 				// if notification is related to a post, display post image
 				if (data[i].src) {
@@ -611,18 +647,11 @@ function updateNotifs() {
 					notif.appendChild(image);
 				} // if
 
-				// create delete button
-				deleteButton.className = "deleteNotif";
-				deleteButton.innerHTML = "&times;";
-				deleteButton.onclick = function() {
-					let commentUID = data[i].commentUID ? data[i].commentUID : "";
-					deleteNotif(data[i].user, data[i].action, commentUID);
-				} // function
-
-				notif.appendChild(deleteButton);
+				notif.appendChild(dateDiv);
 
 				// add notification to page
 				notifications.appendChild(notif);
+				
 			} // for
 		} // if
 	});
@@ -638,33 +667,44 @@ function initNotifs() {
 	} // if
 } // initNotifs
 
-// deletes the notification (of the current user) that matches the parameters passed in
-function deleteNotif(user, action, commentUID) {
-	fetchData("action=deleteNotif&user=" + user + "&notifAction=" + action + "&commentUID=" + commentUID, function(data) {});
+// returns the ids of selected checkboxes as a FormData object
+function getSelectedNotifs() {
+	let checkboxes = document.getElementsByClassName("notifSelect");
+	let reqUIDs = new FormData();
+
+	for (let i = 0; i < checkboxes.length; i++) {	
+		if (checkboxes[i].checked) {
+			reqUIDs.append(i, checkboxes[i].id);
+		} // if
+	} // for
+
+	return reqUIDs;
+} // getSelectedNotifs
+
+// deletes or marks selected notifications as read/unread depending on parameter passed in
+function editNotifs(action2) {
+	fetchData("action=editNotifs&action2=" + action2, function (data) {}, "post", getSelectedNotifs());
 	setTimeout(updateNotifs, 100);
-} // deleteNotif
+} // editNotifs
 
-// deletes all of the current users notifications
-function deleteAllNotifs() {
-	fetchData("action=deleteAllNotifs", function(data) {});
-	setTimeout(updateNotifs, 100);
-	document.getElementById("deleteAllNotifs").classList.replace("unhidden", "hidden");
-	document.getElementById("readAllNotifs").classList.replace("unhidden", "hidden");
-} // deleteAllNotifs
-
-
-
+// toggles the selection of all notifications
 function toggleAllNotifs() {
 	if (document.getElementById("notifications")) {
 		let selectAll = document.getElementById("notifSelectAll");
 		let checkboxes = document.getElementsByClassName("notifSelect");
 
-		console.log(selectAll.checked)
-
+		// set all checkboxes to be the same as "selectAll" checkbox
 		for (let i = 0; i < checkboxes.length; i++) {
-			
 			checkboxes[i].checked = selectAll.checked;
-			console.log(checkboxes[i].checked);
-		}
-	}
-}
+			notifs[checkboxes[i].id] = checkboxes[i].checked;
+		} // for
+	} // if
+} // toggleAllNotifs
+
+// stores whether the checkbox with the id passed in is checked (in the notifs object)
+function logCheckbox(id) {
+	notifs[id] = document.getElementById(id).checked;
+	console.log(notifs);
+} // logCheckbox
+
+let notifs = []; // stores which notification checkboxes are checked

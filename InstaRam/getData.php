@@ -4,7 +4,7 @@
 
 	// echos info of post with requested UID
 	if (!array_key_exists("action", $_GET) 
-		&& array_key_exists("UID", $_GET)) { // is page check needed? 
+		&& array_key_exists("UID", $_GET)) { 
 		
 		// find post with requested uid
 		foreach (get_all_posts() as $user) {
@@ -20,7 +20,7 @@
 							// decide whether the comment should be deletable
 							if ($comment["username"] == get_username($_SESSION["userID"])) {
 								$post["comments"][$key]["shouldDisplay"] = true;
-							}
+							}// if
 						} // foreach
 					} // if
 
@@ -53,7 +53,6 @@
 					"connection" => $user['connection'],
 					"grade" => $user['grade'],
 					"bio" => $user['bio'],
-					"birthdate" => $user['birthdate'],
 				], JSON_PRETTY_PRINT);
 				break;
 			} // if
@@ -83,7 +82,6 @@
 						"connection" => $users[$i]['connection'],
 						"grade" => $users[$i]['grade'],
 						"bio" => $users[$i]['bio'],
-						"birthdate" => $users[$i]['birthdate'],
 						"imageFileType" => $users[$i]['imageFileType']
 					];
 
@@ -118,6 +116,8 @@
 				// add new notification if user was not liking own post
 				//if ($userInfo["UID"] != $_SESSION["userID"]) { //**uncomment
 					$userInfo["notifications"][] = [
+						"UID" => get_next_notifUID(),
+						"date" => date(DATE_ISO8601),
 						"action" => "like",
 						"user" => $_SESSION["userID"],
 						"postUID" => $_GET["UID"],
@@ -190,6 +190,8 @@
 				// add new notification if user was not commenting on own post
 				//if ($userInfo["UID"] != $_SESSION["userID"]) { //**uncomment
 					$userInfo["notifications"][] = [
+						"UID" => get_next_notifUID(),
+						"date" => date(DATE_ISO8601),
 						"action" => "comment",
 						"commentUID" => $newUID,
 						"postUID" => $_GET["UID"],
@@ -226,14 +228,12 @@
 
 	// delete comment with requested UID on post with requested UID
 	else if (array_key_exists("action", $_GET) && $_GET["action"] == "deleteComment" 
-		&& array_key_exists("UID", $_GET)			// TODO: check if uid is valid (check with postIdentifier file)
-		&& array_key_exists("commentUID", $_GET)	// TODO: check if uid is valid 
+		&& array_key_exists("UID", $_GET)		
+		&& array_key_exists("commentUID", $_GET)	
 		&& array_key_exists("userID", $_SESSION)) {
 
 		// delete comment
 		update_post($_GET["UID"], function(&$post) {
-			
-			// check if comments is a key in array?**
 
 			// loop through comments
 			foreach ($post["comments"] as $index => $comment) {
@@ -314,6 +314,8 @@
 
 				// add "new friend" notification to other user
 				$otherUserData["notifications"][] = [
+					"UID" => get_next_notifUID(),
+					"date" => date(DATE_ISO8601),
 					"action" => "friended",
 					"user" => $_SESSION["userID"],
 					"message" => " is now your friend.",
@@ -322,6 +324,8 @@
 
 				// add "new friend" notification to current user
 				$currentUserData["notifications"][] = [
+					"UID" => get_next_notifUID(),
+					"date" => date(DATE_ISO8601),
 					"action" => "friended",
 					"user" => $otherID,
 					"message" => " is now your friend.",
@@ -340,6 +344,8 @@
 
 				// add new notification if user was not commenting on own post
 				$otherUserData["notifications"][] = [
+					"UID" => get_next_notifUID(),
+					"date" => date(DATE_ISO8601),
 					"action" => "friendRequest",
 					"user" => $_SESSION["userID"],
 					"message" => " has sent you a friend request.",
@@ -464,10 +470,11 @@
 		// get notifications if there are any
 		if (isset($userInfo["notifications"])) {
 			$notifications = $userInfo["notifications"];
-		}
-
+		} // if
+	
 		// loop through notifications
 		foreach ($notifications as $key => $notif) {
+			$userData = get_user_data($notif["user"]);
 			$notifications[$key]["username"] = get_username($notif["user"]);
 
 			// set image src if notification is related to a post
@@ -485,54 +492,48 @@
 				// set src of post image
 				$notifications[$key]["src"] = "users/" . $notif["user"] . "/posts/" . $notif["postUID"] . "." . $imageFileType;
 			} // if
-
-			$notifications[$key]["pfpsrc"] = $userInfo["imageFileType"];
+			$notifications[$key]["pfpsrc"] = $userData["imageFileType"];
 		} // foreach
 
 		echo json_encode($notifications, JSON_PRETTY_PRINT);
 	} // else if
 
-	else if (array_key_exists("action", $_GET) && $_GET["action"] == "deleteNotif"
-	&& array_key_exists("userID", $_SESSION) && array_key_exists("user", $_GET) && array_key_exists("notifAction", $_GET)) {
-
+	// deletes or marks notifications (with the requested UIDs) as read/unread
+	else if (array_key_exists("action", $_GET) && $_GET["action"] == "editNotifs"
+	&& isset($_GET["action2"]) && array_key_exists("userID", $_SESSION) && isset($_POST) ) {
+		
+		// get user info of currently logged in user
 		$userInfo = get_user_data($_SESSION["userID"]);
 
 		// find notification and delete if it exists
 		if (isset($userInfo["notifications"])) {
-			foreach ($userInfo["notifications"] as $key => $notif) {
-				if ($notif["user"] == $_GET["user"] && $notif["action"] == $_GET["notifAction"]) {
 
-					// if it's related to a comment, check if the commentUID is the same
-					if (isset($notif["commentUID"]) && isset($_GET["commentUID"]) && $_GET["commentUID"] != $notif["commentUID"]) { break; }
-					
-					// delete notification
-					unset($userInfo["notifications"][$key]);
-					$userInfo["notifications"] = array_values($userInfo["notifications"]);
+			// look for the notifs with the requested UIDs
+			foreach ($_POST as $id) {
+				foreach ($userInfo["notifications"] as $key => $notif) {
+					if ($notif["UID"] == $id) {
 
-					// update info to json file
-					update_user_data($userInfo);
-					break;
-				
-				} // if
+						// delete notification
+						if ($_GET["action2"] == "delete") {
+							unset($userInfo["notifications"][$key]);
+							$userInfo["notifications"] = array_values($userInfo["notifications"]);
+						} else if ($_GET["action2"] == "read") {
+							$userInfo["notifications"][$key]["read"] = true;
+						} else if ($_GET["action2"] == "unread") {
+							$userInfo["notifications"][$key]["read"] = false;
+						} // else if
+			
+						break;
+					} // if
+				} // foreach
 			} // foreach
 		} // if
-	} // else if
-
-	// deletes all notifications
-	else if (array_key_exists("action", $_GET) && $_GET["action"] == "deleteAllNotifs"
-	&& array_key_exists("userID", $_SESSION)) {
-
-		// get user info of currently logged in user
-		$userInfo = get_user_data($_SESSION["userID"]);
-
-		// delete all notifications
-		unset($userInfo["notifications"]);
 
 		// update info to json file
 		update_user_data($userInfo);
 
 		echo json_encode(["deleted" => true], JSON_PRETTY_PRINT);
-	} // else if
+	}// else if
 
 	// prevent end of json errors
 	else {

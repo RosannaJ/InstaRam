@@ -5,17 +5,17 @@
 <div id="userinfoprofile">
 <?php
 	include "postLightbox.inc";
-
-	if (array_key_exists("user", $_GET) && get_user_data($_GET["user"]) !== []) { // add check for if user exists
+	
+	// add check for if user exists
+	if (array_key_exists("user", $_GET) && get_user_data($_GET["user"]) !== []) { 
 		
-		// get user info
+	// get user info
 		$user = get_user_data($_GET["user"]);
 		$posts = [];
 		
 		// display profile info
 		if ($user["UID"] == $_GET["user"]) {
 			$folderName = "users/{$user['UID']}/posts/"; //  posts folder
-
 			
 			echo "<br><br><br><br><br>";
 
@@ -24,8 +24,9 @@
 				echo "<img src='users/{$user['UID']}/pfp.{$user['imageFileType']}' class='pfp'>"; // delete width
 			} else {
 				echo "<img src='images/defaultpfp.jpg' class='pfp'>";
-			}
-
+			} // else
+			
+			// display name
 			echo "<h1 id='nameonprofile'>" . $user['name'] . "</h1>";
 
 			// display username
@@ -33,14 +34,14 @@
 
 			// display bio
 			if (!empty($user['bio'])) {
-				echo "<p id='bioonprofile'>" . $user['bio'] . "<br><br>";
-			}
+				echo "<p id='bioonprofile'>" . $user['bio'];
+			} // if
 
 			if ($user["connection"] == "alum") {
 				echo "<p id='connectprofile'>Mount Douglas Alumnus</p><br><br>";
 			} else if ($user["connection"] == "current") {
 				echo "<p id='connectprofile'>Mount Douglas Student. Grade " . $user['grade'] . "</p><br><br>";
-			}
+			} // else if
 			
 
 			// DISPLAY FRIEND REQUEST BUTTON AND DECLINE
@@ -58,22 +59,22 @@
 
 					if (contains($_SESSION["userID"], $pageUserID, "friendRequests")) {
 						$message = "Unsend Friend Request";
-					}
+					} // if
 
 					if (strcmp($message, "Accept Friend Request") === 0) {
 						$hideButton = "hideDeclineButton();";
-					}
+					} // if
 
 					// display friend request button
 					echo "<input type='button' id='friendRequest' class='profilebuttons' value='$message' onclick='toggleFriend(\"" . $user['username'] . "\");$hideButton'>";
 				} else {
 					echo "<input type='button' id='friendRequest' class='profilebuttons' value='Delete Friend' onclick='toggleFriend(\"" . $user['username'] . "\")'>";
-				}
+				} // else
 
 				// display decline button if pending friend request
 				if (strcmp($message, "Accept Friend Request") === 0) {
 					echo "<input type='button' id='decline' class='profilebuttons' value='Decline Friend Request' onclick='toggleFriend(\"" . $user['username'] . "\");toggleFriend(\"" . $user['username'] . "\");hideDeclineButton();'>";
-				}
+				} // if
 				
 			} else if (isset($_SESSION["userID"]) && strcmp($_SESSION["userID"], $user['UID']) == 0) {
 
@@ -83,10 +84,9 @@
 				<!-- <a href="?page=8"><img src="images/editprofile.png" alt="edit profile"></a>; -->
 
 				<?php
-			}
+			} // else if
 
 			// display friends --- temp?
-			
 			if (isset($user['friends'])) {
 				echo "<br><br><br>";
 				echo "This person has " . count($user['friends']) . " friend(s).";
@@ -95,8 +95,8 @@
 				echo "<br>Friends: ";
 				foreach ($user['friends'] as $friend) {
 					echo $friend . ", ";
-				}
-			}
+				} // foreach
+			} // if
 
 			if (isset($_SESSION["userID"]) && strcmp($_SESSION["userID"], $user['UID']) == 0) {
 
@@ -107,10 +107,7 @@
 			<button type='button' onclick='window.location.href="?action=del"'>reset everything</button>
 
 				<?php
-			}
-
-			// <a href='?action=del'><img src="images/reset.png" alt="reset"></a>
-			// <a href='?action=logout'><img src="images/logout.png" alt="logout"></a>
+			} // if
 
 			echo "</div> </div> </div> <div id='postsonprofile'>";
 
@@ -136,7 +133,7 @@
 					echo "<div class='card' id='{$post['UID']}' onclick='displayLightBox(\"$dest\")'>";
 					echo "<img src='$dest' class='homethumbnail'>\n";
 					echo "</div>";
-				}
+				} // foreach
 				echo "</div>";
 
 			} else if (isset($_GET["user"]) && $_GET["user"] == $_SESSION["userID"]) {
@@ -146,11 +143,11 @@
 				echo "</div>";
 			} else {
 				echo "<p id='nopostsmessage'>This person does not have any posts</p>";
-			}
-		}
+			} // else
+		} // if
 	} else {
 		echo "<br><br><br><div id='noOne'>This page does not exist. <a id='home'href='?page=3'>Return to Home.</a></div>";
-	}
+	} // else
 ?>
 
 </div>

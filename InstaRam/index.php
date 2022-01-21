@@ -7,9 +7,10 @@
     include "signup.php";
     include "post.php";
 
-    if (isset($_SESSION["userID"])) { // if logged in
+    // if logged in
+    if (isset($_SESSION["userID"])) { 
         include "editprofile.php";
-    }
+    } // if
 
     // reset everything
     if (array_key_exists("action", $_GET) && $_GET["action"] == "del") {
@@ -17,17 +18,17 @@
         // delete postID file
         if (file_exists("postID.txt")) {
             unlink("postID.txt");
-        }
+        } // if
 
         // delete commentID file
         if (file_exists("commentUID.txt")) {
             unlink("commentUID.txt");
-        }
+        } // if
 
         // delete identifier file
         if (file_exists("identifier.txt")) {
             unlink("identifier.txt");
-        }
+        } // if
 
         // delete users folder
         delete_folder("users/");
@@ -41,19 +42,19 @@
 
         // log out
         unset($_SESSION["userID"]);
-    }
+    } // if
 
     // decide which page to show
     if (!array_key_exists("page", $_SESSION)) {
         $_SESSION["page"] = 1;
-    }
+    } // if
     if (array_key_exists("page", $_GET)) {
         $_SESSION["page"] = $_GET["page"];
-    }
+    } // if
 
     if (!isset($_SESSION["userID"]) && $_SESSION["page"] != 2) {
         $_SESSION["page"] = 1;
-    }
+    } // if
 
     // show page content
     include "header.inc";
@@ -76,7 +77,7 @@
         include "editprofile.inc";	
     } else {	
         include "loginform.inc";	
-    }
+    } // else
 
     include "footer.inc";
 

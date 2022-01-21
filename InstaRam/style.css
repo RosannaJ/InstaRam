@@ -15,9 +15,23 @@ font-family: 'Lato', sans-serif;
 
 }
 
+.card a {
+	color: #192231;
+}
 
-.notifUsername {
+#unreadAmount {
+	position: absolute;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	color: #985E6D;
+
+
+}
+
+.notifusername {
 	display: inline;
+	align-items: center;
 }
 
 #termsofservice {
@@ -161,7 +175,6 @@ button {
 /* Style navigation menu links */
 .topnav a {
   position:relative;
-  color: white;
   padding: 14px 16px;
   font-size: 10px;
   text-decoration: none;
@@ -254,14 +267,6 @@ button {
 	font-weight: 300;
 }
 
-.deletenotif {
-	margin-left: 1%;
-	background-color: #D5DFEC;
-	color:#192231;
-	border: none;
-	border-radius: 4%;
-}
-
 #title {
 	padding-top: 5%;
 }
@@ -340,6 +345,7 @@ input[type="text"], .loginsignupinfo {
 	background-color: #D5DFEC;
 	color: #192231;
 	padding: 2%;
+	text-align: center;
 }
 
 #bioonprofile {
@@ -359,19 +365,32 @@ input[type="text"], .loginsignupinfo {
 	position: relative;
 }
 
-#birthdate {
-	background-color: #D5DFEC;
-	height: 40px;
-	width: 130px;
-}
-
-#table input[type="file"] {
-	opacity: 0;
-}
+	
 
 #tos, #tologin {
 	color: #D5DFEC;
 	text-decoration: underline;
+	cursor: pointer;
+}
+
+#toshead, #toshead2 {
+	text-decoration: underline;
+}
+
+#termsofservice {
+	padding: 0 15%;
+	overflow-y: scroll;
+}
+
+#return {
+	border: 2px solid #D5DFEC;
+	border-radius: 6px;
+	background-color: #D5DFEC;
+	color:#192231;
+	font-size: 18px;
+	font-weight: 300;
+	width: 180px;
+	height: 50px;
 }
 
 #profile {
@@ -389,12 +408,22 @@ input[type="text"], .loginsignupinfo {
 	background-color: #D5DFEC;
 	color:#192231;
 	border-radius: 2px;
+	pointer-events: none;
 }
 
 #fileToUpload {
-	height: 50px;
-	width: 200px;
+	height: 60px;
+	width: 50%;
 	cursor: pointer;
+	opacity: 0;
+}
+
+.signupfile {
+	height: 50px !important;
+	width: 200px !important;
+	cursor: pointer !important;
+	opacity: 0;
+	
 }
 
 .profilebuttons {
@@ -484,6 +513,7 @@ input[type="text"], .loginsignupinfo {
 	background-color: #D5DFEC;
 	color: #192231;
 	text-align: center;
+	font-size: 15px;
 }
 
 #postnav {
@@ -495,7 +525,18 @@ input[type="text"], .loginsignupinfo {
 	margin: 0 3%;
 }
 
-#explorebox, #homebox, #inboxbox, #editprofilebox, #signupbox {
+input[type="checkbox"] {
+	cursor: pointer;
+	background: #D5DFEC;
+	color: #192231;
+}
+
+#inboxbox input[type="checkbox"] {
+	margin: 1%;
+}
+
+
+#explorebox, #homebox, #editprofilebox, #signupbox {
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
@@ -507,6 +548,21 @@ input[type="text"], .loginsignupinfo {
 	padding-bottom: 10%;
 	overflow-y: scroll;
 }
+
+#inboxbox {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 70%;
+	height: 100vh;
+	background-color: #D5DFEC22;
+	padding-bottom: 10%;
+	overflow-y: scroll;
+	word-wrap: break-word;
+}
+
+
+
 
 #signupbox {
 	margin-top: 5px;
@@ -531,7 +587,7 @@ input[type="text"], .loginsignupinfo {
 
 #comments {
 	width: 100%;
-	height: 75px;
+	height: 100px;
 	overflow-y: scroll;
 
 }
@@ -707,8 +763,8 @@ input[type="text"], .loginsignupinfo {
 #content, #contentEdit {
 	min-width: 10vw;
 	filter: drop-shadow(0 0 2rem #192231);
-	max-width: 50vw;
-	max-height: 50vh;
+	max-width: 40vw;
+	max-height: 40vh;
     width: auto;
     height: auto;
 
@@ -828,18 +884,42 @@ input[type="text"], .loginsignupinfo {
     justify-content: center;
 }
 
-#deleteAllNotifs {
+#deleteNotifs, #unreadNotifs, #readNotifs {
 	border: 4px solid #D5DFEC;
 	border-radius: 6px;
 	background-color: #D5DFEC;
 	color:#192231;
-	font-size:18px;
+	font-size:17px;
 	font-weight: 300;
 	width: 150px;
-	height: 40px;
+	height: 30px;
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
+
+}
+
+.notifs.unread {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(213,223,236, 0.8) !important;
+	color: #192231 !important;
+
+}
+
+.notifs.unread .notifUser .notifUsername {
+	color: #192231 !important;
+	text-decoration: underline solid #192231 !important;
+
+}
+
+.notifs.read {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(73,78,107, 0.9);
+	color: #D5DFEC;
 
 }
 
@@ -848,24 +928,36 @@ input[type="text"], .loginsignupinfo {
 	display: inline;
 	width: 30px;
 	margin-right: 1%;
+	margin-bottom: 1%;
 	border-radius: 50%;
+	align-items: center;
 }
 
 .notiftext {
-	display: inline;
+	display: inline-block;
+align-items: center;
+word-wrap: break-word;
+overflow-wrap: break-word;
 }
 
 .notifpostimage {
 	display: inline;
-	width: 30px;
-	height: 30px; 
+	width: 45px;
+	height: 45px; 
 	object-fit: cover;
-	margin-left: 1%;
+	margin: 2%;
+	align-items: center;
 }
 
 .notifs {
-	vertical-align: middle;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	
 }
+
+
 
 
 
@@ -943,6 +1035,24 @@ input[type="text"], .loginsignupinfo {
 		font-size: 14px;
 	}
 
+	#profilepicinput label {
+		font-size: 15px;
+		padding-bottom: 2%;
+	}
 
+	#newpostbox button {
+		height: 70px;
+	} 
+
+
+
+}
+
+@media screen and (max-height: 700px) {
+
+#content {
+	max-height: 20vh;
+	object-fit: cover;
+}
 
 }
