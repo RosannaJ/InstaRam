@@ -11,9 +11,9 @@
         When you create an Ramstagram account or use Ramstagram, you agree to these terms. 
         The Ramstagram Service is provided to you by BigCypBigRosBigJosh, Inc. These Terms of Service therefore constitute an agreement between you and BigCypBigRosBigJosh, Inc.
         </p><br>
-        <h2>
+        <h2 id="toshead2">
         The Ramstagram Experience
-        </h2 id="toshead2">
+        </h2>
         <p> We agree to provide you the Ramstagram Experience, an all-inclusive personalized social media platform to bring you closer to your loved ones at Mount Doug. The Ramstagram Experience contains the following:</p>
 
         <p>Full, irrevocable ownership to your bank account, social security number, Phantom Wallet &copy;, and children.</p>
