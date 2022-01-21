@@ -23,7 +23,7 @@
 		</div>
 		<div id="profile">
 			<button id="profilepicinput">
-				<img src="images/upload.png" src="upload image"><br>
+				<img src="images/upload.png" alt="upload image"><br>
 				<label for="fileToUpload">Upload Profile Picture</label>
 			</button>
 			<span class="error"><?php echo $profileErr;?></span>
