@@ -46,7 +46,7 @@
 				echo "<div class='card' id='{$post['UID']}' onclick='displayLightBox(\"$imageFile\")'>";
 
 				echo "<a id='usernameonhome' href='?page=6&user=" . $user . "' onclick='event.stopPropagation()'>";
-				echo "<img src='$pfpImageFile' class='thumbnailpfp'>";
+				echo "<img src='$pfpImageFile' class='thumbnailpfp'><br>";
 				echo get_username($user);
 				echo "</a>";
 

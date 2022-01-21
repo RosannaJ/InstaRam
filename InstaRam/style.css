@@ -903,7 +903,7 @@ input[type="checkbox"] {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background: rgba(213,223,236, 0.8) !important;
+	background: rgba(213,223,236, 0.9) !important;
 	color: #192231 !important;
 
 }
@@ -927,6 +927,8 @@ input[type="checkbox"] {
 .notifpfp {
 	display: inline;
 	width: 30px;
+	height: 30px;
+	object-fit: cover;
 	margin-right: 1%;
 	margin-bottom: 1%;
 	border-radius: 50%;
@@ -958,7 +960,12 @@ overflow-wrap: break-word;
 }
 
 
-
+.thumbnailpfp  {
+border-radius: 50%;
+max-width: 50px;
+max-height: 50px;
+object-fit: cover;
+}
 
 
 

@@ -38,9 +38,9 @@
 			} // if
 
 			if ($user["connection"] == "alum") {
-				echo "<p id='connectprofile'>Mount Douglas Alumnus</p><br><br>";
+				echo "<p id='connectprofile'>Mount Douglas Alumnus</p><br>";
 			} else if ($user["connection"] == "current") {
-				echo "<p id='connectprofile'>Mount Douglas Student. Grade " . $user['grade'] . "</p><br><br>";
+				echo "<p id='connectprofile'>Mount Douglas Student. Grade " . $user['grade'] . "</p><br>";
 			} // else if
 			
 
@@ -88,14 +88,9 @@
 
 			// display friends --- temp?
 			if (isset($user['friends'])) {
-				echo "<br><br><br>";
-				echo "This person has " . count($user['friends']) . " friend(s).";
+				echo "<br><br>";
+				echo "Friends: " . count($user['friends']);
 				echo "<br>";
-
-				echo "<br>Friends: ";
-				foreach ($user['friends'] as $friend) {
-					echo $friend . ", ";
-				} // foreach
 			} // if
 
 			if (isset($_SESSION["userID"]) && strcmp($_SESSION["userID"], $user['UID']) == 0) {
