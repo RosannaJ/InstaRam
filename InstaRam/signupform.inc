@@ -23,8 +23,8 @@
 		</div>
 		<div id="profile">
 			<button id="profilepicinput">
-				<img src="images/upload.png" alt="upload image"><br>
-				<div>Upload Profile Picture</div>
+				<img src="images/upload.png" alt="upload image"><br><br>
+				<span>Upload Profile Picture</span>
 			</button>
 			<span class="error"><?php echo $profileErr;?></span>
 		</div>
