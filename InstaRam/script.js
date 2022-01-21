@@ -379,20 +379,25 @@ function displayLightBox(imageFile, uid) {
 		
 			// display comments
 			if (data.comments) {
+
+				console.log(data.comments);
+				
 				for (let i = 0; i < Object.keys(data.comments).length; i++) {
 					let comment = document.createElement("div");
-					let deleteButton = document.createElement("button");
 				
-					comment.innerHTML = data.comments[i].username + ": " + data.comments[i].text;
+					comment.innerHTML = "<a id='linkToPage' href='?page=6&user=" + data.comments[i].user +	"'>" + data.comments[i].username + "</a>" + ": " + data.comments[i].text;
 					comment.className = "comment";
+					
+					if (data.comments[i].shouldDisplay === true) {
+						let deleteButton = document.createElement("button");
+						deleteButton.innerHTML = "Delete";
+						deleteButton.className = "deletecomment"
+						deleteButton.onclick = function() {
+							deleteComment(data.comments[i].UID)
+						};
+						comment.appendChild(deleteButton);
+					}
 
-					deleteButton.innerHTML = "Delete";
-					deleteButton.className = "deletecomment"
-					deleteButton.onclick = function() {
-						deleteComment(data.comments[i].UID)
-					};
-
-					comment.appendChild(deleteButton);
 					comments.appendChild(comment);
 
 				}
@@ -404,11 +409,12 @@ function displayLightBox(imageFile, uid) {
 		// update displayed profile info
 		// fetch profile info
 		fetchData("user=" + UID, function(data) {
+			let connection = data.connection == "current" ? "Student" : "Alumni";
 
 			// update caption
 			document.getElementById("caption").innerHTML = "Username: " + data.username + "<br>"
 															+ "Name: " + data.name + "<br>"
-															+ "Connection: " + data.connection;
+															+ "Connection: " + connection;
 			document.getElementById("content").alt = data.username;
 		});
 	}
@@ -498,7 +504,10 @@ function deleteComment(commentUID) {
 function toggleFriend(user) {
 	fetchData("action=friend&user=" + user, function(data) {
 		// update button text
-		document.getElementById("friendRequest").value = data.message;
+		document.getElementById(
+		
+			
+		"friendRequest").value = data.message;
 	});
 }
 
@@ -532,12 +541,31 @@ function updateNotifs() {
 			}
 		
 			// display notifications
-			for (let i = 0; i < Object.keys(data).length; i++) {
+			for (let i = Object.keys(data).length - 1; i >= 0; i--) {
 				let notif = document.createElement("div");
+				let deleteButton = document.createElement("button");
 			
-				notif.innerHTML = data[i].user + " " + data[i].message;
+				notif.innerHTML = "<a class='notifUser' href='?page=6&user=" + data[i].user + "'>" + data[i].username + "</a> " + data[i].message;
 				notif.className = "notifs";
 
+				deleteButton.className = "deleteNotif";
+				deleteButton.innerHTML = "&times;";
+				deleteButton.onclick = function() {
+					let commentUID = data[i].commentUID ? data[i].commentUID : "";
+
+					deleteNotif(data[i].user, data[i].action, commentUID);
+				}
+
+				notif.appendChild(deleteButton);
+				
+				if (data.postUID) {
+					notif.onclick = function() {
+						displayLightBox(data.src);
+					}
+				}
+				
+
+				// add notification to page
 				notifications.appendChild(notif);
 			}
 		}
@@ -545,6 +573,14 @@ function updateNotifs() {
 }
 
 function initNotifs() {
-	updateNotifs();
-	setInterval(updateNotifs, 5000);
+	if (document.getElementById("unreadAmount")) {
+		updateNotifs();
+		setInterval(updateNotifs, 5000);
+	}
+}
+
+function deleteNotif(user, action, commentUID) {
+	fetchData("action=deleteNotif&user=" + user + "&notifAction=" + action + "&commentUID=" + commentUID, function(data) {
+		updateNotifs();
+	});
 }

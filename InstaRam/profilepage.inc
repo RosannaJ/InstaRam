@@ -6,12 +6,12 @@
 <?php
 	include "postLightbox.inc";
 
-	if (array_key_exists("user", $_GET)) { // add check for if user exists
+	if (array_key_exists("user", $_GET) && get_user_data($_GET["user"]) !== []) { // add check for if user exists
 		
 		// get user info
 		$user = get_user_data($_GET["user"]);
 		$posts = [];
-
+		
 		// display profile info
 		if ($user["UID"] == $_GET["user"]) {
 			$folderName = "users/{$user['UID']}/posts/"; //  posts folder
@@ -37,9 +37,9 @@
 			}
 
 			if ($user["connection"] == "alum") {
-				echo "Mount Douglas Alumnus<br><br><br>";
+				echo "<p id='connectprofile'>Mount Douglas Alumnus</p><br><br><br>";
 			} else if ($user["connection"] == "current") {
-				echo "Mount Douglas Student. Grade " . $user['grade'] . "<br><br><br>";
+				echo "<p id='connectprofile'>Mount Douglas Student. Grade " . $user['grade'] . "</p><br><br><br>";
 			}
 			
 
@@ -79,7 +79,7 @@
 
 				?>
 
-		<button type='button' id='editprofilebutton' class='profilebuttons' onclick='window.location.href="?page=8"'>Edit Profile</button>
+				<button type='button' id='editprofilebutton' class='profilebuttons' onclick='window.location.href="?page=8"'>Edit Profile</button>
 				<!-- <a href="?page=8"><img src="images/editprofile.png" alt="edit profile"></a>; -->
 
 				<?php
@@ -101,10 +101,10 @@
 			if (isset($_SESSION["userID"]) && strcmp($_SESSION["userID"], $user['UID']) == 0) {
 
 				?>
-	<br><br>
+			<br><br>
 			<button type='button' id='logoutbutton' class='profilebuttons' onclick='window.location.href="?action=logout"'>Log Out</button>
 			<br><br><br><br>
-			<button type='button' onclick='window.location.href="?action=del"'>(temporary) reset everything</button>
+			<button type='button' onclick='window.location.href="?action=del"'>reset everything</button>
 
 				<?php
 			}
@@ -145,11 +145,11 @@
 				echo "<p><a href='?page=7'>Share your first post now</a></p>";
 				echo "</div>";
 			} else {
-				echo "This person does not have any posts";
+				echo "<p id='nopostsmessage'>This person does not have any posts</p>";
 			}
 		}
 	} else {
-		echo "User does not exist.";
+		echo "<br><br><br><div id='noOne'>This page does not exist. <a id='home'href='?page=3'>Return to Home.</a></div>";
 	}
 ?>
 

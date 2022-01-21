@@ -15,6 +15,16 @@ font-family: 'Lato', sans-serif;
 
 }
 
+#termsofservice {
+	text-align: center;
+	background-color: #192231 !important;
+	color:#D5DFEC !important;
+}
+
+#noOne {
+	margin-top: 10%;
+}
+
 * {
     box-sizing: border-box;
     font-family: 'Lato', sans-serif;
@@ -26,11 +36,13 @@ body {
 	background-image: linear-gradient(to bottom right, #192231, #494E6B, #985E6D);
 	color: #D5DFEC;
 	overflow: hidden;
+	word-wrap: break-word;
 }
 
 #logolink {
 	text-decoration: none;
 	color: #192231;
+	height: 50px;
 }
 
 .grade {
@@ -38,7 +50,7 @@ body {
 }
 
 .error {
-	color: #985E6D;
+	color: #98878F;
 }
 
 #top {
@@ -132,6 +144,13 @@ button {
 
 .topnav {
 	height: 50px;
+	background-color:#D5DFEC;
+	overflow: hidden;
+   top: 0;
+	width: 100%;
+	position:fixed;
+	z-index:1;
+	
 }
 
 /* Style navigation menu links */
@@ -139,16 +158,16 @@ button {
   position:relative;
   color: white;
   padding: 14px 16px;
+  font-size: 10px;
   text-decoration: none;
   text-transform:uppercase;
   font-size: 17px;
   display: block;
-  background-color:rgba(166, 126, 189, 0.8);;
+
 }
 
 /* Style the hamburger menu */
 .topnav a.icon {
-  background: rgba(166, 201, 174, 0.8);
   display: block;
   position:absolute;
   float:right;
@@ -160,42 +179,28 @@ button {
 
 /* Change the color of links on hover */
 .topnav a:hover {
-	background-color: #A6C9AE;
-	color:#474954;
+	background-color: #98878F;
+	color:#192231;
   }
   
   
   /* Style the active link (or home/logo) */
   .active {
-	background-color: rgba(82, 48, 124, 0.8) !important;
+	
 	color: #FDFFFC;
-	font-size: 20px !important;
+	font-size: 10px !important;
   }
   .active:hover{
 	  color: #FDFFFC !important;
   }
-  
-	.topnav.responsive {position: fixed;}
-	.topnav.responsive .icon {
-	  position: absolute;
-	  right: 0;
-	  top: 0;
-	}
-	.topnav.responsive a {
-	  float: none;
-	  display: block;
-	  text-align: left;
-	}
 
 
 
 .navlinks img {
-    margin-top: -5;
     line-height: 50px;
     vertical-align: middle;
     padding-left: 1%;
     padding-right: 1%;
-    width: 12%;
 }
 
 
@@ -203,7 +208,7 @@ button {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 95vw;
+	width: 100vw;
 	height: 90vh;
 }
 
@@ -241,8 +246,25 @@ button {
 	margin: 0;
 }
 
+.deletenotif {
+	margin-left: 1%;
+	background-color: #D5DFEC;
+	color:#192231;
+	border: none;
+	border-radius: 4%;
+}
+
 #title {
 	padding-top: 5%;
+}
+
+#nopostsmessage {
+	text-align: center;
+	padding: 5%;
+}
+
+.notifUser {
+	color: #D5DFEC;
 }
 
 .logsign a {
@@ -304,7 +326,7 @@ input[type="text"], .loginsignupinfo {
 #signupbox{
 	width: 40%;
 	height: 90%;
-	margin-top: 3%;
+	margin-top: 3.5%;
 	overflow-x: scroll;
 }
 
@@ -379,12 +401,13 @@ input[type="text"], .loginsignupinfo {
 	border-radius: 6px;
 	background-color: #D5DFEC;
 	color:#192231;
-	font-size: 20px;
+	font-size: 18px;
 	font-weight: 300;
 	padding-left: 5%;
 	padding-right: 5%;
 	height: 50px;
 	cursor: pointer;
+	max-width: 300px;
 }
 
 .profilebuttons:hover {
@@ -398,14 +421,14 @@ input[type="text"], .loginsignupinfo {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 95vw;
+	width: 100vw;
 	height: 90vh;
 }
 
 #profilebox {
-	width: 95vw;
-	height: 100vh;
-	top:50px;
+	width: 100vw;
+	height: 95vh;
+	margin-top:5vh;
 }
 
 /* #sizer {
@@ -438,7 +461,7 @@ input[type="text"], .loginsignupinfo {
 	float: right;
 	margin-right: 10%;
 	width: 40%;
-	height: 100%;
+	height: 100vh;
 	background-color: #D3D3D322;
 	overflow-y: scroll;
 	
@@ -609,7 +632,7 @@ input[type="text"], .loginsignupinfo {
 	width: 100vw;
 	height: 100vh;
 	background: linear-gradient(to bottom right, #192231, #494E6B, #985E6D);
-	opacity: 0.95;
+	opacity: 0.98;
 	flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -672,15 +695,19 @@ input[type="text"], .loginsignupinfo {
 
 #content, #contentEdit {
 	min-width: 10vw;
-	
+	filter: drop-shadow(0 0 2rem #192231);
 	max-width: 50vw;
 	max-height: 50vh;
     width: auto;
     height: auto;
 
 	display: block;
-
+	opacity: 1;
 	z-index: 4;
+}
+
+#linkToPage {
+	color:#D5DFEC;
 }
 
 
@@ -790,10 +817,10 @@ input[type="text"], .loginsignupinfo {
     justify-content: center;
 }
 
-@media only screen and (min-width: 1000px) {
+
 	/* Add a black background color to the top navigation */
 .topnav {
-	background-color:rgba(166,126,189,0.8);
+	background-color:#D5DFEC;
 	overflow: hidden;
    top: 0;
 	width: 100%;
@@ -805,7 +832,7 @@ input[type="text"], .loginsignupinfo {
 
 .topnav a {
 	float:left;
-	font-size:17px;
+	padding: 14px 16px;
 }
 .topnav img {
 	width: 24px;
@@ -819,10 +846,81 @@ input[type="text"], .loginsignupinfo {
 
 .topnav a.active {
 
-	color: #FDFFFC;
-	padding:25px;
-	padding-left:45px !important;
-	padding-right:45px !important;
-	font-size:16px !important;
+	font-size: 10px !important;
 }
+
+
+
+
+@media screen and (max-width: 1000px) {
+	.pfp {
+		width: 150px;
+		height: 150px;
+	}
+
+	.profilebuttons {
+		width: 180px;
+		font-size: 16px;
+	}
+	#signupbox {
+		margin-top: 65px;
+		width: 60%;
+	}
+
+}
+
+@media screen and (max-width: 600px) {
+	.topnav a.active {
+
+		display:none;
+	}
+
+	.pfp {
+		width: 50px;
+		height: 50px;
+	}
+
+	#links {
+		width: 100vw;
+	}
+
+	body {
+		background: #192231;
+		overflow-y: scroll;
+	}
+
+	#explorebox, #homebox, #inboxbox, #editprofilebox {
+		margin-top: 5%;
+	}
+
+	.profilebuttons {
+		width: 120px;
+		font-size: 14px;
+	}
+
+	#signupbox {
+		margin-top: 300px;
+	}
+
+}
+
+@media screen and (max-width: 400px) {
+	
+
+	#signupbox {
+		margin-top: 400px;
+	}
+
+}
+
+@media screen and (max-height: 900px) {
+	
+	body {
+		overflow-y: scroll;
+	}
+
+	#signupbox {
+		margin-top: 20%;
+	}
+
 }

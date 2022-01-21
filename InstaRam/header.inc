@@ -10,7 +10,7 @@
 		<link rel="stylesheet" href="style.css">  
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" style>
 		<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-
+		<link rel="icon" type="image/x-icon" href="images/favicon.ico">
 
 		<!-- include an external JavaScript file -->
 		<script src="script.js"></script>
@@ -23,7 +23,7 @@
 			<?php
 				
 
-				if ($_SESSION["page"] > 2) {
-					include "navbar.inc";
-				}
+				
+					include "navbar.inc"; 
+				
 			?>
