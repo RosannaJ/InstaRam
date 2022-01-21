@@ -1,5 +1,9 @@
 <?php
+
     session_start();
+
+     // show header
+    include "header.inc";
     include "functions.php";
 
     // process form data if submitted
@@ -56,9 +60,8 @@
         $_SESSION["page"] = 1;
     } // if
 
+   
     // show page content
-    include "header.inc";
-
     if ($_SESSION["page"] == 1) {	
         include "loginform.inc";	
     } else if ($_SESSION["page"] == 2) {	
